@@ -6,204 +6,246 @@ Version: 0.1 (Draft)
 Status: Draft
 
 Depends on:
-- HCP Specification v0.1
+
+- Humanitarian Connection Protocol Specification v0.1
 
 ---
 
 # 1. Purpose
 
-This specification defines the Humanitarian Record, the fundamental unit of information within the Humanitarian Connection Protocol (HCP).
+This specification defines the Humanitarian Record, the fundamental unit of information exchanged within the Humanitarian Connection Protocol (HCP).
 
-Every entity, event, resource, action or relationship represented by HCP SHALL be modeled as one or more Humanitarian Records.
+Every humanitarian observation exchanged through HCP SHALL be represented as a Humanitarian Record.
 
-This specification establishes the conceptual model that all compliant implementations MUST follow, independently of programming language, storage technology or communication protocol.
+The Humanitarian Record is the atomic unit of synchronization across the network.
 
 ---
 
 # 2. Definition
 
-A Humanitarian Record is the atomic unit of humanitarian information.
+A Humanitarian Record is a standardized, immutable JSON document representing a single humanitarian observation made by an identified actor at a specific point in time.
 
-It represents a single identifiable piece of humanitarian knowledge that may describe a person, organization, event, resource, location, request, donation, verification or any other humanitarian entity defined by HCP.
+The protocol exchanges Humanitarian Records.
 
-A Humanitarian Record is implementation-independent.
+It does not exchange databases.
 
-It is not tied to any database technology, programming language, serialization format or software platform.
+It does not exchange application state.
+
+It does not exchange mutable objects.
 
 ---
 
-# 3. Design Goals
+# 3. Design Philosophy
 
-The Humanitarian Record has been designed to satisfy the following objectives.
+HCP follows an event-based architecture.
 
-• Global interoperability
+Each Humanitarian Record represents an observation.
 
-• Decentralized ownership
+A new observation SHALL generate a new Humanitarian Record.
 
-• Data consistency
+Existing records MUST NOT be modified.
 
-• Extensibility
+This guarantees:
 
-• Traceability
-
-• Versioning
-
-• Privacy
-
-• Verification
-
-• Long-term compatibility
+- complete history
+- distributed synchronization
+- traceability
+- conflict resistance
+- offline operation
 
 ---
 
 # 4. Fundamental Principles
 
-Every Humanitarian Record SHALL comply with the following principles.
+## 4.1 Immutability
 
-## 4.1 Uniqueness
+Once published, a Humanitarian Record SHALL NEVER be modified.
 
-Each record represents one unique humanitarian fact or entity.
-
----
-
-## 4.2 Persistence
-
-A record SHOULD preserve its identity throughout its lifetime.
+Corrections SHALL be represented by new Humanitarian Records.
 
 ---
 
-## 4.3 Verifiability
+## 4.2 Atomicity
 
-Information MAY be verified by one or more independent actors.
+Each Humanitarian Record represents one humanitarian observation.
 
----
-
-## 4.4 Traceability
-
-Changes SHOULD be historically traceable.
+A record SHALL NOT contain unrelated observations.
 
 ---
 
-## 4.5 Extensibility
+## 4.3 Traceability
 
-Future protocol versions MAY extend records without breaking compatibility.
+Every Humanitarian Record becomes part of the permanent humanitarian history.
 
----
-
-## 4.6 Technology Independence
-
-The conceptual model SHALL remain independent from its implementation.
+Historical information MUST remain available.
 
 ---
 
-# 5. Conceptual Structure
+## 4.4 Interoperability
 
-Every Humanitarian Record is conceptually composed of:
-
-• Identity
-
-• Metadata
-
-• Content
-
-• Relationships
-
-• Verification
-
-• History
-
-• Extensions
-
-The internal representation is defined in later sections.
+Every compliant implementation SHALL exchange Humanitarian Records using the HCP JSON representation.
 
 ---
 
-# 6. Record Identity
+## 4.5 Technology Independence
 
-Every Humanitarian Record MUST possess a globally unique identifier.
-
-The identifier SHALL remain immutable.
-
-The identifier SHALL NOT encode implementation-specific information.
+Although JSON is the reference serialization format, the conceptual model remains implementation-independent.
 
 ---
 
-# 7. Record Lifecycle
+# 5. Humanitarian Observation
 
-A Humanitarian Record progresses through different lifecycle states.
+A Humanitarian Record represents an observation made by an actor.
 
-Typical states include:
+Examples include:
 
-Created
+- A hospital reports that a person has been admitted.
+- A rescue team reports that a person has been located.
+- A volunteer reports that food has been delivered.
+- A family reports a missing relative.
+- A shelter reports available capacity.
 
-Validated
-
-Updated
-
-Archived
-
-Superseded
-
-Deleted (logical)
-
-Future specifications MAY define additional states.
+Each observation becomes an independent Humanitarian Record.
 
 ---
 
-# 8. Ownership
+# 6. Humanitarian Record Identity
 
-Ownership refers to the entity responsible for creating or maintaining the record.
+Every Humanitarian Record SHALL possess a globally unique identifier (UUID).
 
-Ownership does not imply exclusive control over humanitarian information.
+The UUID identifies the record itself.
 
-Multiple organizations MAY collaborate on related records.
+It SHALL NOT represent the identity of a person.
 
----
-
-# 9. Relationships
-
-A Humanitarian Record MAY reference one or more Humanitarian Records.
-
-Relationships enable the protocol to represent complex humanitarian scenarios without duplicating information.
+Different records MAY describe the same humanitarian situation.
 
 ---
 
-# 10. Reference Serialization
+# 7. Humanitarian Record Structure
 
-The reference serialization format for HCP SHALL be JSON.
+Every Humanitarian Record SHALL contain the mandatory fields defined by future specifications.
 
-Equivalent representations MAY exist provided semantic compatibility is preserved.
+The reference serialization format SHALL be JSON.
+
+Future specifications define:
+
+- required fields
+- optional fields
+- validation rules
+- JSON Schema
 
 ---
 
-# 11. Compliance
+# 8. Relationships
 
-Any implementation claiming HCP compatibility MUST comply with this specification.
+Humanitarian Records MAY reference other Humanitarian Records.
+
+Relationships allow independent observations to describe the same humanitarian situation without modifying previous records.
+
+Relationship semantics are defined in future specifications.
 
 ---
 
-# 12. Future Work
+# 9. Record History
 
-Future revisions of this specification will define:
+The protocol preserves every published Humanitarian Record.
 
-Identity model
+The current understanding of a humanitarian situation is reconstructed from related observations.
 
-Metadata model
+The protocol does not replace historical information.
 
-Relationship model
+---
 
-Versioning
+# 10. Synchronization
 
-Digital signatures
+Nodes exchange Humanitarian Records.
 
-Verification
+Nodes do not exchange complete databases.
 
-Synchronization
+Nodes do not synchronize mutable state.
 
-Reference JSON Schema
+Synchronization consists of transferring immutable Humanitarian Records between compliant nodes.
 
-Examples
+Synchronization mechanisms are defined in HCP-0003.
 
-Security considerations
+---
 
-Privacy considerations
+# 11. Duplicate Records
+
+The protocol does not attempt to prevent duplicate Humanitarian Records.
+
+Independent actors MAY report the same humanitarian situation.
+
+Duplicate detection and record reconciliation are responsibilities of compliant implementations and future HCP specifications.
+
+Original Humanitarian Records MUST remain unchanged.
+
+---
+
+# 12. Offline Operation
+
+Humanitarian Records MAY be created without network connectivity.
+
+Nodes SHALL synchronize records when communication becomes available.
+
+Offline operation is a fundamental design principle of HCP.
+
+---
+
+# 13. Security
+
+Every Humanitarian Record SHOULD preserve information about:
+
+- originating node
+- originating actor
+- creation timestamp
+
+Future specifications define:
+
+- digital signatures
+- integrity verification
+- trust models
+
+---
+
+# 14. Compliance
+
+An implementation claiming HCP compatibility MUST:
+
+- create immutable Humanitarian Records
+- exchange records using the HCP JSON representation
+- preserve record history
+- avoid modifying previously synchronized records
+
+---
+
+# 15. Future Work
+
+Future specifications will define:
+
+- JSON Schema
+- Mandatory fields
+- Record relationships
+- Synchronization
+- Digital signatures
+- Verification
+- Record linking
+- Conflict resolution
+- Node discovery
+- APIs
+
+---
+
+# 16. Philosophy
+
+Humanitarian information evolves continuously.
+
+Instead of modifying previous information, HCP preserves every observation as an immutable Humanitarian Record.
+
+The current understanding of any humanitarian situation emerges from the chronological sequence of related Humanitarian Records exchanged across the decentralized HCP network.
+
+The protocol therefore preserves not only humanitarian information, but also the complete history of how that information evolved over time.
+
+---
+
+**End of HCP-0001**

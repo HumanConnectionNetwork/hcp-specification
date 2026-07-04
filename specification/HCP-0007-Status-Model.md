@@ -29,286 +29,222 @@ Depends On:
 
 # 1. Abstract
 
-The Status Model defines the humanitarian condition observed and reported within an Observation.
+The Status Model defines how the condition of a Subject is represented within a Humanitarian Observation.
 
-A Status describes the condition of a Subject at the exact moment an Observation is made.
+A Status describes the condition observed at a specific moment in time.
 
-Status is never permanent.
+Status is always temporal.
 
-It represents only the condition observed at a specific point in time.
+It never represents a permanent truth.
 
-Future observations may report different statuses.
+Every Observation reports exactly one Status.
+
+Future Observations may report a different Status for the same Subject.
 
 ---
 
 # 2. Purpose
 
-The purpose of the Status Model is to provide a common vocabulary that allows humanitarian organizations to describe situations consistently while preserving interoperability.
+The purpose of the Status Model is to establish a common semantic structure for representing humanitarian conditions while preserving interoperability between all HCP implementations.
 
-Status values are intended to be simple, unambiguous and internationally understandable.
+The HCP Core defines the Status Model.
 
----
-
-# 3. Fundamental Principle
-
-Status describes the observed condition.
-
-It does not describe the person.
-
-It does not replace previous statuses.
-
-Each Observation reports exactly one Status.
+Subject-specific Status vocabularies are defined in independent specifications.
 
 ---
 
-# 4. Status Lifecycle
+# 3. Fundamental Principles
 
-Status exists only within an Observation.
+The Status Model follows these principles:
 
-Example:
+- A Status describes an observed condition.
+- Every Observation contains exactly one Status.
+- Statuses are immutable once published.
+- New Observations generate new Statuses.
+- Historical Statuses are never modified.
+- Statuses belong to Observations, not to Subjects.
+
+---
+
+# 4. Relationship Between Observation and Status
+
+Every Observation reports the condition of a Subject at the moment it was observed.
+
+Conceptually:
 
 ```text
-Observation
-    Person Located
-
-Status
-    Alive
+Humanitarian Record
+        │
+        ▼
+     Subject
+        │
+        ▼
+   Observation
+        │
+        ▼
+      Status
 ```
 
-A new Observation generates a new Status.
-
-Historical statuses remain unchanged.
+The Status has meaning only within the Observation that reports it.
 
 ---
 
-# 5. Recommended Status Values
+# 5. Core Status Model
 
-The following statuses are recommended for HCP Core.
+The HCP Core defines only the semantic model of Status.
 
-## Unknown
+It intentionally avoids defining exhaustive status lists for every Subject Type.
 
-The current humanitarian condition cannot yet be determined.
-
----
-
-## Missing
-
-The person's whereabouts are unknown.
+This allows the protocol to evolve without modifying its core architecture.
 
 ---
 
-## Located
+# 6. Core Status Vocabulary
 
-The person's location has been confirmed.
+The following Status values are recommended as a minimal common vocabulary across all HCP implementations.
 
----
+- Unknown
+- Pending
+- Active
+- Completed
+- Cancelled
 
-## Safe
+These values are intentionally generic.
 
-The person is confirmed to be safe.
-
----
-
-## Injured
-
-The person has sustained injuries.
+Applications and future specifications may define more specialized vocabularies.
 
 ---
 
-## Critical
+# 7. Subject-Specific Status Vocabularies
 
-The person's condition is critical.
+Different Subject Types require different humanitarian Status values.
 
----
-
-## Hospitalized
-
-The person has been admitted to a medical facility.
-
----
-
-## Sheltered
-
-The person is currently located in a shelter.
-
----
-
-## Evacuated
-
-The person has been successfully evacuated.
-
----
-
-## Reunified
-
-The person has been reunited with family or caregivers.
-
----
-
-## Deceased
-
-The person's death has been confirmed.
-
----
-
-## Assistance Requested
-
-The person requires humanitarian assistance.
-
----
-
-## Assistance Delivered
-
-Humanitarian assistance has been delivered.
-
----
-
-# 6. Status Progression
-
-Status values should not be interpreted as a predefined workflow.
-
-Example:
-
-```text
-Missing
-
-↓
-
-Located
-
-↓
-
-Hospitalized
-
-↓
-
-Sheltered
-
-↓
-
-Reunified
-```
-
-This sequence represents one possible humanitarian history.
-
-Other situations may follow different paths.
-
----
-
-# 7. Status Independence
-
-Status values are independent of Subject Type.
-
-Different Subjects may share similar statuses.
-
-Examples:
+Examples include:
 
 Person
 
-Status:
-Evacuated
+- Missing
+- Located
+- Hospitalized
+- Sheltered
+- Reunified
+- Deceased
 
 Facility
 
-Status:
-Operational
+- Operational
+- Damaged
+- Closed
+- Over Capacity
 
 Resource
 
-Status:
-Delivered
+- Available
+- Reserved
+- Delivered
+- Consumed
 
 Community
 
-Status:
-Isolated
+- Accessible
+- Isolated
+- Evacuated
+- Recovered
 
-Each Subject Type may define its own recommended Status vocabulary.
-
----
-
-# 8. Status Consistency
-
-Nodes should preserve received Status values exactly as transmitted.
-
-Nodes should not reinterpret or automatically translate Status values.
-
-Presentation to end users is the responsibility of Clients.
+These vocabularies are outside the HCP Core and shall be defined by future specifications.
 
 ---
 
-# 9. Unknown Status
+# 8. Status Evolution
 
-Implementations shall preserve unknown Status values whenever possible.
-
-Unknown values should not invalidate a Humanitarian Record.
-
-This allows future protocol versions to introduce additional standardized statuses while maintaining backward compatibility.
-
----
-
-# 10. Last Known Status
-
-Person Candidates should expose the Status reported by the most recent correlated Observation.
-
-The Last Known Status represents the best available humanitarian information at the time of the query.
-
----
-
-# 11. Humanitarian Timeline
-
-As new Observations are created, Status values evolve.
+Status evolves through new Observations.
 
 Example:
 
 ```text
-12 Aug
+Observation 1
 
 Status
 Missing
 
 ↓
 
-13 Aug
+Observation 2
 
 Status
 Located
 
 ↓
 
-15 Aug
+Observation 3
 
 Status
 Hospitalized
 
 ↓
 
-18 Aug
+Observation 4
 
 Status
 Sheltered
 
 ↓
 
-20 Aug
+Observation 5
 
 Status
 Reunified
 ```
 
-The timeline is reconstructed dynamically.
+Each Observation creates a new historical Status.
 
-It is never stored as a permanent object.
+Previous Statuses remain unchanged.
+
+---
+
+# 9. Last Known Status
+
+The Last Known Status is determined during the Person Correlation process.
+
+It corresponds to the Status reported by the most recent correlated Observation.
+
+The Last Known Status is never stored as an independent object.
+
+It is calculated dynamically.
+
+---
+
+# 10. Unknown Status Values
+
+Nodes shall preserve unknown Status values whenever possible.
+
+Unknown values shall not invalidate Humanitarian Records.
+
+This guarantees forward compatibility as the protocol evolves.
+
+---
+
+# 11. Presentation
+
+Status values are protocol semantics.
+
+Their visual representation, translation and user interface are the responsibility of Clients.
+
+Different Clients may present identical Status values differently while preserving their meaning.
 
 ---
 
 # 12. Extensibility
 
-Future HCP specifications may define additional Status values.
+Future HCP specifications may define:
 
-Nodes shall preserve unknown Status values whenever possible.
+- Person Status Vocabulary
+- Facility Status Vocabulary
+- Resource Status Vocabulary
+- Community Status Vocabulary
+- Organization Status Vocabulary
 
-Implementations should avoid rejecting records solely because they contain newer Status definitions.
+These extensions shall remain fully compatible with the Status Model defined by this specification.
 
 ---
 
@@ -316,20 +252,18 @@ Implementations should avoid rejecting records solely because they contain newer
 
 A compliant implementation shall:
 
-- assign exactly one Status to every Observation;
-- preserve historical Status values;
+- associate exactly one Status with every Observation;
+- preserve historical Statuses;
 - avoid modifying previous Observations;
 - preserve unknown Status values whenever possible;
-- expose the Last Known Status during correlation.
+- expose the Last Known Status when presenting correlated humanitarian cases.
 
 ---
 
 # 14. Summary
 
-The Status Model defines the humanitarian condition reported by each Observation.
+The Status Model defines the semantic framework used to represent humanitarian conditions within HCP.
 
-Status represents only the observed condition at a specific moment.
+Rather than defining exhaustive lists of humanitarian states, the HCP Core establishes a simple, extensible and interoperable model that allows future specifications to introduce specialized vocabularies for different Subject Types.
 
-Historical Status values are never modified or replaced.
-
-Through multiple Observations, Nodes reconstruct humanitarian histories and expose the most recent Status as the Last Known Status, providing meaningful and up-to-date information while preserving the complete historical record.
+This approach keeps the protocol stable while allowing it to evolve to support increasingly diverse humanitarian scenarios.

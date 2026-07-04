@@ -82,6 +82,7 @@ Observations never replace previous observations.
 The protocol defines Observation Types as the category of humanitarian event being reported.
 
 Examples include:
+HCP Core defines the Observation Model but does not standardize all Observation Types. Future specifications may define subject-specific observation vocabularies while remaining fully compatible with this model.
 
 ### Person
 

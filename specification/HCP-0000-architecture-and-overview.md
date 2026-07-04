@@ -1,305 +1,309 @@
 # HCP-0000
-# Humanitarian Connection Protocol — Overview
 
-**Version:** 0.1 (Draft)
+# Humanitarian Connection Protocol
+## Architecture and Overview
 
-**Status:** Draft
+Version: 0.1 (Draft)
 
-**Category:** Core Specification
+Status: Draft
 
-**Authors:** Human Connection Network Foundation
+Category: Core Specification
 
-**License:** Apache-2.0
+Project: Human Connection Network (HCN)
 
-**Last Updated:** 2026-07-02
+License: Apache-2.0
 
-**Depends On:** None
+Last Updated: 2026-07-04
 
-# HCP-0000
-# Humanitarian Connection Protocol — Overview
-
-**Version:** 0.1 (Draft)
-
-**Status:** Draft
-
-**Project:** Human Connection Network (HCN)
+Depends On: None
 
 ---
 
-# 1. Introduction
+# 1. Abstract
 
-The Humanitarian Connection Protocol (HCP) is an open, decentralized protocol for exchanging humanitarian information.
+The Humanitarian Connection Protocol (HCP) is an open interoperability protocol designed for humanitarian information exchange.
 
-Its purpose is to enable independent organizations, institutions, governments, humanitarian initiatives and communities to exchange structured humanitarian observations using a common language.
+Rather than defining a centralized platform or database, HCP defines a common language that allows independent systems to create, query, exchange and validate humanitarian observations across organizational boundaries.
 
-HCP is not a centralized platform.
+Any organization, government, NGO, emergency service, hospital, volunteer network or software application may implement HCP while maintaining complete ownership of its own infrastructure.
 
-It is an interoperability standard.
+HCP is infrastructure.
 
----
+Not an application.
 
-# 2. Vision
+Not a database.
 
-Humanitarian emergencies generate fragmented, duplicated and often inconsistent information.
+Not a blockchain.
 
-Hospitals, rescue teams, governments, NGOs, volunteers and affected families frequently collect similar information using incompatible systems.
+Not an identity system.
 
-This fragmentation delays coordination, increases duplication of effort and makes humanitarian response less effective.
-
-HCP provides a common language for representing and exchanging humanitarian information without requiring centralized ownership of data.
+It is an interoperability protocol.
 
 ---
 
-# 3. Human Connection Network
+# 2. Motivation
 
-The Humanitarian Connection Protocol is developed as part of the Human Connection Network (HCN).
+Humanitarian emergencies generate large amounts of fragmented information.
 
-Human Connection Network is an open ecosystem dedicated to humanitarian interoperability through open standards, reference implementations and collaborative development.
+Hospitals collect patient data.
 
-The Human Connection Network Foundation acts as the steward of the protocol.
+Emergency responders register victims.
 
-The Foundation maintains specifications, documentation and reference implementations, but it does not own humanitarian data and does not operate a centralized humanitarian database.
+Volunteers publish lists.
 
----
+Governments maintain independent databases.
 
-# 4. Core Principles
+Families search through social media.
 
-The Humanitarian Connection Protocol is based on the following principles.
+News organizations publish partial information.
 
-## Open
+Most of this information cannot communicate with each other.
 
-Anyone may implement the protocol.
+As a result:
 
-Specifications are publicly available.
+- duplicated records appear;
+- contradictory information spreads;
+- people become difficult to locate;
+- aid becomes slower;
+- trust decreases.
 
----
-
-## Decentralized
-
-No central server is required.
-
-Independent nodes exchange humanitarian information directly.
+HCP exists to solve this interoperability problem.
 
 ---
 
-## Interoperable
+# 3. Vision
 
-All compliant implementations communicate using the same protocol.
+HCP proposes a universal language for humanitarian observations.
 
----
+Instead of forcing organizations into a centralized platform, HCP allows every participant to maintain their own systems while exchanging information through a common protocol.
 
-## Immutable
-
-Humanitarian Records are never modified.
-
-New observations create new records.
-
-History is preserved.
+The protocol enables a global humanitarian information network built upon interoperability rather than centralization.
 
 ---
 
-## Offline-first
+# 4. Design Principles
 
-Nodes continue operating without permanent Internet connectivity.
+HCP follows these fundamental principles:
 
-Synchronization occurs whenever communication becomes available.
-
----
-
-## Technology Independent
-
-HCP does not require any programming language, database, cloud provider or operating system.
-
----
-
-## Trust Neutral
-
-The protocol provides mechanisms for trust.
-
-It does not impose a global authority.
-
-Every implementation decides its own trust policy.
+- Open Standard
+- Vendor Neutral
+- Decentralized
+- Privacy First
+- Human-Centered
+- Extensible
+- Technology Agnostic
+- Trust Through Evidence
+- Interoperability by Design
 
 ---
 
-# 5. Conceptual Model
+# 5. Architecture
 
-The protocol is built around a simple conceptual flow.
+The HCP ecosystem consists of several independent components.
 
-```
-Humanitarian Observation
-        │
-        ▼
 Humanitarian Record
-        │
-        ▼
-HCP Node
-        │
-        ▼
+
+A standardized representation of a humanitarian observation.
+
+Node
+
+A software service implementing the HCP specification.
+
+Client
+
+Any application capable of communicating with a Node.
+
+Organization
+
+Any institution operating one or more Nodes.
+
+Validator
+
+An organization capable of increasing confidence in humanitarian observations through evidence.
+
+Repository
+
+The local storage managed by each Node.
+
 Synchronization
-        │
-        ▼
-Record Linking
-        │
-        ▼
-Distributed Humanitarian Knowledge
-```
 
-Humanitarian knowledge emerges from independent observations linked together over time.
+The exchange of humanitarian records between Nodes.
 
 ---
 
-# 6. Humanitarian Records
+# 6. Humanitarian Record
 
-The Humanitarian Record is the atomic unit of information exchanged by HCP.
+A Humanitarian Record represents an observation.
 
-Every Humanitarian Record:
+It does not represent an identity.
 
-- represents a single humanitarian observation;
-- is immutable;
-- possesses a unique identifier;
-- is digitally signed by the originating node;
-- may be linked to other Humanitarian Records.
+Multiple independent observations may refer to the same person without requiring global identifiers.
 
-HCP exchanges Humanitarian Records rather than mutable databases.
+Confidence emerges through correlation rather than identity.
 
 ---
 
-# 7. HCP Nodes
+# 7. Node
 
-An HCP Node is any software implementation capable of participating in the protocol.
+A Node is the core execution unit of HCP.
 
 Nodes are responsible for:
 
-- creating Humanitarian Records;
-- storing records;
-- synchronizing records;
-- propagating information;
-- digitally signing records.
+- creating records;
+- querying records;
+- validating protocol compliance;
+- exchanging information with other Nodes;
+- storing local data.
 
-Applications such as mobile apps, websites, Telegram bots or WhatsApp bots are clients.
+Nodes do not own the protocol.
 
-They communicate with HCP Nodes but are not themselves nodes.
-
----
-
-# 8. Synchronization
-
-Nodes exchange immutable Humanitarian Records.
-
-Synchronization distributes information.
-
-It does not synchronize application state.
-
-Temporary differences between nodes are expected and naturally resolved through propagation.
+Nodes implement the protocol.
 
 ---
 
-# 9. Record Linking
+# 8. Clients
 
-Different organizations frequently observe different aspects of the same humanitarian situation.
+Clients never communicate directly with other clients.
 
-Instead of preventing duplicate observations, HCP preserves every observation independently.
+Clients communicate only with Nodes.
 
-Relationships between Humanitarian Records allow implementations to reconstruct humanitarian situations without destroying historical information.
+Examples include:
 
----
-
-# 10. Trust
-
-Trust is evaluated locally by each implementation.
-
-The protocol provides:
-
-- node identities;
-- cryptographic signatures;
-- transparent history;
-- verifiable relationships.
-
-HCP never defines a universal authority.
+- Telegram bots
+- WhatsApp bots
+- Mobile applications
+- Hospital systems
+- Government systems
+- NGO platforms
+- Web applications
+- SDK implementations
 
 ---
 
-# 11. Human Connection Network Foundation
+# 9. Organizations
 
-The Human Connection Network Foundation may provide optional ecosystem services, including:
+Any organization may operate one or more Nodes.
 
-- protocol specifications;
-- reference implementations;
-- SDKs;
-- developer documentation;
-- node registration;
-- public node directory;
-- community governance.
+Examples include:
 
-Participation in these services is optional.
+- hospitals;
+- governments;
+- humanitarian organizations;
+- rescue teams;
+- universities;
+- international agencies;
+- community initiatives.
 
-The protocol remains fully functional without them.
+Participation does not require central authorization.
 
 ---
 
-# 12. Scope
+# 10. Trust Model
 
-HCP defines:
+HCP does not attempt to determine absolute truth.
 
-- concepts;
-- terminology;
-- Humanitarian Records;
-- node behavior;
-- synchronization;
-- node identity;
-- record linking;
-- interoperability.
+Instead, trust emerges through:
+
+- independent observations;
+- supporting evidence;
+- validator participation;
+- organizational reputation;
+- temporal consistency;
+- geographic consistency.
+
+Trust is cumulative.
+
+Not absolute.
+
+---
+
+# 11. Identity Model
+
+HCP intentionally separates people from identifiers.
+
+The protocol identifies observations.
+
+Applications may correlate observations using probabilistic methods.
+
+Identity verification belongs to application layers, not to the protocol itself.
+
+---
+
+# 12. Interoperability
+
+Every implementation must expose compatible interfaces regardless of:
+
+- programming language;
+- database engine;
+- operating system;
+- cloud provider;
+- organization.
+
+Compliance with the specification guarantees interoperability.
+
+---
+
+# 13. Relationship with Human Connection Network
+
+Human Connection Network (HCN) is the open initiative responsible for developing HCP.
+
+HCN governs the specification.
+
+HCP defines the protocol.
+
+Independent organizations implement HCP.
+
+---
+
+# 14. Reference Implementation
+
+RedConexionHumana is the first public implementation of HCP.
+
+Its purpose is to demonstrate the protocol through direct humanitarian assistance, connecting donors and recipients while remaining fully compatible with future HCP implementations.
+
+The existence of a reference implementation does not grant any special authority over the protocol.
+
+---
+
+# 15. Non-Goals
 
 HCP does not define:
 
+- a centralized database;
+- a mandatory cloud provider;
 - user interfaces;
-- databases;
-- humanitarian workflows;
-- organizational policies;
-- business rules.
+- payment systems;
+- identity providers;
+- government registries;
+- humanitarian policies.
 
-These remain the responsibility of each implementation.
-
----
-
-# 13. Future
-
-Future specifications will define:
-
-- JSON Schemas;
-- Record Types;
-- APIs;
-- SDKs;
-- Trust Extensions;
-- Synchronization Profiles;
-- Implementation Profiles.
+These concerns belong to applications built on top of HCP.
 
 ---
 
-# 14. Philosophy
+# 16. Future Specifications
 
-Humanitarian information should not belong to a single organization or platform.
+This document introduces the overall architecture.
 
-It should remain interoperable, independently verifiable and available wherever it is needed.
+Subsequent HCP specifications define:
 
-The Humanitarian Connection Protocol does not seek to centralize humanitarian data.
-
-It seeks to standardize how humanitarian observations are represented, exchanged and related across decentralized systems.
-
-By preserving observations instead of replacing them, HCP allows humanitarian knowledge to emerge collaboratively while maintaining transparency, autonomy and historical integrity.
-
----
-
-# Related Specifications
-
-- HCP-0001 — Humanitarian Record
-- HCP-0002 — HCP Node
-- HCP-0003 — Synchronization
-- HCP-0004 — Node Identity
-- HCP-0005 — Record Linking
-- HCP-0006 — Trust Model
+- Humanitarian Records
+- Nodes
+- Search
+- Synchronization
+- APIs
+- Trust
+- Security
+- Privacy
+- Validation
+- Digital Signatures
+- Evidence Models
+- Organization Profiles
 
 ---
 
-**End of HCP-0000**
+# 17. Conclusion
+
+HCP establishes an open interoperability layer for humanitarian information.
+
+Its objective is not to replace existing systems but to enable them to communicate through a common language, reducing fragmentation and improving the quality, speed and reliability of humanitarian information worldwide.

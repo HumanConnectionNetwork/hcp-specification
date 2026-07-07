@@ -1,9 +1,8 @@
 # HCP-0004
 
-# Humanitarian Connection Protocol
-## Person Correlation Model
+# Correlation Model
 
-Version: 0.1 (Draft)
+Version: 0.2 (Draft)
 
 Status: Draft
 
@@ -13,291 +12,425 @@ Project: Human Connection Network (HCN)
 
 License: Apache-2.0
 
-Last Updated: 2026-07-04
+Last Updated: 2026-07-07
 
 Depends On:
 
-- HCP-0000 — Architecture and Overview
-- HCP-0001 — Fundamental Principles
-- HCP-0002 — Humanitarian Record
-- HCP-0003 — Subject Model
+- HCP-0000 Overview
+- HCP-0001 Humanitarian Record
+- HCP-0002 HCP Node
 
 ---
 
 # 1. Abstract
 
-The Person Correlation Model defines how HCP Nodes correlate multiple Humanitarian Records that may describe the same individual.
+The Correlation Model defines how HCP Nodes estimate whether multiple Humanitarian Records may describe the same humanitarian subject.
 
-HCP does not assign a global identity to any person.
+A humanitarian subject is any living being observed during a humanitarian situation.
 
-Instead, Nodes analyze structured humanitarian observations and reconstruct probable humanitarian histories by relating independent Humanitarian Records.
+Supported subject types include:
 
-The purpose of this model is to transform fragmented humanitarian observations into meaningful humanitarian information while preserving decentralization and interoperability.
+- Human
+- Animal
+
+Correlation transforms multiple independent observations into explainable humanitarian hypotheses.
+
+It never creates or assigns a global identity.
 
 ---
 
 # 2. Purpose
 
-Humanitarian emergencies generate multiple observations about the same individual.
+Humanitarian emergencies generate fragmented observations.
 
-A missing person may later be reported by a hospital, a shelter, a rescue team or a family member.
+A living being may be observed by:
+
+- Family
+- Hospital
+- Fire Department
+- Police
+- Volunteers
+- Community members
 
 Each observation becomes an independent Humanitarian Record.
 
-The purpose of this specification is to allow Nodes to correlate these observations and reconstruct a coherent humanitarian history.
+The purpose of correlation is to estimate which observations are likely to describe the same humanitarian subject.
 
 ---
 
 # 3. Fundamental Principle
 
+HCP stores observations.
+
+HCP does not store identities.
+
 A Humanitarian Record represents one observation.
 
-A person is represented by the correlation of multiple observations.
+A humanitarian subject is inferred through the correlation of multiple observations.
 
 Therefore:
 
-- Humanitarian Records are stored.
-- Persons are inferred.
+- Humanitarian Records are exchanged.
+- Correlation Candidates are generated locally.
+- Humanitarian Cases are presented to users.
 
-HCP never stores a Person as an independent object.
-
-Persons exist only as the result of correlating Humanitarian Records.
+Identity verification always remains a human responsibility.
 
 ---
 
-# 4. Correlation Model
+# 4. Correlation Philosophy
 
-Correlation is a local operation performed by each Node.
+Correlation is probabilistic.
 
-Humanitarian Records are never modified during this process.
+It never represents certainty.
 
-Instead, the Node analyzes multiple records and estimates whether they probably describe the same individual.
+The objective is not to answer:
 
-Different Nodes may obtain different correlation results while remaining fully compliant with HCP.
+"Who is this?"
 
-The protocol intentionally allows implementations to improve their correlation methods over time.
+The objective is to answer:
+
+"Which observations are likely describing the same humanitarian event involving the same living being?"
+
+Different Nodes may produce different results while remaining fully compliant with HCP.
 
 ---
 
 # 5. Correlation Signals
 
-Correlation should be based exclusively on structured data contained within Humanitarian Records.
+Correlation should evaluate multiple compatible observations.
 
-Recommended correlation signals include:
+Recommended signals include:
 
-- Name similarity
-- Approximate age
-- Gender
-- Physical description
-- Last known location
-- Event location
-- Observation timestamp
-- Reported situation
-- Last known status
-- Family relationships
-- Contact references
-- Medical references
-- Shelter references
-- Validator confirmations
+- Temporal proximity
+- Geographic proximity
+- Subject type
+- Event evolution
+- Reported name similarity
+- Estimated age
+- Source
+- Description
+- Observable characteristics
+- Humanitarian status
 
-Future protocol versions may define additional structured signals.
+Future versions may introduce additional correlation signals while preserving interoperability.
 
 ---
 
-# 6. Excluded Signals
+# 6. Correlation Priority
 
-The core HCP specification intentionally excludes binary or media-based information.
+Not every signal has the same importance.
 
-Core correlation shall not require:
+Recommended evaluation order:
 
-- Photographs
-- Videos
-- Fingerprints
-- Facial recognition
-- Biometric information
-- Government identity numbers
-- External identity databases
+## 1. Time
 
-Applications may use additional information internally, but interoperability must never depend on these resources.
+Observations occurring within compatible time windows receive higher correlation.
+
+Impossible chronological sequences reduce confidence.
 
 ---
 
-# 7. Correlation Process
+## 2. Geographic Proximity
 
-A typical correlation process consists of:
+Nearby observations receive higher correlation.
 
-1. Searching candidate Humanitarian Records.
-2. Comparing structured fields.
-3. Estimating correlation strength.
-4. Detecting conflicting information.
-5. Ranking possible matches.
-6. Identifying the latest observation.
-7. Generating Correlation Candidates.
+Observations separated by impossible travel distances within short time intervals should significantly reduce confidence.
 
-The protocol does not prescribe any specific algorithm.
+---
+
+## 3. Subject Type
+
+Only compatible subject types should be correlated.
+
+Examples:
+
+Human ↔ Human
+
+Animal ↔ Animal
+
+Human ↔ Animal should never correlate.
+
+---
+
+## 4. Reported Name
+
+Reported names increase confidence but never determine identity.
+
+Nodes should tolerate:
+
+- spelling variations
+- accent differences
+- abbreviations
+- unknown names
+
+Large name differences reduce confidence.
+
+---
+
+## 5. Estimated Age
+
+Estimated age should be evaluated using compatible ranges.
+
+Small differences are acceptable.
+
+Large differences reduce confidence.
+
+---
+
+## 6. Event Evolution
+
+Compatible humanitarian transitions increase confidence.
+
+Examples:
+
+Missing
+
+↓
+
+Hospitalized
+
+↓
+
+Safe
+
+or
+
+Missing Animal
+
+↓
+
+Sheltered Animal
+
+↓
+
+Reunited
+
+---
+
+## 7. Source
+
+Institutional observations may contribute additional confidence.
+
+Examples:
+
+Hospital
+
+Fire Department
+
+Police
+
+Family
+
+Volunteer
+
+Friend
+
+Unknown
+
+---
+
+## 8. Description
+
+Descriptions may contain observable characteristics useful for correlation.
+
+Examples:
+
+Humans
+
+- clothing
+- shoes
+- backpack
+- glasses
+- injuries
+
+Animals
+
+- species
+- estimated breed
+- estimated size
+- collar
+- harness
+- fur color
+
+Descriptions should complement structured information.
+
+---
+
+# 7. Excluded Signals
+
+Core HCP intentionally excludes:
+
+- biometric identifiers
+- fingerprints
+- facial recognition
+- DNA
+- government identifiers
+- centralized identity databases
+
+Applications remain free to use additional local information, but protocol interoperability must never depend on these resources.
 
 ---
 
 # 8. Correlation Candidate
 
-The result of the correlation process is called a Correlation Candidate.
-
-A Correlation Candidate is a temporary internal object generated by an HCP Node from one or more correlated Humanitarian Records.
+The output of the correlation process is a Correlation Candidate.
 
 A Correlation Candidate:
 
-- is not a permanent identifier;
-- is not globally unique;
-- is not synchronized between Nodes;
-- is never stored as part of HCP;
-- exists only during the correlation process.
+- is temporary;
+- exists only inside a Node;
+- is never synchronized;
+- is never globally unique;
+- is never part of the HCP protocol.
 
-Its purpose is to represent a probable humanitarian subject reconstructed from multiple observations.
-
-A Correlation Candidate is an internal Node concept.
-
-It is later transformed into a Humanitarian Case by the Response Engine before being presented to a Client.
+It represents a humanitarian hypothesis generated from compatible observations.
 
 ---
 
 # 9. Humanitarian Timeline
 
-When multiple records are successfully correlated, the Node reconstructs a Humanitarian Timeline.
+When multiple compatible observations are correlated, Nodes may reconstruct a Humanitarian Timeline.
 
 Example:
 
 ```text
 12 Aug
+
 Missing
 
 ↓
 
 13 Aug
-Located
 
-↓
-
-13 Aug
-Transferred to Hospital
+Hospitalized
 
 ↓
 
 15 Aug
-Sheltered
+
+Transferred
 
 ↓
 
 18 Aug
-Family Reunified
+
+Safe
 ```
 
-The timeline is generated dynamically.
+Timelines are generated dynamically.
 
-It is never stored as an independent object.
-
----
-
-# 10. Last Known Status
-
-Every Correlation Candidate should expose a Last Known Status.
-
-This corresponds to the most recent Humanitarian Record associated with that Correlation Candidate.
-
-Typical values include:
-
-- Missing
-- Located
-- Hospitalized
-- Sheltered
-- Evacuated
-- Reunified
-- Deceased
-
-The Last Known Status provides the most relevant humanitarian information available at the time of the query.
+They are never synchronized between Nodes.
 
 ---
 
-# 11. Search Result Grouping
+# 10. Confidence
 
-When searching for a person, Nodes should group Humanitarian Records into Correlation Candidates before generating Humanitarian Responses.
+Confidence expresses compatibility.
 
-This allows Clients to present meaningful humanitarian cases instead of long lists of disconnected observations.
+It does not express certainty.
 
----
+Confidence may increase when:
 
-# 12. Confidence
-
-Correlation represents probability rather than certainty.
-
-Confidence should increase when:
-
-- additional compatible observations are found;
-- validator confirmations exist;
+- compatible observations accumulate;
 - temporal consistency exists;
 - geographic consistency exists;
-- family relationships are confirmed.
+- event evolution is coherent;
+- institutional observations exist.
 
-Confidence may decrease when conflicting observations accumulate.
-
----
-
-# 13. Conflicting Observations
-
-Conflicting information does not invalidate existing Humanitarian Records.
-
-Nodes should preserve every observation while exposing inconsistencies through correlation analysis.
-
-Humanitarian situations frequently evolve under uncertainty.
+Confidence may decrease when observations conflict.
 
 ---
 
-# 14. Local Intelligence
+# 11. Explainability
+
+Every Correlation Candidate should be explainable.
+
+Clients should expose why a candidate was suggested.
+
+Example:
+
+✓ Compatible reporting time
+
+✓ Same geographic area
+
+✓ Similar reported name
+
+✓ Compatible estimated age
+
+✓ Compatible event evolution
+
+✗ Different source
+
+Explainability improves trust and transparency.
+
+---
+
+# 12. Conflicting Observations
+
+Conflicting observations do not invalidate Humanitarian Records.
+
+Every observation should remain preserved.
+
+The correlation engine evaluates conflicts without modifying the original observations.
+
+Historical uncertainty is expected during humanitarian emergencies.
+
+---
+
+# 13. Local Intelligence
 
 Correlation belongs exclusively to the Node.
 
-Each implementation may use:
+Each implementation may improve its own correlation engine using:
 
-- probabilistic models;
-- statistical inference;
-- artificial intelligence;
-- machine learning;
-- custom ranking algorithms.
+- probabilistic models
+- artificial intelligence
+- statistical inference
+- machine learning
+- custom heuristics
 
 These implementation details never affect HCP interoperability.
 
 ---
 
-# 15. Privacy
+# 14. Privacy
 
 Correlation should use only the minimum humanitarian information necessary.
 
 Its purpose is humanitarian assistance.
 
-It shall never become a global identity system.
+It must never become a centralized identity system.
+
+The protocol prioritizes observations over identities.
 
 ---
 
-# 16. Compliance
+# 15. Compliance
 
 A compliant implementation shall:
 
 - preserve Humanitarian Records unchanged;
 - treat correlation as probabilistic;
 - generate Correlation Candidates dynamically;
-- expose the Last Known Status;
-- preserve complete observation history;
-- avoid assigning global subject identifiers.
+- expose explainable results;
+- preserve observation history;
+- avoid global subject identifiers.
 
 ---
 
-# 17. Summary
+# 16. Summary
 
-The Person Correlation Model enables HCP Nodes to transform independent Humanitarian Records into Correlation Candidates.
+The Correlation Model enables HCP Nodes to transform independent Humanitarian Records into explainable Correlation Candidates.
 
-A Correlation Candidate is an internal object generated by the Node's Correlation Engine and represents a probable humanitarian subject reconstructed from decentralized observations.
+Correlation does not identify living beings.
 
-Correlation Candidates are never exchanged between Nodes.
+It estimates compatible humanitarian observations.
 
-Instead, they become the foundation for generating Humanitarian Cases, which are presented to Clients as meaningful humanitarian information.
+Humanitarian Records remain immutable.
 
-This separation allows HCP to preserve decentralized interoperability while enabling increasingly intelligent search and correlation capabilities.
+Correlation Candidates remain local.
+
+Humanitarian Cases remain human-readable.
+
+This separation preserves decentralization while allowing increasingly intelligent humanitarian search across independent HCP implementations.

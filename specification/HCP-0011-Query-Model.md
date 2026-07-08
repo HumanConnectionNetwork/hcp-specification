@@ -1,257 +1,312 @@
 # HCP-0011
+# Query Model
 
-# Humanitarian Connection Protocol
-## Query Model
-
-Version: 0.1 (Draft)
+Version: 0.2 (Draft)
 
 Status: Draft
 
 Category: Core Specification
 
-Project: Human Connection Network (HCN)
+Authors: Human Connection Network Foundation
 
 License: Apache-2.0
 
-Last Updated: 2026-07-04
+Last Updated: 2026-07-07
 
 Depends On:
 
-- HCP-0000 — Architecture and Overview
-- HCP-0001 — Fundamental Principles
-- HCP-0002 — Humanitarian Record
-- HCP-0003 — Subject Model
-- HCP-0004 — Person Correlation Model
-- HCP-0005 — Node Architecture
-- HCP-0006 — Observation Model
-- HCP-0007 — Status Model
-- HCP-0008 — Record Schema
-- HCP-0009 — Node Communication Protocol
-- HCP-0010 — Canonical JSON Specification
+- HCP-0001 Humanitarian Record
+- HCP-0010 Canonical JSON Specification
 
 ---
 
-# 1. Abstract
+# 1. Introduction
 
-The Query Model defines how information is requested from an HCP Node.
+This document defines the Query Model used by the Humanitarian Connection Protocol (HCP).
 
-Rather than exposing database operations, HCP standardizes humanitarian queries.
+A Query allows an HCP Node to search for Humanitarian Records that may describe the same humanitarian event.
 
-A Query represents the intent to discover humanitarian information.
+Unlike traditional search systems, an HCP Query is not intended to perform exact matching.
 
-The internal implementation remains the responsibility of each Node.
+Instead, it provides a collection of correlation variables that enable implementations to estimate the probability that multiple observations refer to the same real-world event.
 
 ---
 
 # 2. Purpose
 
-The purpose of this specification is to define a common semantic model for humanitarian searches.
+The purpose of an HCP Query is to maximize humanitarian correlation.
 
-Applications should be able to submit equivalent humanitarian queries regardless of programming language, transport protocol or database technology.
+A query should contain as many meaningful correlation variables as are available.
 
----
+Incomplete queries are expected and fully supported.
 
-# 3. Fundamental Principle
-
-A Query requests humanitarian information.
-
-A Query never requests database records directly.
-
-The Node interprets the Query and determines how to retrieve, correlate and present the appropriate humanitarian information.
+The protocol is designed to operate effectively even when only partial information is known.
 
 ---
 
-# 4. Humanitarian Query
+# 3. Design Principles
 
-A Humanitarian Query is a structured request processed by an HCP Node.
+Every HCP Query follows these principles.
 
-Conceptually:
+## Correlation-Oriented
 
-```text
-Client
+A query represents a collection of correlation variables rather than an exact search.
 
-↓
+---
 
-Humanitarian Query
+## Partial Information
 
-↓
+Every field is optional.
 
-HCP Node
+Nodes SHOULD submit whatever information is available.
 
-↓
+Unknown information MUST NOT prevent a query from being executed.
 
-Humanitarian Records
+---
 
-↓
+## Humanitarian
 
-Person Correlation
+Queries exist to locate humanitarian observations.
 
-↓
+They are not intended for identity verification or personal identification.
 
-Search Results
+---
+
+## Decentralized
+
+Any HCP Node may create and submit queries.
+
+No central authority is required.
+
+---
+
+# 4. Canonical Query Structure
+
+A canonical query SHOULD follow the structure below.
+
+```json
+{
+  "subject": "person",
+
+  "event_type": "missing",
+
+  "reported_name": "Juan Pérez",
+
+  "estimated_age": 42,
+
+  "recognition_features": "Blue jacket, black backpack, glasses",
+
+  "reported_location": "Caracas",
+
+  "status": "reported"
+}
 ```
 
-The Query does not define how the Node performs the search.
-
-It defines only what humanitarian information is requested.
-
 ---
 
-# 5. Query Targets
+# 5. Query Variables
 
-Every Query shall specify one target.
+Every field acts as a potential correlation variable.
 
-Examples include:
+## subject
 
-- Person
-- Family
-- Community
-- Facility
-- Resource
-- Organization
-- Humanitarian Record
-
-Future specifications may introduce additional targets.
-
----
-
-# 6. Query Criteria
-
-A Query may include one or more search criteria.
+Defines the type of subject.
 
 Examples:
 
-- Name
-- Approximate age
-- Gender
-- Municipality
-- Country
-- Observation date
-- Status
-- Observation type
-- Institution
-- UUID
-
-Nodes remain responsible for interpreting these criteria.
+```
+person
+animal
+```
 
 ---
 
-# 7. Partial Information
+## event_type
 
-Queries are expected to operate with incomplete information.
+Defines the humanitarian event being searched.
 
-Example:
+Examples:
 
-A family member may only know:
-
-- first name;
-- approximate age;
-- city.
-
-The Query Model therefore assumes that humanitarian searches are probabilistic rather than exact.
-
----
-
-# 8. Correlation
-
-Every Query may trigger the Person Correlation process.
-
-The Node may correlate multiple Humanitarian Records before presenting results.
-
-Correlation remains an internal Node operation.
+```
+missing
+hospitalized
+sheltered
+located
+```
 
 ---
 
-# 9. Search Scope
+## reported_name
 
-Queries may be executed against:
+Reported name.
 
-- local records only;
-- synchronized records;
-- future distributed searches.
+Names are treated as reported observations.
 
-The scope depends on Node capabilities.
+They MUST NOT be interpreted as unique identifiers.
 
 ---
 
-# 10. Ranking
+## estimated_age
 
-The protocol does not prescribe ranking algorithms.
+Approximate age.
 
-Nodes may rank results using:
-
-- name similarity;
-- temporal consistency;
-- geographic consistency;
-- validator participation;
-- correlation confidence;
-- local intelligence.
+This field may be omitted if unknown.
 
 ---
 
-# 11. Query Result
+## recognition_features
 
-The Query itself does not define the response format.
+Observable characteristics that improve correlation.
 
-The purpose of the Query is to request humanitarian information.
+Examples for persons:
 
-The presentation of results is defined by the Search Result Model.
+- blue jacket
+- black backpack
+- glasses
+- tattoo
+- scar
+- beard
 
----
+Examples for animals:
 
-# 12. Performance
+- red collar
+- white chest
+- brown coat
+- missing ear
+- limp
 
-Nodes may optimize query execution through:
-
-- indexes;
-- caching;
-- probabilistic search;
-- local optimization.
-
-These implementation details remain outside HCP.
-
----
-
-# 13. Privacy
-
-Queries should request only the humanitarian information necessary.
-
-Nodes may restrict access according to local policies.
-
-Privacy policies remain implementation-specific.
+This field SHOULD contain concise observable characteristics instead of narratives.
 
 ---
 
-# 14. Extensibility
+## reported_location
 
-Future HCP specifications may introduce:
+Approximate location where the observation occurred.
 
-- new query targets;
-- additional search criteria;
-- advanced filtering;
-- distributed search capabilities.
+Examples:
 
-Existing implementations should ignore unsupported optional query elements whenever possible.
-
----
-
-# 15. Compliance
-
-A compliant implementation shall:
-
-- accept structured Humanitarian Queries;
-- support standardized query semantics;
-- preserve protocol interoperability;
-- remain independent of database technology.
+- Hospital Central
+- Shelter A
+- Plaza Bolívar
+- Highway KM 18
 
 ---
 
-# 16. Summary
+## status
 
-The Query Model defines how humanitarian information is requested within HCP.
+Optional filter.
 
-Rather than exposing database operations, HCP standardizes humanitarian intent.
+Implementations MAY use this field to narrow search results.
 
-Clients formulate Humanitarian Queries.
+---
 
-Nodes interpret those queries, search Humanitarian Records, perform local correlation and prepare meaningful humanitarian results for presentation.
+# 6. Correlation Model
+
+An HCP Query does not request exact matches.
+
+Instead, it requests probable correlations.
+
+Implementations SHOULD evaluate the similarity between the submitted correlation variables and existing Humanitarian Records.
+
+Correlation algorithms are implementation-specific.
+
+The protocol intentionally does not prescribe a mandatory algorithm.
+
+---
+
+# 7. Correlation Variables
+
+Typical variables include:
+
+- reported_name
+- estimated_age
+- recognition_features
+- reported_location
+- event_type
+- subject
+- status
+- temporal proximity
+
+Implementations MAY consider additional variables.
+
+---
+
+# 8. Query Results
+
+The protocol does not require exact matches.
+
+Instead, implementations SHOULD return one or more Correlation Candidates.
+
+Each candidate represents an independent Humanitarian Record that may correspond to the queried event.
+
+Candidates SHOULD be ordered according to the implementation's confidence or probability score.
+
+---
+
+# 9. Confidence Scores
+
+Implementations MAY assign a confidence score to every returned candidate.
+
+Typical representation:
+
+```json
+{
+  "probability": 0.91
+}
+```
+
+The meaning of the score is implementation-specific.
+
+The protocol only requires that higher values indicate stronger correlation.
+
+---
+
+# 10. Explainability
+
+Implementations are encouraged to explain why a candidate was returned.
+
+Examples:
+
+- Similar reported name
+- Similar estimated age
+- Matching recognition features
+- Nearby reported location
+- Close reporting time
+
+Providing explainable correlation improves transparency and helps users evaluate search results.
+
+---
+
+# 11. Incomplete Queries
+
+Humanitarian emergencies frequently involve incomplete information.
+
+Examples:
+
+A family member may remember:
+
+- only the clothing
+
+Another may remember:
+
+- only the hospital
+
+Another may remember:
+
+- only the approximate age
+
+All these queries remain valid.
+
+Implementations SHOULD attempt correlation using every available variable.
+
+---
+
+# 12. Interoperability
+
+Every compliant HCP implementation MUST accept canonical HCP Queries.
+
+Internal search engines may differ.
+
+However, the semantic meaning of every query variable MUST remain consistent across all implementations.
+
+This guarantees interoperability between independent HCP Nodes.

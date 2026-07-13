@@ -1,20 +1,24 @@
-# Humanitarian Connection Protocol (HCP)
+# Humanitarian Connection Protocol Specification
 
-> **Interoperability begins when independent systems describe reality using the same language.**
+> **Humanitarian interoperability should depend on shared meaning, not shared infrastructure.**
 
-The **Humanitarian Connection Protocol (HCP)** is an open semantic interoperability standard for humanitarian observations.
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+![Status](https://img.shields.io/badge/status-Draft-orange)
+![Version](https://img.shields.io/badge/HCP-v0.1-lightgrey)
 
-HCP enables independent organizations, governments, hospitals, NGOs, volunteers and digital platforms to exchange humanitarian information using a common language, while preserving their own systems, infrastructure and governance.
+The **Humanitarian Connection Protocol (HCP)** is an open semantic interoperability standard for representing, exchanging, querying and correlating humanitarian observations.
 
-It does not define how organizations build their software.
+This repository contains the official technical specifications of HCP.
 
-It defines how humanitarian observations can be understood everywhere.
+It defines the protocol.
+
+It does not contain a production application, a centralized database or a mandatory server implementation.
 
 ---
 
-# Why HCP?
+## Why HCP Exists
 
-Every humanitarian emergency generates thousands of independent observations.
+Humanitarian emergencies generate large volumes of information.
 
 Hospitals register patients.
 
@@ -22,288 +26,457 @@ Families report missing relatives.
 
 Shelters receive displaced people.
 
-Volunteers document urgent needs.
+Rescue teams document incidents.
 
-Emergency teams report rescues.
+Volunteers report urgent needs.
 
-Governments maintain official records.
+Organizations create their own applications and databases.
 
-Most of these observations describe the same reality.
+Although these systems may describe the same humanitarian reality, they often represent information differently and cannot understand one another.
 
-Yet very few of the systems collecting them can understand one another.
+The problem is not always the absence of data.
 
-The problem is rarely the lack of information.
+The problem is the absence of a shared language.
 
-The problem is the lack of interoperability.
-
----
-
-# Our Vision
-
-Humanitarian interoperability should depend on shared meaning, not shared infrastructure.
-
-Organizations should not be required to replace their existing software in order to collaborate.
-
-Instead, they should be able to exchange structured humanitarian observations through an open protocol.
-
-Just as HTTP standardized communication between web servers without requiring the same operating system, HCP seeks to standardize humanitarian observations without requiring the same database, application or infrastructure.
-
-The protocol connects understanding—not databases.
+HCP addresses that problem by defining common semantics for humanitarian observations.
 
 ---
 
-# What is HCP?
+## Core Idea
 
-HCP is an open specification that defines:
+HCP does not require organizations to share a database.
 
-* how humanitarian observations are represented
-* how they are exchanged
-* how they are queried
-* how they are correlated
-* how implementations can explain correlation results
-* how independent systems remain interoperable
+It does not require them to use the same software.
 
-HCP is:
+It does not prescribe a programming language, cloud provider or storage technology.
 
-* Open
-* Infrastructure-agnostic
-* Vendor-neutral
-* Human-readable
-* Machine-readable
-* Explainable
-* Extensible
-* Open Source
+Each implementation may preserve its own:
 
----
+* infrastructure
+* database
+* internal processes
+* security policies
+* governance
+* operational autonomy
 
-# Shared Meaning, Not Shared Databases
+HCP only defines how humanitarian observations are structured and interpreted when independent systems choose to exchange them.
 
-HCP does not require organizations to share databases.
+Different systems.
 
-It does not prescribe storage technologies.
+Different infrastructures.
 
-It does not prescribe programming languages.
-
-It does not prescribe cloud providers.
-
-Every organization remains free to use its own architecture.
-
-The protocol only standardizes the meaning of humanitarian observations.
-
-Different databases.
-
-Different applications.
-
-Different institutions.
-
-One shared language.
+One shared humanitarian language.
 
 ---
 
-# Humanitarian Records
+## What HCP Standardizes
 
-The core object of HCP is the **Humanitarian Record**.
+HCP defines:
 
-A Humanitarian Record represents an independent humanitarian observation.
+* Humanitarian Records
+* subjects and event types
+* humanitarian observations
+* record status and lifecycle
+* Canonical JSON representation
+* query structures
+* correlation rules
+* explainable correlation results
+* node communication
+* synchronization
+* federation
+* privacy requirements
+* security requirements
+* interoperability requirements
+
+---
+
+## What HCP Does Not Standardize
+
+HCP does not prescribe:
+
+* how organizations store their internal data
+* which database technology must be used
+* which programming language must be used
+* which user interface must be provided
+* which cloud or hosting provider must be used
+* how an institution organizes its internal operations
+* how governments or organizations govern their systems
+
+HCP is a protocol specification, not an application architecture mandate.
+
+---
+
+## Humanitarian Records
+
+The fundamental object of HCP is the **Humanitarian Record**.
+
+A Humanitarian Record represents an independent observation associated with a humanitarian event.
 
 Examples include:
 
-* Missing Person
-* Hospitalized Person
-* Sheltered Person
-* Located Person
-* Public Emergency
-* Missing Animal
-* Found Animal
+* a missing person observation
+* a hospitalized person observation
+* a sheltered person observation
+* a located person observation
+* a public emergency observation
+* a missing animal observation
+* a found animal observation
 
-Humanitarian Records describe observations.
+A Humanitarian Record is not intended to become a permanent global identity profile.
 
-They are not digital identity records.
+It describes an event or observation.
+
+It does not claim to define who a person is.
 
 ---
 
-# Correlation Instead of Identification
+## Observations, Not Identities
 
-Traditional systems often begin by identifying a person.
+HCP separates humanitarian observations from centralized identity.
 
-HCP follows a different approach.
+The protocol does not require:
 
-Independent observations can be correlated before identity is confirmed.
+* national identification numbers
+* passport numbers
+* centralized identity accounts
+* phone numbers as identity keys
+* universal personal identifiers
+* a global registry of people
 
-Correlation estimates whether multiple observations may describe the same humanitarian case.
+A record may contain reported descriptive information when relevant to a humanitarian observation, but HCP does not treat names or contact information as proof of identity.
 
-Implementations are encouraged to use factors such as:
+The protocol is designed to work even when identity is incomplete, uncertain, misspelled or unknown.
 
-* approximate location
-* estimated time
-* humanitarian status
-* observable characteristics
+---
+
+## Correlation Instead of Automatic Identification
+
+HCP does not automatically declare that two records belong to the same person or animal.
+
+It creates **Correlation Candidates**.
+
+A Correlation Candidate represents the possibility that two or more independent observations describe the same humanitarian case.
+
+Correlation may consider protocol-defined factors such as:
+
+* approximate time
+* geographical proximity
 * event context
-* protocol-defined metadata
+* estimated age range
+* observable characteristics
+* humanitarian status
+* reporting context
+* animal species, size or breed
+* supporting confirmations
 
-HCP does not require centralized identity.
+Reported names may assist discovery, but they must not be treated as definitive identity evidence.
 
-It does not require government identifiers.
+Sex, contact information and government identifiers are not intended to determine correlation confidence.
 
-It does not require phone numbers.
+Correlation produces a probability or confidence assessment.
 
-It does not require passport numbers.
-
-The protocol correlates humanitarian observations—not personal identities.
-
----
-
-# Explainable Correlation
-
-Correlation should never be a black box.
-
-Implementations should be able to explain why two Humanitarian Records appear related.
-
-Explainability helps humanitarian workers, institutions and families evaluate possible matches using transparent criteria.
-
-Human judgment remains essential.
+Human confirmation remains necessary.
 
 ---
 
-# Design Principles
+## Explainable Correlation
 
-## Shared Meaning over Shared Infrastructure
+HCP requires correlation to be understandable.
+
+An implementation should not return only a percentage or opaque score.
+
+It should explain which observations increased or decreased the probability of a relationship.
+
+For example:
+
+* locations were geographically close
+* observation times were compatible
+* estimated ages were similar
+* visible characteristics were consistent
+* event contexts matched
+* some reported details were contradictory
+
+Explainability allows families, humanitarian workers and institutions to evaluate possible relationships using transparent evidence.
+
+---
+
+## Design Principles
+
+### Shared Meaning over Shared Infrastructure
 
 Humanitarian interoperability should depend on shared meaning, not shared infrastructure.
 
-## Observations over Identities
+### Observations over Identities
 
-Humanitarian information begins as observations, not centralized identities.
+Humanitarian information begins as observations, not permanent identity profiles.
 
-## Correlation over Identification
+### Correlation over Automatic Identification
 
-Independent observations can be correlated before identity is confirmed.
+The protocol estimates relationships between observations without claiming identity as a technical certainty.
 
-## Federation over Centralization
+### Explainability over Black Boxes
 
-Organizations collaborate without surrendering ownership of their own systems.
+Correlation results should explain why records may be related.
 
-## Explainability over Black Boxes
+### Interoperability over Platform Dependency
 
-Every correlation should be understandable by humans.
+No organization should need to adopt a specific application to participate.
 
----
+### Data Minimization over Unnecessary Collection
 
-# What HCP Does Not Do
+Implementations should collect only the information necessary for the humanitarian purpose.
 
-HCP is not:
+### Autonomy over Infrastructure Mandates
 
-* a humanitarian platform
-* a centralized database
-* a donation platform
-* a messaging application
-* a blockchain
-* a global identity registry
-* a replacement for existing information systems
-
-Those solutions can implement HCP.
-
-HCP defines the common language they use to communicate.
+Every organization remains responsible for its own systems, governance and security.
 
 ---
 
-# Repository Structure
+## Protocol Architecture
 
+A typical HCP interaction may follow this sequence:
+
+```text
+Human Observation
+        │
+        ▼
+HCP Client
+        │
+        ▼
+Canonical Humanitarian Record
+        │
+        ▼
+HCP Node
+        │
+        ├── Create
+        ├── Validate
+        ├── Query
+        ├── Correlate
+        └── Exchange
+        │
+        ▼
+Independent HCP Implementations
 ```
+
+The specification defines the language and expected behavior.
+
+Each implementation decides how that behavior is built internally.
+
+---
+
+## Repository Scope
+
+This repository contains only the normative and supporting documentation of HCP.
+
+Reference software implementations are maintained separately.
+
+```text
 hcp-specification/
-
 ├── README.md
+├── LICENSE
+├── CONTRIBUTING.md
+├── CODE_OF_CONDUCT.md
+├── SECURITY.md
+│
 ├── specification/
+│   ├── README.md
+│   ├── TEMPLATE.md
+│   ├── HCP-0000-architecture-and-overview.md
+│   ├── HCP-0001-humanitarian-record.md
+│   ├── HCP-0002-hcp-node.md
+│   └── ...
+│
 ├── schema/
+│   └── Humanitarian Record schemas
+│
 ├── examples/
+│   └── Canonical HCP Record examples
+│
 └── archive/
+    └── Deprecated or historical documents
 ```
 
 ---
 
-# Specification Index
+## Specification Index
 
-| HCP      | Title                               | Status |
+### Core Architecture
+
+| Document | Title                     | Status |
+| -------- | ------------------------- | ------ |
+| HCP-0000 | Architecture and Overview | Draft  |
+| HCP-0001 | Humanitarian Record       | Draft  |
+| HCP-0002 | HCP Node                  | Draft  |
+| HCP-0003 | Subject Model             | Draft  |
+| HCP-0004 | Correlation Candidate     | Draft  |
+
+### Communication and Data Model
+
+| Document | Title                        | Status |
+| -------- | ---------------------------- | ------ |
+| HCP-0005 | Node Communication Protocol  | Draft  |
+| HCP-0006 | Observation Model            | Draft  |
+| HCP-0007 | Status Model                 | Draft  |
+| HCP-0008 | Event Type Model             | Draft  |
+| HCP-0009 | Node API                     | Draft  |
+| HCP-0010 | Canonical JSON Specification | Draft  |
+
+### Search and Correlation
+
+| Document | Title                         | Status |
+| -------- | ----------------------------- | ------ |
+| HCP-0011 | Query Model                   | Draft  |
+| HCP-0012 | Correlation Model             | Draft  |
+| HCP-0014 | Explainable Correlation Model | Draft  |
+| HCP-0015 | Result Presentation Model     | Draft  |
+| HCP-0018 | Search and Query Protocol     | Draft  |
+
+### Lifecycle, Synchronization and Federation
+
+| Document | Title                               | Status |
 | -------- | ----------------------------------- | ------ |
-| HCP-0000 | Architecture and Overview           | Draft  |
-| HCP-0001 | Humanitarian Record                 | Draft  |
-| HCP-0002 | HCP Node                            | Draft  |
-| HCP-0003 | Subject Model                       | Draft  |
-| HCP-0004 | Correlation Candidate               | Draft  |
-| HCP-0005 | Node Communication Protocol         | Draft  |
-| HCP-0006 | Observation Model                   | Draft  |
-| HCP-0007 | Status Model                        | Draft  |
-| HCP-0008 | Event Type Model                    | Draft  |
-| HCP-0009 | Node API                            | Draft  |
-| HCP-0010 | Canonical JSON Specification        | Draft  |
-| HCP-0011 | Query Model                         | Draft  |
-| HCP-0012 | Correlation Model                   | Draft  |
 | HCP-0013 | Synchronization Model               | Draft  |
-| HCP-0014 | Explainable Correlation Model       | Draft  |
-| HCP-0015 | Result Presentation Model           | Draft  |
 | HCP-0016 | Humanitarian Record Lifecycle Model | Draft  |
 | HCP-0017 | Event Classification Model          | Draft  |
-| HCP-0018 | Search and Query Protocol           | Draft  |
 | HCP-0019 | Federation and Node Discovery Model | Draft  |
-| HCP-0020 | Security Model                      | Draft  |
-| HCP-0021 | Privacy and Data Minimization       | Draft  |
-| HCP-0022 | Interoperability Requirements       | Draft  |
+
+### Security and Interoperability
+
+| Document | Title                         | Status |
+| -------- | ----------------------------- | ------ |
+| HCP-0020 | Security Model                | Draft  |
+| HCP-0021 | Privacy and Data Minimization | Draft  |
+| HCP-0022 | Interoperability Requirements | Draft  |
 
 ---
 
-# Design Goals
+## Document Status
 
-The protocol is designed to be:
+HCP documents may use the following status values:
 
-* Human-readable
-* Machine-readable
-* Explainable
-* Privacy-aware
-* Infrastructure-agnostic
-* Offline-friendly
-* Extensible
-* Easy to implement
+| Status       | Meaning                                                       |
+| ------------ | ------------------------------------------------------------- |
+| Draft        | Under active design and subject to change                     |
+| Review       | Ready for community and technical review                      |
+| Experimental | Available for implementation testing                          |
+| Stable       | Considered sufficiently mature for compatible implementations |
+| Deprecated   | Retained for historical reference but no longer recommended   |
 
----
-
-# Ecosystem
-
-The Humanitarian Connection Protocol is part of the Human Connection Network ecosystem.
-
-| Repository                   | Purpose                           |
-| ---------------------------- | --------------------------------- |
-| **human-connection-network** | Project overview                  |
-| **hcp-specification**        | Official protocol specification   |
-| **hcp-reference**            | Reference HCP Node implementation |
-| **hcp-client-telegram**      | First official HCP Client         |
-| **hcp-node-web**             | Future web implementation         |
+Unless explicitly stated otherwise, current HCP documents are drafts.
 
 ---
 
-# Contributing
+## Normative Language
+
+HCP documents may use the terms:
+
+* **MUST**
+* **MUST NOT**
+* **SHOULD**
+* **SHOULD NOT**
+* **MAY**
+
+These terms indicate requirement levels for compatible implementations.
+
+A future conformance document will define the exact requirements an implementation must satisfy to claim HCP compatibility.
+
+---
+
+## Implementations
+
+The specification is implementation-independent.
+
+Current ecosystem repositories include:
+
+| Repository                 | Purpose                                         |
+| -------------------------- | ----------------------------------------------- |
+| `human-connection-network` | Institutional overview of the HCN ecosystem     |
+| `hcp-specification`        | Official HCP specifications                     |
+| `hcp-reference`            | Minimal reference implementation of an HCP Node |
+| `hcp-client-telegram`      | First operational HCP Client                    |
+| `hcp-node-web`             | Planned web-oriented HCP implementation         |
+
+An implementation does not need to use the same source code as the reference implementation.
+
+It only needs to follow the protocol requirements.
+
+---
+
+## Current Status
+
+HCP is currently under active development.
+
+Current protocol version:
+
+```text
+HCP v0.1 — Draft
+```
+
+The current work focuses on:
+
+* stabilizing the Humanitarian Record model
+* defining Canonical JSON
+* formalizing query semantics
+* formalizing explainable correlation
+* defining node communication
+* preparing conformance requirements
+* validating the protocol through real implementations
+
+The Telegram Client serves as the first operational demonstration of the protocol concepts.
+
+The reference implementation provides a minimal technical example of an HCP Node.
+
+---
+
+## Contributing
 
 Contributions are welcome from:
 
-* Software Engineers
-* Humanitarian Organizations
-* Emergency Response Teams
+* software engineers
+* protocol designers
+* humanitarian organizations
+* emergency response teams
+* hospitals
 * NGOs
-* Governments
-* Universities
-* Researchers
-* Open Source Contributors
+* governments
+* universities
+* privacy and security specialists
+* open-source contributors
 
-Please read the contribution guidelines before submitting proposals or pull requests.
+Contributions may include:
+
+* specification corrections
+* implementation feedback
+* interoperability proposals
+* JSON Schema improvements
+* security reviews
+* privacy reviews
+* examples
+* translations
+* conformance tests
+
+Please read `CONTRIBUTING.md` and `CODE_OF_CONDUCT.md` before submitting an Issue or Pull Request.
 
 ---
 
-# License
+## Governance
 
-Released under the Apache License 2.0.
+HCP is developed openly through GitHub.
+
+Protocol changes should be proposed, discussed and reviewed publicly.
+
+No implementation automatically becomes part of the protocol merely because it introduces a new feature.
+
+Normative behavior must be documented and accepted in the specification.
 
 ---
 
-> **HCP is not designed to know who people are.**
+## License
+
+The Humanitarian Connection Protocol specification is released under the Apache License 2.0.
+
+---
+
+> **HCP does not require humanitarian systems to share the same infrastructure.**
 >
-> **It is designed to help independent systems understand the same humanitarian reality.**
-
+> **It allows them to understand the same humanitarian reality.**

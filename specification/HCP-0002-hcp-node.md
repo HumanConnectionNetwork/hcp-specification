@@ -12,265 +12,428 @@ Project: Human Connection Network (HCN)
 
 License: Apache-2.0
 
-Last Updated: 2026-07-07
+Last Updated: 2026-07-13
 
 Depends On:
 
-- HCP-0000 Overview
-- HCP-0001 Humanitarian Record
+- HCP-0000 — Architecture and Overview
+- HCP-0001 — Humanitarian Record
+
+Replaces:
+None
+
+Replaced By:
+None
+
+---
+
+# Abstract
+
+This document defines the concept of an **HCP Node**, the fundamental implementation component of the Humanitarian Connection Protocol.
+
+An HCP Node is an independent implementation capable of creating, querying, exchanging and correlating Humanitarian Records while preserving interoperability with other compatible implementations.
+
+Nodes do not define humanitarian information.
+
+They implement the common language defined by HCP and enable humanitarian observations to be shared across independent systems without requiring centralized infrastructure.
+
+This document establishes the conceptual responsibilities of an HCP Node independently of any programming language, database or deployment architecture.
 
 ---
 
 # 1. Introduction
 
-An HCP Node is an independent system that implements the Humanitarian Connection Protocol.
+An **HCP Node** is an independent implementation of the Humanitarian Connection Protocol.
 
-Nodes exchange Humanitarian Records with other compatible nodes using the HCP specification.
+Its purpose is to implement the protocol specification and enable humanitarian observations to be represented, queried, exchanged and correlated using the common semantic model defined by HCP.
 
-Nodes are responsible for preserving, querying and synchronizing humanitarian observations.
+An HCP Node is implementation-independent.
 
-Clients interact with nodes.
+It is not defined by a specific programming language, database technology, deployment model or communication mechanism.
 
-Nodes interact with other nodes.
+Instead, an HCP Node is defined by its ability to correctly implement the protocol and maintain interoperability with other compatible HCP implementations.
+
+Clients interact with HCP Nodes.
+
+HCP Nodes interact with other HCP Nodes.
+
+Together they create an interoperable humanitarian network based on shared meaning rather than shared infrastructure.
 
 ---
 
 # 2. Purpose
 
-The purpose of an HCP Node is to make humanitarian observations available in a standardized and interoperable manner.
+The purpose of an HCP Node is to enable humanitarian interoperability.
 
-A node does not own the protocol.
+Rather than requiring organizations to replace their existing software or adopt a centralized platform, an HCP Node allows them to participate in the HCP ecosystem while preserving their own operational autonomy.
 
-A node does not own humanitarian information.
+An HCP Node enables independent organizations to:
 
-A node simply participates in a decentralized humanitarian network.
+- create Humanitarian Records
+- query Humanitarian Records
+- exchange humanitarian observations
+- correlate compatible observations
+- synchronize humanitarian information
+
+The protocol standardizes communication and meaning.
+
+Each implementation remains free to choose its own technologies and operational model.
 
 ---
 
 # 3. Responsibilities
 
-An HCP Node should be capable of:
+Every HCP Node is responsible for implementing the behavior defined by the HCP specification.
 
-- Creating Humanitarian Records.
-- Querying Humanitarian Records.
-- Synchronizing observations with other compatible nodes.
-- Preserving observation history.
-- Providing explainable correlation candidates.
-- Remaining interoperable with future HCP versions whenever possible.
+Its primary responsibilities include:
+
+- creating Humanitarian Records
+- querying Humanitarian Records
+- exchanging Humanitarian Records with compatible HCP Nodes
+- preserving observation history
+- generating explainable Correlation Candidates
+- supporting protocol evolution whenever reasonably possible
+
+An HCP Node is responsible for implementing protocol behavior.
+
+It is not responsible for determining permanent identity.
+
+Identity verification always remains outside the scope of the protocol.
 
 ---
 
 # 4. Humanitarian Records
 
-Nodes exchange Humanitarian Records.
+The primary responsibility of an HCP Node is the management of Humanitarian Records.
 
-A Humanitarian Record represents an observation about a living being during a humanitarian situation.
+Humanitarian Records represent independent humanitarian observations concerning living beings affected by humanitarian events.
 
-Supported subject types include:
+Current protocol specifications support observations related to:
 
-- Human
-- Animal
-
-Nodes should not attempt to identify people.
+- Humans
+- Animals
 
 Nodes exchange observations.
 
-Human verification remains outside the protocol.
+They do not exchange identities.
+
+Multiple HCP Nodes may independently create Humanitarian Records describing the same humanitarian reality.
+
+Those observations remain independent until compatible implementations determine that they may represent the same humanitarian case through explainable correlation.
+---
+
+# 5. Organizational Autonomy
+
+Every HCP Node operates independently.
+
+Organizations remain fully responsible for their own systems, operational policies and humanitarian procedures.
+
+Examples of HCP Node operators include:
+
+- hospitals
+- emergency services
+- fire departments
+- police departments
+- humanitarian organizations
+- governments
+- universities
+- community initiatives
+- humanitarian foundations
+- independent organizations
+
+Each HCP Node independently decides:
+
+- which Humanitarian Records to preserve
+- which Humanitarian Records to expose
+- which Humanitarian Records to synchronize
+- how correlation is implemented
+- which internal technologies are used
+
+The protocol intentionally avoids prescribing implementation details.
+
+Organizational autonomy is preserved while interoperability is maintained through compliance with the HCP specification.
 
 ---
 
-# 5. Node Independence
+# 6. HCP Clients
 
-Every node remains independent.
+An **HCP Client** is not an HCP Node.
 
-Examples include:
+Clients provide user interaction.
 
-- Hospital
-- Fire Department
-- Police
-- University
-- NGO
-- Government
-- Community
-- Humanitarian Foundation
-- Independent Organization
+Nodes implement protocol behavior.
 
-Each node decides:
+Typical HCP Clients include:
 
-- Which observations to preserve.
-- Which observations to expose.
-- Which observations to synchronize.
-- Which internal database technology to use.
+- Telegram Clients
+- WhatsApp Clients
+- SMS Clients
+- Web Applications
+- Mobile Applications
+- Desktop Applications
+- Future compatible interfaces
 
-The protocol does not impose implementation details.
+Clients allow users to create, search and review Humanitarian Records.
 
----
+HCP Nodes receive those requests, process them according to the protocol and exchange compatible information with other HCP Nodes when appropriate.
 
-# 6. Clients
+Clients implement user experience.
 
-Clients are not nodes.
+Nodes implement protocol behavior.
 
-Clients are user interfaces that communicate with nodes.
-
-Examples:
-
-- Telegram Bot
-- WhatsApp Bot
-- SMS Client
-- Web Client
-- Mobile Application
-- Desktop Application
-
-Clients create and query Humanitarian Records.
-
-Nodes store and synchronize them.
+This separation allows different user interfaces to coexist while preserving a common interoperability model.
 
 ---
 
 # 7. Communication
 
-Nodes exchange information using HCP.
+HCP Nodes communicate using the protocol defined by the HCP specification.
 
-The transport mechanism is implementation-specific.
+The protocol defines the structure and meaning of exchanged information.
 
-Examples include:
+It does not prescribe the transport mechanism.
+
+Compatible implementations may communicate through technologies such as:
 
 - HTTPS
-- Local Network
-- Mesh Networks
-- Satellite Links
-- Store-and-forward synchronization
-- Offline synchronization
+- local networks
+- mesh networks
+- satellite communication
+- store-and-forward synchronization
+- removable media
+- offline synchronization
+- future communication technologies
 
-The protocol defines interoperability.
+The transport layer is intentionally outside the scope of HCP.
 
-It does not mandate a transport layer.
+Only semantic interoperability is standardized.
+
+This allows the protocol to remain compatible across a wide variety of technological environments.
 
 ---
 
 # 8. Correlation
 
-Nodes may execute correlation algorithms.
+An HCP Node may implement one or more correlation strategies.
 
-Correlation attempts to estimate whether multiple observations describe the same humanitarian event.
+The protocol does not prescribe a specific algorithm.
 
-Recommended variables include:
+Instead, it defines the semantic information that compatible implementations may use to estimate whether independent Humanitarian Records describe the same humanitarian case.
 
-- Temporal proximity
-- Geographic proximity
-- Reported name
-- Estimated age
-- Event evolution
-- Source
-- Description
+Correlation may consider evidence such as:
 
-Correlation should produce probabilities.
+- reported name
+- estimated age
+- reported location
+- observation time
+- humanitarian status
+- recognition features
+- reporting source
+- event evolution
+- protocol-defined metadata
 
-Never certainty.
+Correlation estimates probability.
+
+It does not establish identity.
+
+Different implementations may use different correlation methods while remaining fully interoperable through the common semantic model defined by HCP.
 
 ---
 
 # 9. Explainability
 
-Whenever correlation is provided, nodes should also provide an explanation.
+Whenever an HCP Node provides Correlation Candidates, it should also provide an explanation describing the evidence that contributed to the correlation.
 
-Examples:
+Typical explanations may reference:
 
-✓ Similar reported name
+- compatible reported names
+- compatible estimated ages
+- compatible locations
+- compatible observation times
+- compatible humanitarian status
+- similar recognition features
+- supporting or conflicting observations
 
-✓ Compatible estimated age
+Explainability supports human verification.
 
-✓ Same geographic area
+It does not replace human judgment.
 
-✓ Compatible reporting time
+Transparent correlation improves trust, facilitates humanitarian decision-making and reduces misinformation during humanitarian emergencies.
 
-✗ Different source
-
-Explainability improves transparency and human verification.
-
+The detailed Explainable Correlation Model is defined in **HCP-0014**.
 ---
 
-# 10. Privacy
+# 10. Privacy and Security
 
-Nodes should exchange only the information necessary for humanitarian interoperability.
+An HCP Node should exchange only the information necessary to preserve humanitarian interoperability.
 
-Nodes are encouraged to minimize personally identifiable information whenever possible.
+Implementations are encouraged to minimize the collection, storage and exchange of personally identifiable information whenever possible.
 
-HCP prioritizes observations over identities.
+Whenever equivalent humanitarian value can be achieved through observable characteristics, implementations should prefer observation-based evidence over permanent identifiers.
+
+Security mechanisms remain implementation-specific.
+
+Each organization may define its own authentication, authorization, encryption and operational security policies.
+
+The protocol standardizes humanitarian interoperability rather than operational security.
+
+Additional requirements are defined in:
+
+- **HCP-0020 — Security Model**
+- **HCP-0021 — Privacy and Data Minimization**
 
 ---
 
 # 11. Version Compatibility
 
-Nodes should expose the HCP version they implement.
+Every HCP Node should expose the protocol version it implements.
 
-Whenever possible, newer nodes should remain compatible with previous protocol versions.
+Version information allows compatible implementations to negotiate supported capabilities and maintain interoperability as the protocol evolves.
 
-Backward compatibility increases interoperability.
+Whenever reasonably possible, newer HCP implementations should preserve backward compatibility with previous protocol versions.
+
+Maintaining compatibility reduces fragmentation and facilitates gradual protocol adoption across independent organizations.
+
+Protocol evolution should prioritize interoperability over unnecessary breaking changes.
 
 ---
 
-# 12. Example Architecture
+# 12. Conceptual Architecture
+
+The following diagram illustrates the conceptual role of an HCP Node within the Human Connection Network ecosystem.
 
 ```text
-Telegram Client
-        │
-        │
-Web Client
-        │
-        │
-SMS Client
-        │
-        ▼
-────────────────────────────
+                 HCP Clients
+      (Telegram, SMS, Web, Mobile,
+       Desktop, APIs and others)
 
-        HCP Node
+                    │
+                    ▼
 
-────────────────────────────
+             ┌─────────────────┐
+             │    HCP Node      │
+             └─────────────────┘
 
-Create Record
+      • Create Humanitarian Records
 
-Query Record
+      • Query Humanitarian Records
 
-Correlation
+      • Correlate Observations
 
-Synchronization
+      • Explain Correlation
 
-────────────────────────────
+      • Synchronize with HCP Nodes
 
-        │
-        ▼
+                    │
+                    ▼
 
-Other HCP Nodes
+          Independent HCP Nodes
+
+                    │
+                    ▼
+
+      Shared Humanitarian Meaning
 ```
+
+This architecture is conceptual.
+
+The specification defines protocol behavior.
+
+It does not prescribe internal software architecture or deployment models.
 
 ---
 
 # 13. Design Principles
 
-Every HCP Node should preserve the following principles:
+Every HCP Node should preserve the following principles.
 
-- Decentralization
-- Interoperability
-- Explainability
-- Simplicity
-- Human Verification
-- Long-term compatibility
-- Privacy by Design
-- Offline-first whenever possible
+## Semantic Interoperability
+
+Exchange Humanitarian Records using the common semantic model defined by HCP.
 
 ---
 
-# 14. Summary
+## Organizational Autonomy
+
+Each organization remains responsible for its own systems, operational procedures and humanitarian decisions.
+
+---
+
+## Infrastructure Independence
+
+Implementations remain free to choose their own programming languages, databases, communication technologies and deployment architectures.
+
+---
+
+## Explainability
+
+Correlation should be transparent and understandable.
+
+Whenever possible, implementations should explain why observations appear related.
+
+---
+
+## Privacy by Design
+
+Collect and exchange only the information necessary to support humanitarian interoperability.
+
+---
+
+## Human Verification
+
+Correlation supports humanitarian decision-making.
+
+Final verification always belongs to people and responsible institutions.
+
+---
+
+## Offline-first
+
+Implementations should support environments with limited, intermittent or delayed connectivity whenever practical.
+
+---
+
+## Long-term Compatibility
+
+Implementations should preserve interoperability across protocol versions whenever reasonably possible.
+
+---
+
+# 14. Relationship with Other Specifications
+
+This document defines the conceptual behavior of an HCP Node.
+
+Additional HCP specifications define complementary aspects of node behavior.
+
+- **HCP-0001** defines the Humanitarian Record.
+- **HCP-0005** defines the Node Communication Protocol.
+- **HCP-0009** defines the Node API.
+- **HCP-0010** defines the Canonical HCP JSON Representation.
+- **HCP-0011** defines the Query Model.
+- **HCP-0012** defines the Correlation Model.
+- **HCP-0013** defines the Synchronization Model.
+- **HCP-0014** defines the Explainable Correlation Model.
+
+Together, these specifications define how HCP Nodes create, exchange, query, synchronize and correlate Humanitarian Records while preserving interoperability across independent implementations.
+
+---
+
+# 15. Summary
 
 An HCP Node is an independent implementation of the Humanitarian Connection Protocol.
 
 Its responsibility is not to identify people.
 
-Its responsibility is to preserve, exchange and correlate humanitarian observations about living beings.
+Its responsibility is to implement the protocol and enable humanitarian observations to be represented, exchanged, queried and correlated using a common semantic model.
 
-Clients connect people.
+HCP Clients connect people.
 
-Nodes connect observations.
+HCP Nodes connect humanitarian observations.
 
-Together they enable decentralized humanitarian interoperability.
+Together they allow independent systems to understand the same humanitarian reality without requiring shared infrastructure or centralized identity management.
+
+The HCP Node is the implementation layer of the Humanitarian Connection Protocol.
+
+It transforms the protocol specification into humanitarian interoperability.
+
+By preserving independent observations rather than centralized identity records, HCP improves interoperability while respecting organizational autonomy.

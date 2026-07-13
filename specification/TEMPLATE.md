@@ -1,331 +1,285 @@
-# HCP Specification Template
+# HCP Document Template
+
+This template defines the recommended structure for Humanitarian Connection Protocol (HCP) specification documents.
+
+All new HCP documents SHOULD follow this structure unless there is a compelling technical reason to deviate.
+
+The goal is to maintain consistency, readability and interoperability across the entire specification.
 
 ---
 
-```
+# Document Metadata
+
+Every HCP document SHOULD begin with the following metadata.
+
+```text
 HCP-XXXX
 
-Title:
-<Specification Title>
-
-Status:
-Draft | Review | Stable | Deprecated | Superseded
+Title
 
 Version:
-0.1.0
+
+Status:
 
 Category:
-Core | Networking | Security | Extension | Informational
 
 Authors:
-Human Connection Network Contributors
 
-Created:
-YYYY-MM-DD
+License:
 
-Updated:
-YYYY-MM-DD
+Last Updated:
 
-Requires:
-HCP-0000
-HCP-0001
+Depends On:
 
-Supersedes:
-(optional)
+Replaces:
 
-Superseded By:
-(optional)
+Replaced By:
 ```
 
----
+## Metadata Fields
 
-# Abstract
-
-Provide a concise summary of the purpose of this specification.
-
-The abstract SHOULD be understandable without reading the remainder of the document.
-
-Recommended length:
-
-100–250 words.
-
----
-
-# Status of This Document
-
-Describe the maturity level of this specification.
-
-Possible values:
-
-* Draft
-* Review
-* Stable
-* Deprecated
-* Superseded
-
-Only **Stable** specifications are considered normative.
+| Field        | Description                                                   |
+| ------------ | ------------------------------------------------------------- |
+| HCP          | Unique document identifier                                    |
+| Title        | Official specification title                                  |
+| Version      | Current document version                                      |
+| Status       | Draft, Review, Experimental, Stable or Deprecated             |
+| Category     | Core, Record Model, Search, Networking, Security, etc.        |
+| Authors      | Document maintainers                                          |
+| License      | Document license                                              |
+| Last Updated | Last editorial revision                                       |
+| Depends On   | Other HCP documents required to understand this specification |
+| Replaces     | Previous specification superseded by this document            |
+| Replaced By  | Future specification replacing this document                  |
 
 ---
 
-# Motivation
+# 1. Introduction
+
+Briefly describe:
+
+* what this specification defines
+* why it exists
+* how it relates to the protocol
+
+Avoid implementation details.
+
+---
+
+# 2. Motivation
 
 Explain the problem this specification solves.
 
-Answer questions such as:
-
-* Why does this specification exist?
-* Which architectural problem does it address?
-* Why is it part of HCP?
+Focus on interoperability rather than implementation.
 
 ---
 
-# Scope
+# 3. Scope
 
 Clearly define:
 
 What this specification covers.
 
-What this specification intentionally does NOT cover.
+What this specification intentionally does not cover.
 
 ---
 
-# Terminology
+# 4. Definitions
 
-Define all domain-specific terms introduced by this document.
+Define important protocol concepts introduced by this document.
 
-Previously defined terms SHOULD reference the Glossary instead of redefining them.
+Use precise terminology.
+
+Whenever possible, reference previously defined HCP concepts instead of redefining them.
+
+---
+
+# 5. Specification
+
+This section contains the normative protocol definition.
+
+Normative requirements should use the keywords:
+
+* MUST
+* MUST NOT
+* SHOULD
+* SHOULD NOT
+* MAY
+
+These keywords indicate the expected behavior of compatible implementations.
+
+---
+
+# 6. Data Model
+
+If applicable, define:
+
+* structures
+* fields
+* attributes
+* allowed values
+* constraints
+
+Representations should remain implementation-independent.
+
+---
+
+# 7. Processing Rules
+
+Describe how compatible implementations are expected to process the information defined by this specification.
+
+Focus on observable behavior rather than internal implementation.
+
+---
+
+# 8. Examples
+
+Provide informative examples whenever appropriate.
+
+Examples are not normative.
+
+Examples should illustrate correct protocol usage.
+
+Whenever possible include Canonical JSON examples.
+
+---
+
+# 9. Error Handling
+
+Describe expected behavior when invalid, incomplete or incompatible information is received.
+
+If not applicable, explicitly state so.
+
+---
+
+# 10. Security Considerations
+
+Describe relevant security implications introduced by this specification.
+
+Examples may include:
+
+* spoofing
+* tampering
+* denial of service
+* trust assumptions
+* authentication
+* authorization
+
+If none apply, explicitly state:
+
+> This specification introduces no additional security considerations.
+
+---
+
+# 11. Privacy Considerations
+
+Discuss any privacy implications.
+
+Examples include:
+
+* personal information
+* data minimization
+* observation sensitivity
+* metadata exposure
+* contact information
+
+If not applicable, explicitly state so.
+
+---
+
+# 12. Interoperability Considerations
+
+Explain how this specification contributes to interoperability.
+
+Document any compatibility requirements with other HCP specifications.
+
+---
+
+# 13. Dependencies
+
+List all related HCP documents.
+
+For example:
+
+* HCP-0000
+* HCP-0001
+* HCP-0010
+
+Avoid circular dependencies whenever possible.
+
+---
+
+# 14. References
+
+References may include:
+
+* other HCP specifications
+* RFCs
+* W3C Recommendations
+* academic publications
+* open standards
+
+Informative references should be distinguished from normative references whenever appropriate.
+
+---
+
+# Writing Guidelines
+
+Authors SHOULD:
+
+* write in clear technical English
+* use active voice whenever possible
+* define new terminology before using it
+* avoid unnecessary repetition
+* maintain implementation independence
+* preserve backward compatibility whenever practical
+
+Authors SHOULD NOT:
+
+* prescribe programming languages
+* prescribe database technologies
+* prescribe deployment architectures
+* prescribe user interface behavior unless strictly necessary
+* describe implementation details that do not affect interoperability
 
 ---
 
 # Normative Language
 
-The keywords
+Requirement keywords should be interpreted consistently throughout the specification.
 
-**MUST**
-
-**MUST NOT**
-
-**SHOULD**
-
-**SHOULD NOT**
-
-**MAY**
-
-are to be interpreted according to RFC 2119.
+| Keyword    | Meaning               |
+| ---------- | --------------------- |
+| MUST       | Mandatory requirement |
+| MUST NOT   | Prohibited behavior   |
+| SHOULD     | Strong recommendation |
+| SHOULD NOT | Generally discouraged |
+| MAY        | Optional behavior     |
 
 ---
 
-# Specification
+# Editorial Principles
 
-This section contains the normative protocol definition.
+Every HCP document should strive to be:
 
-Everything described here is considered part of HCP.
-
-Implementations claiming compliance MUST follow this section.
-
----
-
-# Business Rules
-
-Describe the mandatory business behavior.
-
-Example:
-
-* Every Record MUST have exactly one identifier.
-
-* Every Node MUST expose its capabilities.
-
-* Identity MUST NOT replace Records.
+* technically precise
+* implementation-independent
+* human-readable
+* machine-readable where applicable
+* internally consistent
+* interoperable
+* privacy-aware
+* security-conscious
+* future-proof
 
 ---
 
-# State Model
+# Philosophy
 
-Describe lifecycle or state transitions when applicable.
+Humanitarian Connection Protocol specifications describe **shared meaning**, not implementation details.
 
-Example:
+The protocol defines how humanitarian observations are represented and understood across independent systems.
 
-```
-Created
+Implementations remain free to choose their own technologies, infrastructure and internal architecture.
 
-↓
-
-Validated
-
-↓
-
-Updated
-
-↓
-
-Archived
-```
-
-If the specification has no state transitions this section MAY be omitted.
-
----
-
-# Data Requirements
-
-Describe required fields, constraints and validation rules.
-
-Reference JSON Schemas whenever possible.
-
-Do not duplicate schema definitions.
-
----
-
-# Interoperability Requirements
-
-Describe what is required to ensure compatibility between implementations.
-
-This section should answer:
-
-"What must another implementation do to interoperate?"
-
----
-
-# Examples
-
-Provide practical examples.
-
-Recommended examples:
-
-* Valid example
-
-* Invalid example
-
-* Typical workflow
-
-* Edge case
-
-Examples are informative.
-
-They are not normative.
-
----
-
-# Security Considerations
-
-Describe security implications.
-
-Examples:
-
-* Authentication
-
-* Authorization
-
-* Integrity
-
-* Replay attacks
-
-* Data leakage
-
-Every specification SHOULD contain this section.
-
----
-
-# Privacy Considerations
-
-Describe any privacy implications.
-
-Examples:
-
-* Personal data
-
-* Metadata
-
-* Sensitive information
-
-* Data minimization
-
----
-
-# Extensibility
-
-Describe how future protocol versions may extend this specification.
-
-Extensions SHOULD preserve backward compatibility whenever possible.
-
----
-
-# Implementation Notes
-
-Optional guidance for implementers.
-
-This section is informative.
-
-It MUST NOT define protocol behavior.
-
----
-
-# Compliance
-
-Describe the minimum requirements an implementation must satisfy.
-
-Example:
-
-An implementation is compliant if it:
-
-* validates all mandatory fields;
-
-* preserves identifiers;
-
-* follows lifecycle rules;
-
-* exposes required capabilities.
-
----
-
-# Future Work
-
-List known areas for future improvements.
-
-This section is informative.
-
----
-
-# References
-
-Normative references.
-
-Examples:
-
-* HCP-0001 Protocol
-
-* HCP-0002 Data Model
-
-* RFC 2119
-
-Informative references MAY also be included.
-
----
-
-# Appendix A — Examples
-
-Optional.
-
-Large examples should be placed here.
-
----
-
-# Appendix B — Changelog
-
-Version history for this specification.
-
-Example:
-
-Version 0.1
-
-* Initial draft
-
-Version 0.2
-
-* Added Identity section
-
-Version 1.0
-
-* Stable release
-
-```
-```
+The specification standardizes interoperability—not software.

@@ -1,377 +1,517 @@
 # HCP-0020
+
 # Security Model
 
-Version: 0.1 (Draft)
+Version: 0.2 (Draft)
 
 Status: Draft
 
 Category: Core Specification
 
-Authors: Human Connection Network Foundation
+Project: Human Connection Network (HCN)
 
 License: Apache-2.0
 
-Last Updated: 2026-07-05
+Last Updated: 2026-07-13
 
 Depends On:
 
-- HCP-0002 HCP Node
-- HCP-0004 Node Identity
-- HCP-0005 Node Communication Protocol
-- HCP-0006 Trust Model
-- HCP-0013 Synchronization Model
-- HCP-0019 Federation & Node Discovery Model
+- HCP-0002 — HCP Node
+- HCP-0005 — Node Communication Protocol
+- HCP-0010 — Canonical JSON Specification
+- HCP-0013 — Synchronization Model
+- HCP-0019 — Federation and Node Discovery Model
+
+Replaces:
+None
+
+Replaced By:
+None
 
 ---
 
-# 1. Abstract
+# Abstract
 
-The HCP Security Model defines the principles that protect the integrity, authenticity, availability and resilience of humanitarian information exchanged through the Humanitarian Connection Protocol.
+This document defines the Security Model of the Humanitarian Connection Protocol (HCP).
+
+The Security Model establishes the principles that protect humanitarian interoperability while preserving decentralization and organizational autonomy.
 
 Security within HCP extends beyond cryptography.
 
-The protocol protects not only communication, but also the humanitarian ecosystem against misuse, misinformation, unauthorized participation and malicious behavior.
+The protocol protects the authenticity, integrity, availability and resilience of humanitarian information exchanged between HCP Nodes.
+
+Authenticity does not imply correctness.
+
+Humanitarian correctness remains subject to independent humanitarian verification.
+
+The protocol standardizes security principles.
+
+It does not standardize specific security technologies.
+
+---
+
+# 1. Introduction
+
+Humanitarian information frequently travels across organizational, geographic and operational boundaries.
+
+Independent HCP Nodes exchange Humanitarian Records under varying technical, legal and humanitarian conditions.
+
+The Security Model defines the principles that protect this exchange without assuming that every observation is correct.
+
+Security protects interoperability.
+
+Humanitarian verification protects reality.
+
+The protocol intentionally separates technical authenticity from humanitarian correctness.
 
 ---
 
 # 2. Security Objectives
 
-HCP is designed to provide:
+The Security Model seeks to preserve the following objectives:
 
-- authenticity
-- integrity
-- availability
-- accountability
-- interoperability
-- resilience
-- decentralization
+- authenticity;
+- integrity;
+- availability;
+- confidentiality;
+- autonomy;
+- interoperability;
+- resilience.
 
-The protocol intentionally separates technical authenticity from humanitarian credibility.
-
----
-
-# 3. Fundamental Principle
-
-Being authenticated does not imply being trusted.
-
-Being trusted does not imply being correct.
-
-Every observation remains subject to independent evaluation.
+Together, these objectives enable humanitarian information to be exchanged reliably while preserving organizational independence and decentralized operation.
 
 ---
 
-# 4. Security Layers
+# 3. Design Principles
 
-Security is implemented through multiple independent layers.
+Every Security Model follows the fundamental architectural principles of HCP.
 
-Layer 1
+---
 
-Node Identity
+## Authentic
 
-↓
+Implementations should verify the origin of exchanged Humanitarian Records whenever appropriate.
 
-Layer 2
+Authenticity protects interoperability.
+
+It never guarantees humanitarian correctness.
+
+---
+
+## Integrity
+
+Humanitarian Records should remain unmodified throughout synchronization.
+
+Integrity verification preserves the humanitarian evidence originally published.
+
+---
+
+## Resilient
+
+The protocol should continue operating despite communication failures, infrastructure disruption or isolated implementation failures.
+
+---
+
+## Decentralized
+
+Security mechanisms should preserve Node autonomy.
+
+No centralized security authority is required by HCP.
+
+---
+
+## Layered
+
+Security should rely upon multiple independent verification mechanisms rather than a single point of trust.
+
+Failure in one layer should not compromise humanitarian interoperability.
+
+---
+
+## Implementation Independent
+
+Authentication technologies, encryption mechanisms and operational security policies remain implementation-specific.
+
+The protocol standardizes only the security principles governing humanitarian interoperability.
+
+---
+
+# 4. Security Philosophy
+
+Security protects humanitarian interoperability.
+
+It does not determine humanitarian truth.
+
+Authenticity confirms the origin of humanitarian evidence.
+
+Integrity confirms that humanitarian evidence has not been modified.
+
+Neither authenticity nor integrity guarantees that a humanitarian observation is correct.
+
+Humanitarian correctness emerges only through independent observations, correlation, explainability and human verification.
+
+The fundamental philosophy of HCP security is:
+
+**Security protects interoperability.**
+
+**Humanitarian evidence remains subject to correlation.**
+
+**Humanitarian reasoning remains explainable.**
+
+**Reality is verified by humans.**
+---
+
+# 5. Layered Verification
+
+The Humanitarian Connection Protocol protects humanitarian interoperability through multiple independent verification layers.
+
+Illustrative verification sequence:
+
+```text
+Humanitarian Record
+
+        │
+
+        ▼
+
+Canonical Validation
+
+        │
+
+        ▼
 
 Authentication
 
-↓
+        │
 
-Layer 3
+        ▼
 
-Digital Signatures
+Integrity Validation
 
-↓
+        │
 
-Layer 4
+        ▼
 
-Integrity Verification
+Synchronization
 
-↓
+        │
 
-Layer 5
-
-Trust Evaluation
-
-↓
-
-Layer 6
+        ▼
 
 Correlation
 
-↓
+        │
 
-Layer 7
+        ▼
 
-Human Review
+Explainability
 
-Failure in one layer should not compromise the entire system.
+        │
 
----
+        ▼
 
-# 5. Node Identity
+Human Verification
+```
 
-Every HCP Node should possess a unique cryptographic identity.
+Each verification layer contributes independently to the quality and resilience of humanitarian interoperability.
 
-Typical implementations include:
-
-- public/private key pairs
-- X.509 certificates
-- federation-issued certificates
-- hardware security modules
-- future identity technologies
-
-Identity mechanisms remain implementation specific.
+Failure in one layer should not invalidate the entire humanitarian process.
 
 ---
 
 # 6. Authentication
 
-Nodes should authenticate one another before exchanging information whenever required by federation policy.
+Whenever required by local operational policy, HCP Nodes should authenticate one another before exchanging Humanitarian Records.
 
-Authentication confirms:
+Authentication may confirm:
 
-- node identity
-- protocol compatibility
-- federation membership (if applicable)
+- the identity of the communicating Node;
+- protocol compatibility;
+- federation membership;
+- authorization to exchange humanitarian information.
 
-Authentication does not evaluate observation quality.
+Authentication establishes who is communicating.
+
+It does not evaluate humanitarian correctness.
 
 ---
 
 # 7. Digital Signatures
 
-Every synchronized Humanitarian Record should be digitally signed by the originating node.
+Implementations are encouraged to digitally sign Humanitarian Records whenever appropriate.
 
 Digital signatures provide:
 
-- authenticity
-- integrity
-- non-repudiation
+- authenticity;
+- integrity;
+- non-repudiation.
 
-Modification of signed records invalidates the signature.
+Modification of a signed Humanitarian Record invalidates its signature.
+
+The protocol intentionally remains independent of any specific cryptographic technology.
 
 ---
 
-# 8. Integrity
+# 8. Integrity Validation
 
-Nodes shall verify that received records have not been modified.
+Receiving HCP Nodes should validate every synchronized Humanitarian Record before accepting it.
 
-Integrity verification should include:
+Typical validation includes:
 
-- signature validation
-- metadata consistency
-- timestamp validation
-- record identifier consistency
+- Canonical JSON conformance;
+- UUID consistency;
+- protocol version compatibility;
+- signature validation (when applicable);
+- metadata consistency.
 
-Invalid records should be rejected.
+Humanitarian Records failing integrity validation should be rejected.
+
+Integrity validation protects humanitarian interoperability.
+
+It does not determine humanitarian correctness.
 
 ---
 
 # 9. Confidentiality
 
-When required, communication channels should provide confidentiality.
+Whenever humanitarian context or local policy requires confidentiality, implementations should protect communication channels.
 
 Possible mechanisms include:
 
-- TLS
-- VPN
-- encrypted messaging
-- future secure transports
+- TLS;
+- VPN;
+- encrypted messaging;
+- secure offline media;
+- future secure communication technologies.
 
-The protocol does not mandate a specific encryption technology.
+The protocol does not mandate any specific encryption technology.
+
+Only the semantic principles of secure communication are standardized.
 
 ---
 
 # 10. Availability
 
-Emergency communication may occur under adverse conditions.
+Humanitarian emergencies frequently occur under adverse operational conditions.
 
 Implementations should tolerate:
 
-- intermittent connectivity
-- partial synchronization
-- delayed communication
-- offline operation
-- network partitioning
+- intermittent connectivity;
+- delayed synchronization;
+- partial synchronization;
+- network partitioning;
+- prolonged offline operation.
 
-Availability is a primary design objective.
+Availability remains one of the core architectural principles of HCP.
+
+Humanitarian operations should continue whenever possible despite communication failures.
 
 ---
 
 # 11. Data Minimization
 
-Only humanitarian observations necessary for interoperability should be exchanged.
+Only the humanitarian information necessary for interoperability should be exchanged.
 
-Organizations should avoid publishing unnecessary personal information.
+Organizations should avoid publishing unnecessary personally identifiable information.
 
-The protocol encourages minimum necessary disclosure.
+Implementations are encouraged to disclose only the minimum humanitarian evidence required for effective interoperability.
 
----
+Data minimization improves:
+
+- privacy;
+- security;
+- interoperability;
+- long-term sustainability.
+
+Additional privacy guidance is defined in:
+
+- **HCP-0021 — Privacy and Data Minimization**
+- ---
 
 # 12. Protection Against False Information
 
-HCP assumes that false observations may exist.
+The Humanitarian Connection Protocol assumes that inaccurate or intentionally false humanitarian observations may exist.
 
-The protocol mitigates misinformation through:
+The protocol does not attempt to eliminate false information.
 
-- independent observations
-- Correlation Candidate
-- Trust Model
-- source diversity
-- historical consistency
+Instead, it reduces its impact through multiple independent mechanisms.
 
-False information cannot be completely prevented.
+These mechanisms include:
 
-Its impact should be minimized.
+- independent humanitarian observations;
+- distributed synchronization;
+- Correlation Model;
+- Explainable Correlation;
+- human verification.
+
+No single Humanitarian Record should be treated as definitive humanitarian truth.
+
+Humanitarian understanding emerges from the relationship between multiple independent observations.
 
 ---
 
 # 13. Abuse Prevention
 
-Implementations should protect against:
+Implementations are encouraged to protect HCP services against abusive behavior.
 
-- spam observations
-- automated flooding
-- replay attacks
-- malformed records
-- excessive synchronization
-- abusive search requests
+Typical protection mechanisms include:
 
-Protection mechanisms remain implementation specific.
+- spam prevention;
+- replay detection;
+- malformed record rejection;
+- excessive synchronization control;
+- abusive Query protection;
+- resource throttling.
+
+Protection mechanisms remain implementation-specific.
+
+They should preserve interoperability while protecting operational availability.
 
 ---
 
 # 14. Replay Protection
 
-Previously synchronized records should not be accepted as newly created observations.
+Previously synchronized Humanitarian Records should not be accepted as newly created observations.
 
-Nodes should detect duplicate Record UUIDs and repeated synchronization attempts.
+Implementations should detect:
+
+- duplicate Record UUIDs;
+- repeated synchronization attempts;
+- duplicated Canonical JSON payloads when appropriate.
+
+Replay protection preserves the historical integrity of humanitarian observations.
 
 ---
 
 # 15. Compromised Nodes
 
-A federation may determine that a node has been compromised.
+Organizations may determine that an HCP Node has become compromised.
 
-Possible responses include:
+Possible operational responses include:
 
-- temporary isolation
-- certificate revocation
-- synchronization suspension
-- trust reduction
-- permanent removal
+- temporary isolation;
+- synchronization suspension;
+- authentication revocation;
+- operational investigation;
+- permanent removal from operational relationships.
 
-Compromised node handling is governed by federation policy.
+Handling compromised Nodes remains entirely under local organizational control.
 
----
+The protocol defines interoperability.
 
-# 16. Trust Independence
-
-Cryptographic validity does not imply humanitarian credibility.
-
-Example:
-
-A correctly signed observation may still contain inaccurate information.
-
-The Trust Model remains responsible for evaluating operational reliability.
+Organizations define operational response.
 
 ---
 
-# 17. Emergency Mode
+# 16. Emergency Operation
 
-Humanitarian emergencies may require temporary relaxation of certain operational policies.
+Humanitarian emergencies may require temporary adaptation of operational security policies.
 
 Examples include:
 
-- anonymous observations
-- temporary volunteer nodes
-- delayed authentication
-- offline synchronization
+- delayed authentication;
+- temporary volunteer Nodes;
+- offline synchronization;
+- degraded communication environments;
+- temporary operational exceptions.
 
-Such exceptions should remain auditable.
+Such adaptations should remain auditable whenever reasonably possible.
 
----
-
-# 18. Federation Security
-
-Each federation defines its own security policies.
-
-These may include:
-
-- admission requirements
-- identity verification
-- certificate authorities
-- synchronization permissions
-- incident response
-
-The HCP specification does not impose governance structures.
+Emergency operation should preserve humanitarian interoperability while maintaining the highest practical level of security.
 
 ---
 
-# 19. Privacy Protection
+# 17. Federation Security
 
-Security includes protecting affected individuals.
+Every Humanitarian Federation independently defines its own operational security policies.
 
-Nodes should:
+Typical considerations include:
 
-- minimize exposed information
-- restrict unnecessary disclosure
-- protect sensitive observations
-- comply with applicable legislation
+- Node admission;
+- authentication policies;
+- authorization policies;
+- synchronization permissions;
+- incident response procedures;
+- operational auditing.
 
-Privacy policies remain locally defined.
-
----
-
-# 20. Security Monitoring
-
-Implementations are encouraged to record:
-
-- synchronization attempts
-- failed authentications
-- rejected records
-- signature failures
-- protocol violations
-
-Audit logs improve incident investigation.
+The protocol intentionally separates security interoperability from organizational governance.
 
 ---
 
-# 21. Future Threats
+# 18. Security Monitoring
 
-Future versions should consider:
+Implementations are encouraged to record security-relevant operational events.
 
-- post-quantum cryptography
-- decentralized identity
-- hardware-backed authentication
-- zero-trust networking
-- confidential computing
-- AI-generated misinformation
-- automated trust attacks
+Typical audit information includes:
 
-The protocol should evolve as threats evolve.
+- synchronization attempts;
+- authentication failures;
+- rejected Humanitarian Records;
+- integrity validation failures;
+- protocol violations.
 
----
+Security monitoring improves operational resilience and supports incident investigation.
 
-# 22. Security Philosophy
-
-HCP does not assume that participants are always honest.
-
-Instead, it assumes that:
-
-- identities may be compromised;
-- observations may be inaccurate;
-- communication may fail;
-- organizations may disagree.
-
-The protocol achieves resilience through independent verification, distributed observations and layered security rather than blind trust.
+Audit mechanisms remain implementation-specific.
 
 ---
 
-# 23. Summary
+# 19. Future Threats
 
-The HCP Security Model protects humanitarian interoperability through multiple independent security layers.
+Future versions of HCP should continue evolving as the humanitarian and technological landscape changes.
 
-Cryptographic authenticity, data integrity, operational trust and human verification are intentionally separated.
+Examples include:
 
-This layered approach enables humanitarian collaboration while reducing the impact of technical failures, malicious actors and misinformation.
+- post-quantum cryptography;
+- decentralized identity technologies;
+- confidential computing;
+- hardware-backed authentication;
+- AI-generated misinformation;
+- automated protocol abuse;
+- future humanitarian cyber threats.
+
+The Security Model intentionally remains technology-independent so that new protection mechanisms may be incorporated without changing humanitarian semantics.
+
+---
+
+# 20. Relationship with Other Specifications
+
+The Security Model defines the principles protecting humanitarian interoperability throughout HCP.
+
+Complementary specifications define how humanitarian information is represented, exchanged and interpreted.
+
+- **HCP-0002** defines the HCP Node.
+- **HCP-0005** defines the Node Communication Protocol.
+- **HCP-0010** defines the Canonical JSON Specification.
+- **HCP-0013** defines the Synchronization Model.
+- **HCP-0019** defines the Federation and Node Discovery Model.
+
+Together, these specifications define how humanitarian information remains authentic, resilient and interoperable while preserving organizational autonomy.
+
+---
+
+# 21. Summary
+
+The Security Model defines the principles protecting humanitarian interoperability within the Humanitarian Connection Protocol.
+
+Security protects the authenticity, integrity, availability and resilience of humanitarian information.
+
+Authenticity confirms origin.
+
+Integrity confirms preservation.
+
+Neither guarantees humanitarian correctness.
+
+Humanitarian understanding emerges through independent observations, correlation, explainability and human verification.
+
+By separating technical authenticity from humanitarian correctness, HCP enables secure interoperability without assuming that any single humanitarian observation represents objective truth.
+
+The Security Model reinforces one of the central architectural principles of HCP:
+
+**Security protects interoperability.**
+
+**Humanitarian evidence remains subject to correlation.**
+
+**Humanitarian reasoning remains explainable.**
+
+**Reality is verified by humans.**

@@ -1,45 +1,54 @@
 # HCP-0022
+
 # Interoperability Requirements
 
-Version: 0.1 (Draft)
+Version: 0.2 (Draft)
 
 Status: Draft
 
 Category: Core Specification
 
-Authors: Human Connection Network Foundation
+Project: Human Connection Network (HCN)
 
 License: Apache-2.0
 
-Last Updated: 2026-07-05
+Last Updated: 2026-07-13
 
 Depends On:
 
-- HCP-0001 Humanitarian Record
-- HCP-0002 HCP Node
-- HCP-0004 Node Identity
-- HCP-0005 Node Communication Protocol
-- HCP-0006 Trust Model
-- HCP-0012 Correlation Candidate
-- HCP-0013 Synchronization Model
-- HCP-0014 Query & Discovery Model
-- HCP-0017 Event Classification Model
-- HCP-0018 Search & Query Protocol
-- HCP-0019 Federation & Node Discovery Model
-- HCP-0020 Security Model
-- HCP-0021 Privacy & Data Minimization
+- HCP-0001 — Humanitarian Record
+- HCP-0002 — HCP Node
+- HCP-0005 — Node Communication Protocol
+- HCP-0010 — Canonical JSON Specification
+- HCP-0013 — Synchronization Model
+- HCP-0020 — Security Model
+- HCP-0021 — Privacy and Data Minimization
+
+Replaces:
+None
+
+Replaced By:
+None
 
 ---
 
-# 1. Abstract
+# Abstract
 
-This specification defines the minimum technical requirements for an implementation to claim interoperability with the Humanitarian Connection Protocol (HCP).
+This document defines the minimum semantic and behavioral requirements necessary for an implementation to claim compatibility with the Humanitarian Connection Protocol (HCP).
 
-These requirements establish consistent behavior across independent implementations while preserving implementation flexibility.
+The purpose of these requirements is to ensure that independent implementations preserve humanitarian interoperability while remaining free to adopt different technologies, architectures and operational models.
+
+HCP standardizes humanitarian semantics.
+
+It does not standardize software architecture.
+
+Implementations may differ technically.
+
+They must remain semantically compatible.
 
 ---
 
-# 2. Normative Language
+# 1. Normative Language
 
 The key words:
 
@@ -54,260 +63,406 @@ The key words:
 - MAY
 - OPTIONAL
 
-are to be interpreted as described in RFC 2119 and RFC 8174.
+are to be interpreted as described in:
+
+- RFC 2119
+- RFC 8174
+
+---
+
+# 2. Introduction
+
+The Humanitarian Connection Protocol is an interoperability standard rather than a software platform.
+
+Different HCP implementations may use different:
+
+- programming languages;
+- databases;
+- communication technologies;
+- deployment architectures;
+- correlation algorithms;
+- operational procedures.
+
+Despite these technical differences, compatible implementations must preserve the humanitarian semantics defined by HCP.
+
+Interoperability depends upon shared meaning rather than identical implementation.
 
 ---
 
 # 3. General Requirements
 
-An HCP implementation MUST exchange Humanitarian Records according to the protocol specifications.
+Every implementation claiming compatibility with HCP shall preserve the semantic principles defined by the protocol.
 
-An implementation MAY provide additional functionality provided that it does not break protocol interoperability.
+Implementations:
 
-Local implementation details remain outside the scope of HCP.
+- MUST exchange valid Humanitarian Records;
+- MUST preserve immutable humanitarian observations;
+- MUST preserve semantic interoperability;
+- MAY provide additional capabilities;
+- MUST NOT alter standardized humanitarian semantics.
+
+Local implementation details remain entirely implementation-specific.
+
+The protocol intentionally separates humanitarian semantics from software implementation.
 
 ---
 
-# 4. Humanitarian Records
+# 4. Design Principles
 
-An implementation MUST:
+Every interoperable HCP implementation follows the fundamental architectural principles of the protocol.
+
+---
+
+## Semantic Compatibility
+
+Implementations remain interoperable by preserving the humanitarian meaning defined by HCP.
+
+Technical implementation details remain independent.
+
+---
+
+## Behavioral Compatibility
+
+Implementations should behave consistently when exchanging, synchronizing and interpreting Humanitarian Records.
+
+---
+
+## Extensibility
+
+Additional functionality may be implemented provided that it does not alter standardized humanitarian semantics.
+
+---
+
+## Backward Compatibility
+
+Future protocol evolution should preserve interoperability whenever reasonably possible.
+
+Breaking changes should remain exceptional.
+
+---
+
+## Implementation Independence
+
+HCP intentionally avoids prescribing software architecture, programming languages, storage technologies or deployment models.
+
+Implementations remain free to innovate while preserving semantic interoperability.
+
+---
+
+## Humanitarian Purpose
+
+Every interoperable implementation should prioritize humanitarian coordination over technical uniformity.
+
+Interoperability exists to improve humanitarian cooperation.
+
+Technology remains a means rather than the objective.
+---
+
+# 5. Humanitarian Records
+
+Every interoperable HCP implementation MUST generate and exchange valid Humanitarian Records according to the Canonical JSON Specification.
+
+Implementations MUST:
 
 - generate valid Humanitarian Records;
-- preserve immutable records;
+- preserve immutable observations;
 - assign globally unique Record UUIDs;
-- preserve timestamps;
-- preserve metadata;
-- preserve unknown optional fields.
+- preserve observation timestamps;
+- preserve protocol metadata;
+- preserve unknown optional fields whenever technically possible.
 
-An implementation MUST NOT modify synchronized records.
-
----
-
-# 5. Record Immutability
-
-Once a Humanitarian Record has been published, it MUST remain immutable.
-
-New information MUST generate a new Humanitarian Record.
-
-Existing records MUST NOT be edited.
+Implementations MUST NOT alter the semantic meaning of synchronized Humanitarian Records.
 
 ---
 
-# 6. Event Classification
+# 6. Record Immutability
 
-Implementations MUST recognize standardized HCP Event Classifications.
+Humanitarian Records are immutable.
 
-Unknown Event Types MUST NOT invalidate otherwise valid records.
+Once published, a Humanitarian Record MUST never be modified.
 
-Implementations SHOULD preserve unknown classifications whenever possible.
+Whenever new humanitarian information becomes available, a new Humanitarian Record MUST be created.
+
+Implementations MUST NOT:
+
+- overwrite observations;
+- replace historical records;
+- modify synchronized Humanitarian Records.
+
+History is preserved through new observations rather than updates.
 
 ---
 
-# 7. Synchronization
+# 7. Event Types
 
-Implementations MUST support synchronization of Humanitarian Records.
+Implementations MUST recognize standardized HCP Event Types.
+
+Unknown Event Types MUST NOT invalidate otherwise valid Humanitarian Records.
+
+Implementations SHOULD preserve unknown Event Types whenever technically possible.
+
+Future protocol versions may introduce additional Event Types without breaking interoperability.
+
+---
+
+# 8. Synchronization
+
+Interoperable implementations MUST support synchronization of Humanitarian Records.
 
 Synchronization MUST preserve:
 
 - Record UUID;
+- Canonical JSON structure;
 - timestamps;
-- metadata;
-- event classification;
-- signatures (when present).
+- Event Types;
+- protocol metadata;
+- digital signatures (when present).
 
-Synchronization MUST NOT alter record content.
-
----
-
-# 8. Query Support
-
-Implementations SHOULD support distributed humanitarian queries.
-
-Queries MUST return Humanitarian Records rather than identified persons.
-
-Implementations MAY limit search scope according to local policy.
+Synchronization MUST NOT modify the humanitarian meaning of exchanged Humanitarian Records.
 
 ---
 
-# 9. Correlation
+# 9. Query Support
 
-Implementations SHOULD support Correlation Candidate processing.
+Implementations SHOULD support humanitarian Queries as defined by the Query Model.
 
-Correlation MUST NOT merge Humanitarian Records.
+Queries MUST retrieve Humanitarian Records.
 
-Correlation MUST preserve original observations.
+They MUST NOT retrieve identified persons.
 
----
+Implementations MAY restrict:
 
-# 10. Trust Model
+- search scope;
+- distributed search;
+- searchable observations.
 
-Trust evaluation SHOULD follow the principles defined in the HCP Trust Model.
-
-Implementations MAY implement additional trust algorithms.
-
-Trust evaluation MUST remain independent from cryptographic authentication.
+Such restrictions remain implementation-specific and MUST preserve humanitarian semantics.
 
 ---
 
-# 11. Node Identity
+# 10. Correlation
 
-Nodes participating in federated synchronization SHOULD possess stable identities.
+Implementations SHOULD support the Correlation Model defined by HCP.
 
-Identity technologies remain implementation specific.
+Correlation MUST:
 
-Node Identity MUST NOT alter Humanitarian Record semantics.
+- preserve original Humanitarian Records;
+- avoid merging observations;
+- generate humanitarian interpretations without modifying historical evidence.
 
----
+Correlation algorithms remain entirely implementation-specific.
 
-# 12. Security
-
-Implementations SHOULD verify:
-
-- record integrity;
-- digital signatures (when available);
-- protocol compatibility;
-- federation policies.
-
-Invalid records MUST be rejected.
+Only humanitarian semantics are standardized.
 
 ---
 
-# 13. Privacy
+# 11. Security
 
-Implementations SHOULD exchange only the minimum information necessary for humanitarian coordination.
+Implementations SHOULD apply the Security Model throughout humanitarian interoperability.
 
-Privacy policies remain locally governed.
+Typical responsibilities include:
 
-Implementations MUST NOT assume that all locally stored observations are eligible for synchronization.
+- authentication;
+- integrity validation;
+- protocol compatibility verification;
+- synchronization validation.
 
----
+Invalid Humanitarian Records SHOULD be rejected before synchronization.
 
-# 14. Transport Independence
-
-Implementations MAY use any communication technology.
-
-Examples include:
-
-- HTTPS
-- gRPC
-- MQTT
-- Message Queues
-- WebSockets
-- Offline synchronization
-
-Transport selection MUST NOT alter protocol semantics.
+Security mechanisms remain implementation-specific.
 
 ---
 
-# 15. Federation
+# 12. Privacy
 
-Implementations MAY participate in:
+Implementations SHOULD exchange only the minimum humanitarian information necessary for interoperability.
 
-- private federations;
-- public federations;
-- hybrid federations.
+Privacy policies remain entirely under local organizational control.
 
-Federation membership remains outside the scope of HCP.
+Implementations MUST NOT assume that every locally stored Humanitarian Record is eligible for synchronization or distributed search.
+
+Privacy is preserved by minimizing exchanged humanitarian information rather than by restricting humanitarian interoperability.
+---
+
+# 13. Transport Independence
+
+The Humanitarian Connection Protocol intentionally remains independent of communication technologies.
+
+Compatible implementations may exchange Humanitarian Records using:
+
+- HTTPS;
+- gRPC;
+- MQTT;
+- Message Queues;
+- WebSockets;
+- offline synchronization;
+- future communication mechanisms.
+
+Transport technologies may differ.
+
+Humanitarian semantics must remain identical.
 
 ---
 
-# 16. Unknown Extensions
+# 14. Federation
 
-Implementations MUST ignore unknown optional fields without rejecting valid Humanitarian Records.
+Compatible implementations may participate in:
 
-Unknown extensions SHOULD be preserved whenever technically possible.
+- private Humanitarian Federations;
+- public Humanitarian Federations;
+- hybrid Humanitarian Federations.
 
-This requirement improves forward compatibility.
+Federation membership remains entirely voluntary.
 
----
+Participation in a Humanitarian Federation MUST NOT alter the humanitarian semantics defined by HCP.
 
-# 17. Version Compatibility
-
-Implementations SHOULD advertise supported HCP versions.
-
-Nodes SHOULD negotiate compatible protocol behavior whenever multiple versions are available.
-
-Backward compatibility is strongly recommended.
+Operational relationships remain independent of protocol compatibility.
 
 ---
 
-# 18. Error Handling
+# 15. Unknown Extensions
 
-Implementations SHOULD detect and report:
+Future protocol versions may introduce additional optional fields and capabilities.
 
-- malformed records;
-- invalid signatures;
+Interoperable implementations MUST ignore unknown optional fields without rejecting otherwise valid Humanitarian Records.
+
+Whenever technically possible, unknown optional fields SHOULD be preserved during synchronization.
+
+Forward compatibility contributes to long-term humanitarian interoperability.
+
+---
+
+# 16. Version Compatibility
+
+Implementations SHOULD advertise the HCP protocol versions they support.
+
+Whenever multiple protocol versions are available, compatible implementations SHOULD negotiate mutually supported behavior.
+
+Backward compatibility is strongly recommended whenever reasonably possible.
+
+Version negotiation affects implementation compatibility.
+
+It never alters humanitarian semantics.
+
+---
+
+# 17. Error Handling
+
+Implementations SHOULD detect and report operational errors, including:
+
+- malformed Humanitarian Records;
+- Canonical JSON validation failures;
 - unsupported protocol versions;
 - synchronization failures;
-- invalid metadata.
+- integrity validation failures.
 
-Errors SHOULD NOT interrupt unrelated protocol operations.
+Errors affecting one Humanitarian Record SHOULD NOT interrupt unrelated humanitarian operations whenever reasonably possible.
+
+Operational resilience remains a core objective of HCP.
 
 ---
 
-# 19. Local Autonomy
+# 18. Local Autonomy
 
-HCP implementations remain free to define:
+Every interoperable implementation remains free to define its own:
 
-- governance;
+- governance model;
 - authentication policies;
 - synchronization policies;
 - retention policies;
-- federation rules;
+- federation participation;
 - operational procedures.
 
-These local decisions MUST NOT modify the protocol semantics.
+These local decisions MUST NOT modify the standardized humanitarian semantics defined by HCP.
+
+The protocol governs interoperability.
+
+Organizations govern themselves.
 
 ---
 
-# 20. Compliance Levels
+# 19. Compliance Levels
 
-An implementation may describe itself as:
-
-### HCP Compatible
-
-Implements all mandatory (MUST) requirements.
+Implementations may describe their compatibility according to the following levels.
 
 ---
 
-### HCP Recommended
+## Core Compatible
 
-Implements mandatory and recommended (SHOULD) requirements.
+Implements every mandatory (**MUST**) requirement defined by HCP.
 
----
-
-### HCP Extended
-
-Implements HCP plus additional vendor-specific capabilities without breaking interoperability.
-
-Vendor-specific extensions SHOULD be documented.
+Core Compatible implementations preserve the minimum humanitarian interoperability required by the protocol.
 
 ---
 
-# 21. Non-Compliance
+## Fully Compatible
+
+Implements both mandatory (**MUST**) and recommended (**SHOULD**) requirements.
+
+Fully Compatible implementations provide the highest level of interoperability expected by the specification.
+
+---
+
+## Extended Compatible
+
+Implements HCP while adding implementation-specific capabilities.
+
+Extensions MUST preserve humanitarian semantics and MUST NOT reduce interoperability with other compatible implementations.
+
+Vendor-specific extensions should be documented whenever reasonably possible.
+
+---
+
+# 20. Non-Compliance
 
 An implementation MUST NOT claim HCP compatibility if it:
 
-- modifies synchronized records;
-- replaces immutable observations;
-- alters standardized semantics;
+- modifies synchronized Humanitarian Records;
+- replaces immutable humanitarian observations;
+- alters standardized humanitarian semantics;
 - breaks protocol interoperability;
-- violates mandatory requirements defined by this specification.
+- violates mandatory (**MUST**) requirements defined by this specification.
+
+Technical innovation is encouraged.
+
+Semantic incompatibility is not.
 
 ---
 
-# 22. Future Compatibility
+# 21. Relationship with Other Specifications
 
-Future HCP versions should preserve interoperability whenever reasonably possible.
+The Interoperability Requirements specification defines the minimum semantic and behavioral requirements necessary for compatibility with HCP.
 
-Breaking changes SHOULD be avoided.
+Complementary specifications define the protocol models that interoperable implementations are expected to preserve.
 
-When unavoidable, version negotiation mechanisms SHOULD be provided.
+- **HCP-0001** defines the Humanitarian Record.
+- **HCP-0002** defines the HCP Node.
+- **HCP-0005** defines the Node Communication Protocol.
+- **HCP-0010** defines the Canonical JSON Specification.
+- **HCP-0013** defines the Synchronization Model.
+- **HCP-0020** defines the Security Model.
+- **HCP-0021** defines the Privacy and Data Minimization Model.
+
+Together, these specifications define the minimum semantic behavior required for universal humanitarian interoperability across independent implementations.
 
 ---
 
-# 23. Summary
+# 22. Summary
 
-This specification defines the minimum technical requirements necessary for interoperable HCP implementations.
+The Interoperability Requirements specification defines what it means for an implementation to be compatible with the Humanitarian Connection Protocol.
 
-By distinguishing mandatory, recommended and optional behaviors, HCP enables diverse software implementations while preserving a consistent humanitarian interoperability model across organizations, technologies and deployment environments.
+Compatibility depends upon preserving humanitarian semantics rather than technical implementation.
+
+Different implementations may use different architectures, programming languages, databases and communication technologies while remaining fully interoperable.
+
+The protocol intentionally standardizes humanitarian meaning instead of software implementation.
+
+By preserving shared semantics while encouraging technical diversity, HCP enables long-term interoperability across independent organizations, technologies and humanitarian environments.
+
+The Interoperability Requirements specification reinforces one of the central architectural principles of HCP:
+
+**Different implementations.**
+
+**Shared semantics.**
+
+**Universal interoperability.**

@@ -1,330 +1,509 @@
 # HCP-0018
-# Search & Query Protocol
 
-Version: 0.1 (Draft)
+# Search and Query Protocol
+
+Version: 0.2 (Draft)
 
 Status: Draft
 
 Category: Core Specification
 
-Authors: Human Connection Network Foundation
+Project: Human Connection Network (HCN)
 
 License: Apache-2.0
 
-Last Updated: 2026-07-05
+Last Updated: 2026-07-13
 
 Depends On:
 
-- HCP-0002 HCP Node
-- HCP-0005 Node Communication Protocol
-- HCP-0006 Trust Model
-- HCP-0012 Correlation Candidate
-- HCP-0013 Synchronization Model
-- HCP-0014 Query & Discovery Model
-- HCP-0017 Event Classification Model
+- HCP-0002 — HCP Node
+- HCP-0005 — Node Communication Protocol
+- HCP-0011 — Query Model
+- HCP-0012 — Correlation Model
+- HCP-0013 — Synchronization Model
+
+Replaces:
+None
+
+Replaced By:
+None
 
 ---
 
-# 1. Abstract
+# Abstract
 
-The Search & Query Protocol defines how HCP Nodes request and exchange humanitarian observations.
+This document defines the Search and Query Protocol of the Humanitarian Connection Protocol (HCP).
 
-The protocol specifies query behavior rather than transport mechanisms.
+The Search and Query Protocol describes how HCP Nodes execute humanitarian searches using the Query Model defined by **HCP-0011**.
 
-An HCP query searches for Humanitarian Records that may describe a requested humanitarian situation.
+Search retrieves humanitarian evidence.
 
-It never requests or returns verified personal identities.
+It never retrieves identities.
+
+The purpose of search is to collect compatible Humanitarian Records that may contribute to humanitarian understanding.
+
+Correlation and result presentation occur only after humanitarian evidence has been collected.
+
+The protocol standardizes the semantic behavior of humanitarian search.
+
+It does not prescribe transport technologies or search algorithms.
+
+---
+
+# 1. Introduction
+
+Humanitarian emergencies frequently require information distributed across multiple independent HCP Nodes.
+
+Hospitals, shelters, emergency responders and humanitarian organizations may each possess different Humanitarian Records describing the same humanitarian situation.
+
+The Search and Query Protocol defines how HCP Nodes execute humanitarian searches using standardized Queries.
+
+Search retrieves Humanitarian Records.
+
+It does not generate Correlation Candidates.
+
+It does not generate Humanitarian Cases.
+
+Those responsibilities belong to subsequent stages of the protocol.
+
+The Search and Query Protocol exists solely to retrieve humanitarian evidence.
 
 ---
 
 # 2. Purpose
 
-Search allows independent HCP Nodes to discover humanitarian observations stored by other participating nodes.
+The purpose of the Search and Query Protocol is to define the semantic principles governing humanitarian search within HCP.
 
-The objective is to improve humanitarian awareness while preserving decentralization and interoperability.
+Search enables HCP Nodes to:
+
+- execute humanitarian Queries;
+- retrieve compatible Humanitarian Records;
+- collect humanitarian evidence from multiple Nodes;
+- support decentralized humanitarian discovery.
+
+The protocol intentionally separates humanitarian search from humanitarian interpretation.
+
+Search retrieves evidence.
+
+Correlation creates humanitarian understanding.
 
 ---
 
 # 3. Design Principles
 
-Search operations shall be:
+Every Search and Query Protocol follows the fundamental architectural principles of HCP.
 
-- decentralized
-- transport independent
-- stateless
-- deterministic
-- interoperable
-- fault tolerant
+---
 
-Nodes remain autonomous.
+## Evidence-Based
+
+Search retrieves Humanitarian Records.
+
+It never retrieves identities.
+
+---
+
+## Local First
+
+Every humanitarian search begins within the local HCP Node.
+
+Distributed search extends local search.
+
+It never replaces it.
+
+---
+
+## Decentralized
 
 No central search authority exists.
 
----
-
-# 4. Query Model
-
-A query represents a humanitarian search request.
-
-Typical search parameters may include:
-
-- reported name
-- estimated age
-- estimated gender
-- event classification
-- city
-- administrative region
-- country
-- date range
-- reporting organization
-- free text keywords
-
-All parameters are optional.
-
-Partial searches are expected.
+Every HCP Node remains autonomous.
 
 ---
 
-# 5. Query Scope
+## Stateless
 
-Nodes may execute searches against:
+Each Query is evaluated independently.
 
-- local records
-- selected trusted peers
-- regional HCP networks
-- national HCP networks
-- global HCP networks
-
-Scope is determined by local policy.
+Search does not require persistent query sessions.
 
 ---
 
-# 6. Local Search
+## Transport Independent
 
-Every search begins locally.
-
-If local observations satisfy the request, results may be returned immediately.
-
-Remote searches remain optional.
+Search semantics remain identical regardless of the communication technology used.
 
 ---
 
-# 7. Distributed Search
+## Fault Tolerant
 
-When enabled, the node may forward the query to connected peers.
+Unavailable Nodes should never prevent humanitarian search from completing.
 
-Example:
+Partial humanitarian evidence remains valuable.
 
-```
+---
+
+## Implementation Independent
+
+Every HCP implementation remains free to optimize search execution.
+
+The protocol standardizes humanitarian search behavior.
+
+It does not standardize implementation techniques.
+
+---
+
+# 4. Search Philosophy
+
+Search retrieves humanitarian evidence.
+
+It does not establish humanitarian understanding.
+
+The Humanitarian Connection Protocol intentionally separates evidence retrieval from humanitarian interpretation.
+
+Humanitarian understanding emerges only after correlation has evaluated the available Humanitarian Records.
+
+The fundamental philosophy of humanitarian search is:
+
+**Search retrieves humanitarian evidence.**
+
+**Correlation creates humanitarian understanding.**
+
+**Clients communicate Humanitarian Cases.**
+
+**People verify reality.**
+---
+
+# 5. Search Pipeline
+
+Every humanitarian search follows the same conceptual sequence.
+
+```text
 Client
 
-↓
+        │
+
+        ▼
+
+Query
+
+        │
+
+        ▼
+
+Local Search
+
+        │
+
+        ▼
+
+Distributed Search (optional)
+
+        │
+
+        ▼
+
+Collect Humanitarian Records
+
+        │
+
+        ▼
+
+Correlation
+
+        │
+
+        ▼
+
+Result Presentation
+
+        │
+
+        ▼
+
+Humanitarian Cases
+```
+
+The Search Pipeline separates humanitarian evidence retrieval from humanitarian interpretation.
+
+Search retrieves Humanitarian Records.
+
+Correlation evaluates humanitarian evidence.
+
+Presentation communicates Humanitarian Cases.
+
+---
+
+# 6. Search Scope
+
+Implementations may execute humanitarian searches using different scopes according to local operational policies.
+
+Typical search scopes include:
+
+- local HCP Node;
+- selected peer Nodes;
+- regional humanitarian networks;
+- national humanitarian networks;
+- global humanitarian networks.
+
+The selected scope affects where Humanitarian Records are searched.
+
+It never changes the semantic behavior of the protocol.
+
+---
+
+# 7. Local Search
+
+Every humanitarian search begins locally.
+
+The HCP Node first evaluates the Humanitarian Records already available within its own repository.
+
+If local humanitarian evidence sufficiently satisfies the Query, the implementation may decide that no distributed search is necessary.
+
+Local search minimizes latency and reduces unnecessary network traffic.
+
+---
+
+# 8. Distributed Search
+
+When enabled, an HCP Node may forward the Query to compatible peer Nodes.
+
+Illustrative example:
+
+```text
+Client
+
+        │
+
+        ▼
 
 Node A
 
-↓
+      ╱ │ ╲
+
+     ▼  ▼  ▼
 
 Node B
 
-↓
-
 Node C
-
-↓
 
 Node D
 ```
 
-Each node performs an independent search.
+Each receiving Node independently executes the Query against its own Humanitarian Records.
+
+Each Node returns only humanitarian evidence available within its own repository.
+
+Distributed search never centralizes humanitarian information.
 
 ---
 
-# 8. Query Propagation
+# 9. Query Propagation
 
-Nodes should avoid unlimited query propagation.
+Implementations should avoid unlimited propagation of humanitarian Queries.
 
-Typical mechanisms include:
+Typical propagation controls include:
 
-- maximum hop count
-- time-to-live (TTL)
-- trusted peer restrictions
-- geographic limits
+- maximum hop count;
+- time-to-live (TTL);
+- trusted peer restrictions;
+- geographic boundaries;
+- organizational boundaries.
 
-These mechanisms reduce unnecessary network traffic.
+These mechanisms improve scalability while preserving decentralized operation.
 
----
-
-# 9. Query Parameters
-
-Queries should tolerate incomplete or uncertain information.
-
-Example:
-
-```
-Reported Name:
-Maria González
-
-Estimated Age:
-15
-
-Location:
-Valencia
-
-Event:
-Hospital Admission
-```
-
-Exact matches are not required.
+Propagation policies remain implementation-specific.
 
 ---
 
 # 10. Result Collection
 
-Each node returns matching Humanitarian Records.
+Each participating HCP Node returns the Humanitarian Records matching the received Query.
 
-Returned records remain independent observations.
+Returned Humanitarian Records remain independent humanitarian observations.
 
-Nodes must not merge records during query execution.
+Nodes never merge Humanitarian Records during search execution.
+
+Every returned Humanitarian Record preserves its original humanitarian meaning.
+
+Correlation begins only after the available humanitarian evidence has been collected.
+---
+
+# 11. Correlation After Search
+
+Search concludes once the available Humanitarian Records have been collected.
+
+From that point onward, the local HCP Node executes its Correlation Model.
+
+Search never performs:
+
+- humanitarian correlation;
+- Humanitarian Timeline reconstruction;
+- Humanitarian Case generation;
+- result presentation.
+
+These operations belong to subsequent protocol stages.
+
+The Search and Query Protocol retrieves humanitarian evidence.
+
+The Correlation Model interprets that evidence.
 
 ---
 
-# 11. Correlation
+# 12. Query Completion
 
-Correlation is performed after records are collected.
+A humanitarian search may complete under different conditions.
 
-The Correlation Candidate algorithm estimates whether multiple observations describe the same humanitarian situation.
+Typical completion conditions include:
 
-Correlation never modifies returned records.
+- all selected HCP Nodes have responded;
+- the configured timeout has expired;
+- the maximum search scope has been reached;
+- local operational policies terminate the search.
 
----
+Partial results remain valid humanitarian evidence.
 
-# 12. Ranking
-
-Returned observations should be ranked using:
-
-- Correlation Score
-- Trust Score
-- temporal proximity
-- geographic proximity
-- observation consistency
-- event similarity
-
-Ranking assists human interpretation.
+Future synchronization or subsequent searches may reveal additional Humanitarian Records.
 
 ---
 
-# 13. Query Completion
+# 13. Fault Tolerance
 
-A query completes when:
+Distributed humanitarian environments naturally experience communication failures.
 
-- all configured nodes respond;
-- timeout expires;
-- maximum search scope is reached;
-- local policy terminates the operation.
+Unavailable HCP Nodes should never prevent humanitarian search from completing.
 
-Partial results remain valid.
+Search continues using the Humanitarian Records successfully retrieved.
 
----
+Temporary communication failures affect search completeness.
 
-# 14. Fault Tolerance
-
-Unavailable nodes must not prevent search execution.
-
-The querying node continues using available observations.
-
-Future synchronization may reveal additional information.
+They do not affect protocol interoperability.
 
 ---
 
-# 15. Privacy
+# 14. Privacy
 
-Nodes remain responsible for determining which observations may be searchable.
+Each HCP Node determines which Humanitarian Records are available for search according to its local policies.
 
-Private records need not participate in distributed search.
+Implementations may restrict searchable Humanitarian Records based on:
 
-Local policy always prevails.
+- organizational policies;
+- local legislation;
+- humanitarian context;
+- access permissions.
 
----
+Search never requires every Humanitarian Record to be publicly searchable.
 
-# 16. Security
-
-Nodes should verify:
-
-- requesting node identity (when applicable)
-- protocol compatibility
-- query integrity
-- authorization policies
-
-Invalid queries should be rejected.
+Node autonomy remains one of the fundamental principles of HCP.
 
 ---
 
-# 17. Rate Limiting
+# 15. Security
 
-Implementations are encouraged to protect against abusive querying.
+Implementations should validate incoming Queries before executing humanitarian searches.
 
-Possible mechanisms include:
+Typical validation includes:
 
-- request quotas
-- authentication
-- query throttling
-- caching
-- trusted-node prioritization
+- protocol compatibility;
+- Query integrity;
+- authorization policies;
+- supported protocol version.
 
-Rate limiting is implementation specific.
+Invalid or malformed Queries should be rejected before search execution.
 
----
-
-# 18. Transport Independence
-
-The Search & Query Protocol does not mandate a transport technology.
-
-Implementations may use:
-
-- HTTPS
-- gRPC
-- Message Queues
-- MQTT
-- WebSockets
-- Offline synchronization
-- Future communication mechanisms
-
-Semantic behavior must remain consistent.
+Security mechanisms remain implementation-specific.
 
 ---
 
-# 19. Version Compatibility
+# 16. Rate Limiting
 
-Nodes should advertise supported protocol versions.
+Implementations are encouraged to protect humanitarian search services against abusive or excessive querying.
 
-Queries should only use features supported by both parties.
+Typical mechanisms include:
 
-Backward compatibility is strongly recommended.
+- request quotas;
+- authentication;
+- query throttling;
+- caching;
+- trusted peer prioritization.
 
----
+Rate limiting policies remain implementation-specific.
 
-# 20. Future Extensions
-
-Future versions may support:
-
-- semantic search
-- multilingual search
-- phonetic search
-- AI-assisted query expansion
-- geographic indexing
-- distributed caching
-- encrypted federated search
-
-Extensions should preserve interoperability whenever possible.
+They should never alter the semantic behavior of humanitarian search.
 
 ---
 
-# 21. Summary
+# 17. Transport Independence
 
-The Search & Query Protocol enables decentralized discovery of humanitarian observations across independent HCP Nodes.
+The Search and Query Protocol intentionally avoids prescribing communication technologies.
 
-Queries retrieve observations rather than identities.
+Compatible implementations may execute humanitarian searches using:
 
-Correlation and Trust Models organize the returned information.
+- HTTPS;
+- gRPC;
+- Message Queues;
+- MQTT;
+- WebSockets;
+- offline synchronization;
+- future communication mechanisms.
 
-This approach allows scalable humanitarian search while preserving decentralization, interoperability and local autonomy.
+Regardless of the transport technology used, humanitarian search semantics remain identical.
+
+---
+
+# 18. Version Compatibility
+
+HCP Nodes should advertise the protocol versions they support.
+
+Search operations should use only features compatible with both communicating Nodes.
+
+Whenever reasonably possible, backward compatibility should be preserved across protocol versions.
+
+Version negotiation affects implementation compatibility.
+
+It never changes humanitarian semantics.
+
+---
+
+# 19. Relationship with Other Specifications
+
+The Search and Query Protocol defines how HCP Nodes execute humanitarian searches using standardized Queries.
+
+Complementary specifications define the remaining stages of humanitarian interoperability.
+
+- **HCP-0002** defines the HCP Node.
+- **HCP-0005** defines the Node Communication Protocol.
+- **HCP-0011** defines the Query Model.
+- **HCP-0012** defines the Correlation Model.
+- **HCP-0013** defines the Synchronization Model.
+- **HCP-0015** defines the Result Presentation Model.
+
+Together, these specifications define how humanitarian evidence is queried, retrieved, interpreted and ultimately presented while preserving decentralization and implementation independence.
+
+---
+
+# 20. Summary
+
+The Search and Query Protocol defines the semantic principles governing humanitarian search within HCP.
+
+Search retrieves Humanitarian Records.
+
+It never retrieves identities.
+
+The protocol intentionally separates humanitarian evidence retrieval from humanitarian interpretation.
+
+Humanitarian understanding emerges only after correlation evaluates the available Humanitarian Records.
+
+Different HCP Nodes may execute humanitarian searches using different implementation strategies while preserving identical semantic behavior.
+
+By separating search, correlation and presentation into independent protocol stages, HCP maintains scalability, implementation independence and long-term interoperability.
+
+The Search and Query Protocol reinforces one of the central architectural principles of HCP:
+
+**Search retrieves humanitarian evidence.**
+
+**Correlation creates humanitarian understanding.**
+
+**Clients communicate Humanitarian Cases.**
+
+**People verify reality.**

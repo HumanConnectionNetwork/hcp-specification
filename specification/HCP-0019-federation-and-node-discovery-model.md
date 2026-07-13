@@ -1,144 +1,254 @@
 # HCP-0019
-# Federation & Node Discovery Model
 
-Version: 0.1 (Draft)
+# Federation and Node Discovery Model
+
+Version: 0.2 (Draft)
 
 Status: Draft
 
 Category: Core Specification
 
-Authors: Human Connection Network Foundation
+Project: Human Connection Network (HCN)
 
 License: Apache-2.0
 
-Last Updated: 2026-07-05
+Last Updated: 2026-07-13
 
 Depends On:
 
-- HCP-0002 HCP Node
-- HCP-0004 Node Identity
-- HCP-0005 Node Communication Protocol
-- HCP-0013 Synchronization Model
-- HCP-0018 Search & Query Protocol
+- HCP-0002 — HCP Node
+- HCP-0005 — Node Communication Protocol
+- HCP-0013 — Synchronization Model
+- HCP-0018 — Search and Query Protocol
+
+Replaces:
+None
+
+Replaced By:
+None
 
 ---
 
-# 1. Abstract
+# Abstract
 
-The Federation & Node Discovery Model defines how HCP Nodes organize into interoperable networks and, when permitted, discover other participating nodes.
+This document defines the Federation and Node Discovery Model of the Humanitarian Connection Protocol (HCP).
 
-HCP does not require a global network or a centralized registry.
+The Federation and Node Discovery Model describes how autonomous HCP Nodes may cooperate through voluntary operational agreements while preserving organizational independence.
 
-Instead, it allows independent federations to operate autonomously while remaining interoperable through the Humanitarian Connection Protocol.
+HCP does not require a centralized registry, a global federation or mandatory participation.
+
+Instead, independent Humanitarian Federations may cooperate whenever appropriate while remaining fully autonomous.
+
+The protocol standardizes interoperability.
+
+It does not standardize organizational governance.
+
+---
+
+# 1. Introduction
+
+Humanitarian emergencies frequently involve multiple independent organizations operating simultaneously.
+
+Hospitals, emergency responders, humanitarian organizations, governments and volunteer initiatives often need to exchange humanitarian evidence while maintaining their own operational policies.
+
+The Federation and Node Discovery Model defines how HCP Nodes may discover compatible peers and establish voluntary operational relationships.
+
+Participation is always optional.
+
+Autonomy is always preserved.
+
+Interoperability never requires centralization.
 
 ---
 
 # 2. Purpose
 
-The objective of federation is to enable organizations to exchange humanitarian observations according to their own operational, legal and security requirements.
+The purpose of the Federation and Node Discovery Model is to define the semantic principles governing cooperation between autonomous HCP Nodes.
 
-Each federation determines:
+This specification enables organizations to:
 
-- which nodes participate;
-- how trust relationships are established;
-- how synchronization occurs;
-- whether external interoperability is permitted.
+- discover compatible HCP Nodes;
+- establish operational relationships;
+- exchange Humanitarian Records;
+- preserve organizational autonomy;
+- participate in decentralized humanitarian networks.
+
+The protocol intentionally separates interoperability from organizational governance.
+
+Organizations define their own policies.
+
+HCP defines how interoperability occurs.
 
 ---
 
 # 3. Design Principles
 
-The federation model follows these principles:
-
-- decentralized
-- federation-based
-- organization independent
-- transport independent
-- optional interoperability
-- no mandatory central authority
-
-Participation in a federation is always voluntary.
+Every Federation and Node Discovery Model follows the fundamental architectural principles of HCP.
 
 ---
 
-# 4. What is a Federation?
+## Autonomous
 
-A federation is a group of HCP Nodes that agree to exchange Humanitarian Records according to shared operational policies.
+Every HCP Node remains operationally independent.
 
-Examples include:
-
-- National emergency response networks
-- Hospital consortiums
-- Humanitarian NGOs
-- Civil Defense organizations
-- University research projects
-- Community volunteer initiatives
-
-Multiple federations may coexist.
+Participation in any federation is voluntary.
 
 ---
 
-# 5. Federation Independence
+## Interoperable
 
-Every federation operates independently.
+Federations exchange Humanitarian Records.
 
-Federations may choose to:
-
-- remain completely isolated;
-- synchronize with selected federations;
-- participate in broader humanitarian networks.
-
-No federation has authority over another.
+Operational decisions always remain local.
 
 ---
 
-# 6. Federation Types
+## Decentralized
 
-HCP recognizes different deployment models.
+No central authority is required for federation or node discovery.
 
-## 6.1 Private Federation
+Multiple Humanitarian Federations may coexist.
 
-Participation is restricted.
+---
+
+## Voluntary
+
+Organizations decide independently whether to participate in federation activities.
+
+The protocol never mandates collaboration.
+
+---
+
+## Implementation Independent
+
+Discovery mechanisms, admission policies and operational procedures remain implementation-specific.
+
+The protocol standardizes only humanitarian interoperability.
+
+---
+
+## Scalable
+
+The federation model supports cooperation between a small number of Nodes as well as large international humanitarian networks.
+
+No architectural limits are imposed by the protocol.
+
+---
+
+# 4. Federation Philosophy
+
+A Humanitarian Federation is a voluntary operational network of autonomous HCP Nodes.
+
+It is not a protocol object.
+
+It is not governed by HCP.
+
+It represents an operational agreement between organizations that choose to cooperate using the Humanitarian Connection Protocol.
+
+The protocol intentionally separates organizational cooperation from humanitarian interoperability.
+
+The fundamental philosophy of federation is:
+
+**Nodes remain autonomous.**
+
+**Federations remain voluntary.**
+
+**Synchronization remains selective.**
+
+**Interoperability remains universal.**
+---
+
+# 5. Humanitarian Federation
+
+A Humanitarian Federation is a voluntary operational network of autonomous HCP Nodes.
+
+Its purpose is to facilitate humanitarian interoperability between organizations that agree to cooperate while preserving their own operational independence.
+
+A Humanitarian Federation is not a protocol object.
+
+It is an operational agreement.
+
+Participation never changes the semantic behavior of HCP.
+
+Different Humanitarian Federations may coexist, overlap or remain completely independent.
+
+---
+
+# 6. Federation Independence
+
+Every Humanitarian Federation operates independently.
+
+Each federation determines its own:
+
+- operational policies;
+- admission requirements;
+- synchronization policies;
+- search policies;
+- governance model.
+
+No Humanitarian Federation has authority over another.
+
+Participation in one federation never prevents participation in another.
+
+The protocol guarantees interoperability.
+
+It never imposes organizational structure.
+
+---
+
+# 7. Federation Types
+
+Different humanitarian environments may adopt different federation models.
+
+Illustrative examples include:
+
+---
+
+## Private Federation
+
+Participation is restricted to explicitly authorized HCP Nodes.
 
 Typical examples include:
 
-- Hospitals
-- Government agencies
-- Emergency services
-- Military humanitarian operations
-
-Nodes are explicitly authorized.
+- hospitals;
+- government agencies;
+- emergency services;
+- military humanitarian operations.
 
 ---
 
-## 6.2 Public Federation
+## Public Federation
 
-Participation is open according to local admission policies.
+Participation follows publicly defined operational policies.
 
-Examples include:
+Typical examples include:
 
-- NGOs
-- Volunteer organizations
-- Community projects
-- Academic initiatives
-
-Admission policies are locally defined.
+- humanitarian organizations;
+- volunteer initiatives;
+- academic collaborations;
+- community response networks.
 
 ---
 
-## 6.3 Hybrid Federation
+## Hybrid Federation
 
-Some nodes remain private while selected observations are shared externally.
+Private operational environments selectively exchange Humanitarian Records with external HCP Nodes.
 
-This model is expected to be common during humanitarian emergencies.
+Hybrid Federations are expected to be common during large humanitarian emergencies where organizations cooperate while preserving operational boundaries.
+
+The protocol does not prescribe a preferred federation model.
 
 ---
 
-# 7. Node Discovery
+# 8. Node Discovery
 
-HCP does not mandate a single discovery mechanism.
+Node Discovery enables an HCP Node to identify other compatible HCP Nodes.
 
-Possible approaches include:
+Discovery identifies potential interoperability.
+
+It does not establish operational relationships.
+
+Possible discovery mechanisms include:
 
 - manually configured peers;
 - organization-maintained node directories;
@@ -147,179 +257,233 @@ Possible approaches include:
 - service discovery protocols;
 - future decentralized discovery mechanisms.
 
-Discovery remains implementation specific.
+Discovery mechanisms remain entirely implementation-specific.
+
+The protocol standardizes only their semantic purpose.
 
 ---
 
-# 8. Discovery is Optional
+# 9. Discovery is Optional
 
-Nodes are not required to discover peers automatically.
+Automatic Node Discovery is never required.
 
-A node may operate permanently with manually configured peers.
+An HCP Node may operate indefinitely using only manually configured peers.
 
-Automatic discovery is an optional capability.
+Likewise, a Node may participate in a Humanitarian Federation without implementing automatic discovery.
 
----
+Discovery is an optional operational capability.
 
-# 9. Peer Relationships
+The protocol intentionally separates discovery from federation.
 
-Each node determines which peers it trusts.
-
-Trust relationships may be established through:
-
-- organizational agreements;
-- certificates;
-- federation membership;
-- manual configuration;
-- future trust mechanisms.
-
-Trust is never implied by protocol participation alone.
+**Discovery never implies federation.**
 
 ---
 
-# 10. Federation Boundaries
+# 10. Operational Relationships
 
-Nodes may restrict:
+After discovering compatible HCP Nodes, organizations may establish operational relationships according to their own policies.
+
+Operational relationships determine:
+
+- whether synchronization is permitted;
+- whether distributed search is permitted;
+- which Humanitarian Records may be exchanged;
+- applicable operational restrictions.
+
+Operational relationships remain entirely under local organizational control.
+
+Participation in the same Humanitarian Federation does not require identical operational relationships between every pair of Nodes.
+
+**Federation never implies synchronization.**
+---
+
+# 11. Federation Boundaries
+
+Every Humanitarian Federation defines its own operational boundaries.
+
+Federations may restrict:
 
 - synchronization;
-- search requests;
-- query propagation;
-- observation sharing;
-- event classifications.
+- distributed search;
+- Query propagation;
+- Humanitarian Record exchange;
+- participation policies.
 
-Federation boundaries are enforced locally.
+These boundaries remain entirely under local organizational control.
+
+The protocol does not prescribe federation policies.
+
+It only preserves semantic interoperability.
 
 ---
 
-# 11. Cross-Federation Interoperability
+# 12. Cross-Federation Interoperability
 
-Independent federations may exchange Humanitarian Records.
+Independent Humanitarian Federations may exchange Humanitarian Records whenever mutually permitted.
 
-Example:
+Illustrative example:
 
-```
-Federation A
+```text
+Humanitarian Federation A
 
-↓
+            │
+
+            ▼
 
 Federation Gateway
 
-↓
+            │
 
-Federation B
+            ▼
+
+Humanitarian Federation B
 ```
 
 Each federation retains complete operational autonomy.
 
----
+Interoperability exists only where organizations voluntarily establish operational relationships.
 
-# 12. Federation Gateways
-
-Organizations may deploy Gateway Nodes.
-
-Gateway Nodes:
-
-- synchronize selected observations;
-- translate local policies;
-- enforce security requirements;
-- preserve interoperability.
-
-Gateway Nodes are ordinary HCP Nodes with additional operational responsibilities.
+Cross-federation interoperability never creates centralized control.
 
 ---
 
-# 13. Network Topologies
+# 13. Federation Gateways
 
-HCP supports multiple network topologies.
+Organizations may deploy Gateway Nodes to facilitate interoperability between independent Humanitarian Federations.
 
-Examples include:
+Gateway Nodes may:
 
-- hub-and-spoke
-- full mesh
-- regional mesh
-- hierarchical
-- peer-to-peer
-- hybrid
+- synchronize selected Humanitarian Records;
+- execute distributed Queries;
+- enforce local operational policies;
+- apply security controls;
+- preserve semantic interoperability.
 
-The protocol does not prescribe a preferred topology.
+A Gateway Node remains an ordinary HCP Node.
 
----
-
-# 14. Offline Operation
-
-Federations may continue operating without Internet connectivity.
-
-Synchronization resumes when communication becomes available.
-
-Temporary isolation does not invalidate participation.
+Its additional responsibilities are operational rather than protocol-defined.
 
 ---
 
-# 15. Security Considerations
+# 14. Network Topologies
 
-Federations should establish policies regarding:
+The Humanitarian Connection Protocol intentionally remains independent of network topology.
+
+Compatible HCP deployments may adopt architectures such as:
+
+- peer-to-peer;
+- full mesh;
+- regional mesh;
+- hub-and-spoke;
+- hierarchical;
+- hybrid.
+
+The selected topology affects operational behavior.
+
+It never changes humanitarian semantics.
+
+---
+
+# 15. Offline Operation
+
+Humanitarian Federations may continue operating while partially or completely disconnected.
+
+Temporary communication failures do not interrupt local humanitarian operations.
+
+Synchronization resumes whenever communication becomes available.
+
+Offline capability remains one of the core architectural principles of HCP.
+
+---
+
+# 16. Security Considerations
+
+Each Humanitarian Federation defines its own security policies.
+
+Typical operational considerations include:
 
 - node admission;
 - authentication;
 - authorization;
-- key management;
 - incident response;
-- compromised node handling.
+- compromised node handling;
+- operational auditing.
 
-Security policy remains under federation control.
+Security policies remain organizational responsibilities.
+
+The protocol defines interoperability rather than security governance.
 
 ---
 
-# 16. Scalability
+# 17. Scalability and Governance
 
-HCP places no architectural limit on:
+The Humanitarian Connection Protocol places no architectural limits on:
 
-- number of federations;
-- number of nodes;
+- the number of Humanitarian Federations;
+- the number of HCP Nodes;
 - geographic distribution;
 - participating organizations.
 
-Scalability is achieved through federation rather than centralization.
+Scalability emerges naturally through federation rather than centralization.
 
----
+Likewise, governance remains entirely outside the scope of HCP.
 
-# 17. Governance
+Each Humanitarian Federation independently defines its own:
 
-The HCP specification does not govern federations.
-
-Each federation defines its own:
-
+- governance model;
 - operational policies;
-- governance;
-- membership;
-- trust requirements;
+- membership rules;
 - data-sharing agreements.
 
-The protocol defines interoperability, not governance.
+The protocol governs interoperability.
+
+Organizations govern themselves.
 
 ---
 
-# 18. Future Extensions
+# 18. Relationship with Other Specifications
 
-Future versions may define:
+The Federation and Node Discovery Model defines how autonomous HCP Nodes discover one another and cooperate through voluntary operational agreements.
 
-- decentralized node discovery;
-- federation metadata exchange;
-- automatic peer negotiation;
-- distributed federation directories;
-- federation health monitoring;
-- routing optimization.
+Complementary specifications define how humanitarian evidence is exchanged and searched once those operational relationships exist.
 
-These extensions should remain compatible with existing HCP deployments.
+- **HCP-0002** defines the HCP Node.
+- **HCP-0005** defines the Node Communication Protocol.
+- **HCP-0013** defines the Synchronization Model.
+- **HCP-0018** defines the Search and Query Protocol.
+
+Together, these specifications define how autonomous HCP Nodes cooperate while preserving organizational independence, decentralized operation and semantic interoperability.
 
 ---
 
 # 19. Summary
 
-The Federation & Node Discovery Model enables independent HCP Nodes to organize into autonomous humanitarian networks.
+The Federation and Node Discovery Model defines the semantic principles governing voluntary cooperation between autonomous HCP Nodes.
 
-Federations may remain private, public or hybrid.
+Humanitarian Federations are operational agreements.
 
-Node discovery is optional and implementation specific.
+They are not protocol objects.
 
-The protocol promotes interoperability without requiring centralized infrastructure, allowing humanitarian organizations to collaborate while preserving their operational independence.
+Node Discovery identifies compatible HCP Nodes.
+
+It never establishes operational relationships.
+
+Operational relationships determine how organizations cooperate.
+
+Federations coordinate voluntary collaboration.
+
+Synchronization remains selective.
+
+Every organization preserves complete operational autonomy.
+
+By separating organizational cooperation from humanitarian interoperability, HCP enables independent humanitarian networks to collaborate without sacrificing decentralization or local control.
+
+The Federation and Node Discovery Model reinforces one of the central architectural principles of HCP:
+
+**Nodes remain autonomous.**
+
+**Federations remain voluntary.**
+
+**Synchronization remains selective.**
+
+**Interoperability remains universal.**

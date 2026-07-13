@@ -1,201 +1,340 @@
 # HCP-0021
-# Privacy & Data Minimization
 
-Version: 0.1 (Draft)
+# Privacy and Data Minimization
+
+Version: 0.2 (Draft)
 
 Status: Draft
 
 Category: Core Specification
 
-Authors: Human Connection Network Foundation
+Project: Human Connection Network (HCN)
 
 License: Apache-2.0
 
-Last Updated: 2026-07-05
+Last Updated: 2026-07-13
 
 Depends On:
 
-- HCP-0001 Humanitarian Record
-- HCP-0006 Trust Model
-- HCP-0014 Query & Discovery Model
-- HCP-0015 Result Presentation Model
-- HCP-0020 Security Model
+- HCP-0001 — Humanitarian Record
+- HCP-0010 — Canonical JSON Specification
+- HCP-0015 — Result Presentation Model
+- HCP-0016 — Humanitarian Record Lifecycle Model
+- HCP-0020 — Security Model
+
+Replaces:
+None
+
+Replaced By:
+None
 
 ---
 
-# 1. Abstract
+# Abstract
 
-The Privacy & Data Minimization specification defines the principles that protect individuals whose humanitarian observations are exchanged through the Humanitarian Connection Protocol (HCP).
+This document defines the Privacy and Data Minimization Model of the Humanitarian Connection Protocol (HCP).
 
-HCP promotes humanitarian interoperability while minimizing the collection, storage and exchange of personal information.
+The Privacy and Data Minimization Model establishes the principles that minimize the collection, storage and exchange of personal information while preserving humanitarian interoperability.
 
-Privacy is considered a fundamental design principle rather than an optional feature.
+Privacy within HCP is achieved primarily through protocol architecture rather than post-processing or data anonymization.
+
+Humanitarian Records represent humanitarian observations.
+
+They do not represent complete personal identities.
+
+The protocol standardizes privacy principles.
+
+It does not standardize legal or organizational privacy policies.
+
+---
+
+# 1. Introduction
+
+Humanitarian emergencies frequently require organizations to exchange information quickly.
+
+However, effective humanitarian coordination does not require unlimited collection of personal information.
+
+The Humanitarian Connection Protocol intentionally minimizes personal information by exchanging humanitarian observations instead of complete personal identities.
+
+Privacy is therefore preserved through protocol architecture rather than through extensive post-processing of sensitive information.
+
+Humanitarian interoperability should never become unnecessary surveillance.
 
 ---
 
 # 2. Purpose
 
-Humanitarian emergencies often require rapid information sharing.
+The purpose of the Privacy and Data Minimization Model is to define the semantic principles governing privacy throughout HCP.
 
-However, information sharing should never exceed what is necessary to coordinate humanitarian response.
+This specification enables organizations to:
 
-The purpose of this specification is to ensure that interoperability does not become unnecessary surveillance.
+- exchange humanitarian observations;
+- minimize personal information;
+- preserve humanitarian interoperability;
+- reduce unnecessary exposure of individuals;
+- support responsible humanitarian coordination.
+
+The protocol intentionally separates humanitarian interoperability from identity management.
+
+Only the minimum humanitarian information necessary to achieve humanitarian interoperability should be exchanged.
 
 ---
 
-# 3. Fundamental Principle
+# 3. Design Principles
 
-If a humanitarian objective can be achieved without collecting a specific piece of information, that information should not be collected.
-
-The protocol favors minimum necessary disclosure.
+Every Privacy and Data Minimization Model follows the fundamental architectural principles of HCP.
 
 ---
 
-# 4. Humanitarian Observation Principle
+## Observation-Oriented
 
 HCP exchanges humanitarian observations.
 
-It does not exchange complete personal histories.
-
-A Humanitarian Record represents an observed humanitarian situation.
-
-It does not represent an individual's permanent identity.
+It does not exchange complete personal identities.
 
 ---
 
-# 5. Data Minimization
+## Minimum Necessary Disclosure
 
-Implementations should exchange only information necessary to support humanitarian coordination.
+Only the humanitarian information necessary for interoperability should be exchanged.
 
-Typical examples include:
-
-- reported name
-- estimated age
-- approximate location
-- humanitarian status
-- event classification
-- observation timestamp
-
-Additional information should only be exchanged when operationally justified.
+Additional personal information should remain under local organizational control whenever possible.
 
 ---
 
-# 6. Information Outside HCP
+## Privacy by Architecture
 
-The following information generally falls outside the intended scope of HCP:
+Privacy is primarily achieved through the architectural design of the protocol.
 
-- complete medical records
-- laboratory results
-- financial information
-- biometric databases
-- criminal records
-- immigration records
-- political affiliation
-- religious affiliation
-- employment history
-- educational history
-- social media profiles
-
-Organizations may maintain such information internally, but HCP is not intended to synchronize it.
+Humanitarian Records intentionally avoid becoming comprehensive personal profiles.
 
 ---
 
-# 7. Sensitive Information
+## Organization Controlled
 
-Implementations should exercise particular care when handling:
+Organizations remain responsible for determining which humanitarian observations may be published, synchronized or searched.
 
-- children
-- vulnerable adults
-- victims of violence
-- refugees
-- asylum seekers
-- trafficking victims
-- protected witnesses
-
-Local policies may require additional restrictions.
+The protocol never replaces organizational privacy policies.
 
 ---
 
-# 8. Local Responsibility
+## Implementation Independent
 
-Each participating organization remains responsible for:
+Privacy technologies, legal compliance mechanisms and operational procedures remain implementation-specific.
 
-- legal compliance;
-- data governance;
-- publication policies;
-- retention policies;
-- access control.
-
-HCP defines interoperability, not organizational data governance.
+The protocol standardizes only the semantic principles governing privacy.
 
 ---
 
-# 9. Search Privacy
+## Humanitarian Purpose
 
-Nodes may restrict which observations participate in distributed search.
+Every piece of exchanged information should have a clear humanitarian purpose.
+
+Information without humanitarian value should not become part of humanitarian interoperability.
+
+---
+
+# 4. Privacy Philosophy
+
+Privacy is preserved by exchanging humanitarian observations rather than personal identities.
+
+The protocol intentionally minimizes identity while maximizing humanitarian evidence.
+
+Privacy therefore emerges naturally from the architecture of HCP rather than from later attempts to remove unnecessary information.
+
+The fundamental philosophy of privacy within HCP is:
+
+**Privacy is preserved by exchanging observations rather than identities.**
+
+**HCP minimizes identity.**
+
+**HCP maximizes humanitarian evidence.**
+---
+
+# 5. Humanitarian Observation Principle
+
+The Humanitarian Connection Protocol exchanges humanitarian observations.
+
+It does not exchange complete personal identities.
+
+Every Humanitarian Record represents a humanitarian observation captured at a specific moment in time.
+
+It is not intended to become a permanent personal profile.
+
+This architectural decision minimizes unnecessary personal information while preserving humanitarian interoperability.
+
+---
+
+# 6. Data Minimization
+
+Implementations should exchange only the humanitarian information necessary to support humanitarian interoperability.
+
+Illustrative examples include:
+
+- reported_label;
+- estimated age;
+- approximate location;
+- Event Type;
+- Recognition Features;
+- observation timestamp.
+
+Additional information should be exchanged only when operationally justified and consistent with local policies.
+
+Data minimization reduces unnecessary exposure while preserving humanitarian usefulness.
+
+---
+
+# 7. Information Outside HCP
+
+Certain categories of information generally fall outside the intended scope of HCP.
+
+Illustrative examples include:
+
+- complete medical records;
+- laboratory results;
+- financial information;
+- biometric databases;
+- criminal records;
+- immigration records;
+- political affiliation;
+- religious affiliation;
+- employment history;
+- educational history;
+- social media profiles.
+
+Organizations may maintain such information within their own operational systems.
+
+HCP is not intended to synchronize or standardize these datasets.
+
+---
+
+# 8. Sensitive Information
+
+Certain humanitarian situations require additional privacy protection.
 
 Examples include:
 
-- confidential shelters
-- protected medical facilities
-- restricted operations
-- ongoing rescue activities
+- children;
+- vulnerable adults;
+- victims of violence;
+- refugees;
+- asylum seekers;
+- trafficking victims;
+- protected witnesses.
 
-Search participation is determined locally.
+Organizations should establish appropriate operational safeguards according to applicable legislation and humanitarian context.
 
----
-
-# 10. Synchronization Privacy
-
-Not every locally stored observation needs to be synchronized.
-
-Organizations remain free to classify observations as:
-
-- local only
-- federation only
-- public federation
-- global federation
-
-Synchronization policy is locally controlled.
+The protocol intentionally leaves these decisions under local organizational control.
 
 ---
 
-# 11. Result Presentation
+# 9. Local Responsibility
 
-User interfaces should avoid exposing unnecessary personal information.
+Every participating organization remains responsible for:
 
-Whenever possible, results should emphasize:
+- legal compliance;
+- privacy governance;
+- publication policies;
+- retention policies;
+- access control;
+- data protection procedures.
+
+HCP defines humanitarian interoperability.
+
+It does not define organizational privacy governance.
+
+---
+
+# 10. Search Privacy
+
+Organizations may determine which Humanitarian Records participate in distributed search.
+
+Examples include:
+
+- confidential shelters;
+- protected medical facilities;
+- restricted humanitarian operations;
+- ongoing rescue activities.
+
+Search participation remains entirely under local organizational control.
+
+The protocol never requires every Humanitarian Record to be searchable.
+
+---
+
+# 11. Synchronization Privacy
+
+Not every locally stored Humanitarian Record needs to be synchronized.
+
+Organizations remain free to classify Humanitarian Records according to their own operational policies.
+
+Illustrative synchronization scopes include:
+
+- local only;
+- federation only;
+- selected federation partners;
+- broader humanitarian networks.
+
+Synchronization remains a voluntary operational decision.
+
+Privacy is preserved through selective interoperability rather than mandatory publication.
+---
+
+# 12. Result Presentation
+
+HCP Clients should avoid exposing unnecessary personal information when presenting Humanitarian Cases.
+
+Whenever reasonably possible, presentation should emphasize:
 
 - humanitarian observations;
-- confidence levels;
-- event chronology;
-- reporting sources.
+- Supporting Evidence;
+- Conflicting Evidence;
+- Humanitarian Timeline;
+- Correlation Score.
 
-Rather than unnecessary personal details.
+Rather than unnecessary personal identifiers.
 
----
-
-# 12. Historical Preservation
-
-Historical observations improve transparency and humanitarian analysis.
-
-However, historical availability should always be balanced against privacy considerations and applicable legislation.
-
-Retention policies remain locally defined.
+Presentation should communicate humanitarian understanding while preserving individual privacy.
 
 ---
 
-# 13. Consent
+# 13. Historical Preservation
 
-Whenever operationally possible, organizations should obtain consent before publishing humanitarian observations.
+Historical Humanitarian Records improve:
 
-Emergency situations may justify temporary exceptions according to applicable law and humanitarian necessity.
+- transparency;
+- explainability;
+- humanitarian analysis;
+- future correlation.
 
-The protocol does not define legal consent requirements.
+Historical preservation should always be balanced against:
+
+- applicable legislation;
+- humanitarian necessity;
+- organizational policies;
+- privacy considerations.
+
+Retention policies remain entirely under local organizational control.
 
 ---
 
-# 14. Cross-Border Information Sharing
+# 14. Consent
+
+Whenever reasonably possible, organizations should obtain appropriate consent before publishing Humanitarian Records.
+
+Humanitarian emergencies may require temporary exceptions according to:
+
+- applicable legislation;
+- humanitarian necessity;
+- emergency operational procedures.
+
+The Humanitarian Connection Protocol intentionally avoids defining legal consent requirements.
+
+Legal responsibility remains with each participating organization.
+
+---
+
+# 15. Cross-Border Information Sharing
 
 Humanitarian emergencies frequently involve multiple jurisdictions.
 
@@ -206,96 +345,124 @@ Organizations remain responsible for complying with:
 - international agreements;
 - humanitarian law.
 
-HCP does not replace legal obligations.
+The protocol facilitates humanitarian interoperability.
+
+It never replaces legal obligations.
 
 ---
 
-# 15. Data Protection by Design
+# 16. Privacy by Architecture
 
-Implementations are encouraged to adopt privacy by design principles.
+Privacy within HCP is achieved primarily through architectural design rather than post-processing.
 
-Examples include:
+The protocol minimizes personal information by exchanging humanitarian observations instead of comprehensive personal identities.
 
-- least privilege
-- encrypted communication
-- secure storage
-- limited disclosure
-- role-based access
-- auditability
+Illustrative conceptual flow:
 
-Privacy should be considered during system design rather than after deployment.
+```text
+Observation
 
----
+        │
 
-# 16. Data Protection by Default
+        ▼
 
-Default configurations should favor privacy.
+Humanitarian Record
 
-Examples include:
+        │
 
-- minimum shared fields;
-- limited synchronization;
-- restricted search scope;
-- conservative publication policies.
+        ▼
 
-Organizations may expand sharing according to operational requirements.
+Correlation
+
+        │
+
+        ▼
+
+Humanitarian Case
+```
+
+Throughout this process, humanitarian interoperability depends upon observations rather than complete personal profiles.
+
+Privacy therefore emerges naturally from protocol architecture.
 
 ---
 
 # 17. Observation Expiration
 
-Organizations may define local policies regarding observation retention.
+Organizations remain free to define local retention policies for Humanitarian Records.
 
-Expired observations may be:
+According to local operational requirements, observations may eventually be:
 
 - archived;
 - anonymized;
 - deleted;
-- retained according to applicable law.
+- retained according to applicable legislation.
 
-The HCP specification does not mandate a universal retention period.
+The protocol intentionally avoids defining universal retention periods.
 
 ---
 
 # 18. Artificial Intelligence
 
-AI systems processing HCP observations should respect the same privacy principles defined for human operators.
+Artificial Intelligence systems processing Humanitarian Records should follow exactly the same privacy principles expected from human operators.
 
-Machine learning should not justify unnecessary personal data collection.
+AI should never justify unnecessary personal data collection.
 
-Humanitarian purpose remains the primary criterion.
+Humanitarian purpose remains the primary criterion governing information processing.
+
+Privacy principles remain independent of the technology performing the analysis.
 
 ---
 
 # 19. Future Considerations
 
-Future versions may define:
+Future versions of HCP may introduce additional privacy capabilities, including:
 
-- privacy metadata;
 - selective disclosure;
-- attribute-based encryption;
 - confidential synchronization;
+- attribute-based encryption;
 - anonymous humanitarian observations;
-- zero-knowledge verification.
+- zero-knowledge verification;
+- future privacy-preserving technologies.
 
-These extensions should remain compatible with the core protocol.
+Such extensions should preserve compatibility with the semantic principles defined by this specification.
 
 ---
 
-# 20. Privacy Philosophy
+# 20. Relationship with Other Specifications
 
-Privacy is not opposed to humanitarian interoperability.
+The Privacy and Data Minimization Model defines the principles protecting personal information while preserving humanitarian interoperability.
 
-Properly designed interoperability minimizes unnecessary information while maximizing humanitarian effectiveness.
+Complementary specifications define how humanitarian observations are represented, exchanged, secured and presented.
 
-The protocol intentionally avoids becoming a general-purpose personal information exchange system.
+- **HCP-0001** defines the Humanitarian Record.
+- **HCP-0010** defines the Canonical JSON Specification.
+- **HCP-0015** defines the Result Presentation Model.
+- **HCP-0016** defines the Humanitarian Record Lifecycle Model.
+- **HCP-0020** defines the Security Model.
+
+Together, these specifications define how humanitarian information remains interoperable while minimizing unnecessary exposure of personal information.
 
 ---
 
 # 21. Summary
 
-The Privacy & Data Minimization specification establishes that HCP exchanges only the minimum information necessary to support humanitarian coordination.
+The Privacy and Data Minimization Model defines the semantic principles governing privacy within the Humanitarian Connection Protocol.
 
-Humanitarian observations are shared instead of complete personal histories.
+Humanitarian interoperability should require only the minimum information necessary to support humanitarian coordination.
 
-Organizations remain responsible for legal compliance and local governance, while the protocol promotes privacy by design, minimum necessary disclosure and responsible humanitarian interoperability.
+Humanitarian Records represent observations rather than complete personal identities.
+
+Privacy is preserved primarily through protocol architecture rather than post-processing.
+
+Organizations remain responsible for legal compliance, publication policies and operational governance.
+
+By minimizing identity while preserving humanitarian evidence, HCP enables responsible humanitarian interoperability across independent organizations and jurisdictions.
+
+The Privacy and Data Minimization Model reinforces one of the central architectural principles of HCP:
+
+**Privacy is preserved by exchanging observations rather than identities.**
+
+**HCP minimizes identity.**
+
+**HCP maximizes humanitarian evidence.**

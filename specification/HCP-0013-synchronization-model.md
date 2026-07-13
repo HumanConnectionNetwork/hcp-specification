@@ -1,433 +1,183 @@
 # HCP-0013
+
 # Synchronization Model
 
-Version: 0.1 (Draft)
+Version: 0.2 (Draft)
 
 Status: Draft
 
 Category: Core Specification
 
-Authors: Human Connection Network Foundation
+Project: Human Connection Network (HCN)
 
 License: Apache-2.0
 
-Last Updated: 2026-07-05
+Last Updated: 2026-07-13
 
 Depends On:
 
-- HCP-0001 Humanitarian Record
-- HCP-0002 HCP Node
-- HCP-0005 Node Communication Protocol
-- HCP-0006 Trust Model
-- HCP-0012 Correlation Candidate
+- HCP-0000 — Architecture and Overview
+- HCP-0001 — Humanitarian Record
+- HCP-0002 — HCP Node
+- HCP-0005 — Node Communication Protocol
+- HCP-0010 — Canonical JSON Specification
+- HCP-0012 — Correlation Model
+
+Replaces:
+None
+
+Replaced By:
+None
 
 ---
 
-# 1. Abstract
+# Abstract
 
-The HCP Synchronization Model defines how Humanitarian Records are propagated across independent HCP Nodes.
+This document defines the Synchronization Model of the Humanitarian Connection Protocol (HCP).
 
-Unlike centralized systems, HCP does not require a master database.
+The Synchronization Model describes how independent HCP Nodes exchange Humanitarian Records while preserving organizational autonomy and implementation independence.
 
-Each node stores its own local observations and synchronizes them with other trusted nodes using standard replication rules.
+Synchronization distributes humanitarian evidence.
 
-Synchronization distributes observations—not identities.
+It never distributes interpretations.
 
-The objective is to maximize humanitarian visibility while preserving decentralization.
+Only Humanitarian Records are exchanged between HCP Nodes.
+
+Every Node independently performs correlation, timeline reconstruction and result presentation after synchronization.
+
+The protocol standardizes the semantic representation being exchanged.
+
+It does not standardize synchronization strategies or network topologies.
 
 ---
 
-# 2. Design Principles
+# 1. Introduction
 
-Synchronization in HCP follows six principles.
+Humanitarian emergencies frequently involve multiple independent organizations collecting humanitarian observations simultaneously.
 
-## 2.1 Decentralized
+Hospitals, emergency responders, volunteers, shelters, governments and humanitarian initiatives may all generate Humanitarian Records describing the same humanitarian situation.
+
+The purpose of synchronization is to exchange those Humanitarian Records between compatible HCP Nodes.
+
+Synchronization never exchanges Correlation Candidates, Humanitarian Timelines or Humanitarian Cases.
+
+Only Humanitarian Records travel across the network.
+
+Every receiving Node remains responsible for interpreting the synchronized humanitarian evidence according to its own Correlation Model.
+
+This separation preserves interoperability while allowing every Node to evolve independently.
+
+---
+
+# 2. Purpose
+
+The purpose of the Synchronization Model is to define the semantic principles governing the exchange of Humanitarian Records between HCP Nodes.
+
+Synchronization enables humanitarian evidence collected by one organization to become available to other compatible Nodes without requiring centralized infrastructure.
+
+Synchronization intentionally separates evidence exchange from humanitarian interpretation.
+
+Every Node receives the same humanitarian evidence.
+
+Each Node remains free to:
+
+- correlate observations;
+- reconstruct humanitarian timelines;
+- generate Correlation Candidates;
+- present Humanitarian Cases.
+
+The protocol standardizes humanitarian evidence.
+
+Interpretation always remains local.
+
+---
+
+# 3. Design Principles
+
+Every HCP Synchronization Model follows the fundamental architectural principles of HCP.
+
+---
+
+## Decentralized
 
 No central authority controls synchronization.
 
-Every node is autonomous.
+Every HCP Node remains fully autonomous.
 
 ---
 
-## 2.2 Eventually Consistent
+## Observation-Based
 
-Nodes are not expected to contain identical information at every moment.
+Synchronization exchanges Humanitarian Records.
 
-Given sufficient connectivity, nodes will progressively converge.
+It never exchanges identities.
 
 ---
 
-## 2.3 Offline First
+## Semantic
 
-Nodes may continue operating while disconnected.
+Synchronization exchanges Canonical HCP JSON representations.
+
+It never exchanges implementation objects.
+
+---
+
+## Offline-First
+
+Nodes remain fully operational while disconnected.
 
 Synchronization occurs whenever communication becomes available.
 
 ---
 
-## 2.4 Observation-Based
+## Eventually Consistent
 
-Synchronization exchanges Humanitarian Records.
+Nodes are not expected to contain identical Humanitarian Records at every moment.
 
-It never attempts to synchronize "people".
-
----
-
-## 2.5 Append-Oriented
-
-Records are never overwritten.
-
-New observations generate new records.
-
-Historical information is preserved.
+Given sufficient connectivity, compatible Nodes progressively converge through continued synchronization.
 
 ---
 
-## 2.6 Trust-Aware
+## Append-Oriented
 
-Nodes may prioritize synchronization according to trust policies.
+Synchronization never overwrites Humanitarian Records.
 
-Trusted organizations may synchronize first.
+New humanitarian observations generate new Humanitarian Records.
 
-Public nodes may synchronize later.
-
----
-
-# 3. Synchronization Unit
-
-The atomic synchronization object is a Humanitarian Record.
-
-Each synchronized object contains:
-
-- Record UUID
-- Metadata
-- Humanitarian Observation
-- Node Signature
-- Timestamp
-
-No synchronization message represents an individual person.
+Historical observations remain preserved.
 
 ---
 
-# 4. Synchronization Workflow
+## Implementation Independent
 
-The synchronization process is intentionally simple.
+Every HCP implementation remains free to define its synchronization strategy.
 
-```
-Node A
-
-Creates Record
-
-↓
-
-Stores locally
-
-↓
-
-Detects available peers
-
-↓
-
-Sends new records
-
-↓
-
-Peer validates
-
-↓
-
-Stores locally
-
-↓
-
-Peer propagates to other peers
-```
-
-Every node behaves identically.
+The protocol standardizes only the humanitarian semantics being exchanged.
 
 ---
 
-# 5. Pull and Push
+# 4. Synchronization Philosophy
 
-Synchronization supports both models.
+Synchronization exchanges humanitarian evidence.
 
-## Push
+Interpretation always remains local.
 
-A node proactively sends newly created records.
+Every HCP Node receives the same Humanitarian Records.
 
-Example:
+Each Node independently applies its own Correlation Model.
 
-Hospital Node reports a rescued victim.
+Different Nodes may legitimately produce different Correlation Candidates, Humanitarian Timelines and Humanitarian Cases from exactly the same synchronized Humanitarian Records.
 
-The record is immediately propagated.
+This variation does not reduce interoperability.
 
----
+It reflects the implementation independence intentionally preserved by the Humanitarian Connection Protocol.
 
-## Pull
+The fundamental philosophy of synchronization is:
 
-A node requests updates from another node.
+**Humanitarian Records preserve observations.**
 
-Example:
+**Synchronization exchanges humanitarian evidence.**
 
-A temporary emergency center reconnects after several hours offline.
+**Correlation remains local.**
 
-It requests all missing records.
-
----
-
-Both mechanisms may coexist.
-
----
-
-# 6. Synchronization Scope
-
-Nodes may synchronize:
-
-Entire datasets
-
-Specific disasters
-
-Specific geographic areas
-
-Specific time intervals
-
-Specific event types
-
-Specific trust levels
-
-This allows efficient operation under limited bandwidth.
-
----
-
-# 7. Duplicate Detection
-
-Duplicate transmission is expected.
-
-Nodes must ignore duplicated Record UUIDs.
-
-If two received records share the same UUID:
-
-- keep one copy
-- ignore the duplicate
-
-This operation is deterministic.
-
----
-
-# 8. Correlation During Synchronization
-
-Synchronization does not merge records.
-
-Instead:
-
-Records are synchronized independently.
-
-After synchronization, each node may execute the Correlation Candidate algorithm.
-
-Example:
-
-Node A:
-
-Juan Perez
-Hospital
-Alive
-
-↓
-
-Node B:
-
-Juan Pérez
-Volunteer
-Needs evacuation
-
-↓
-
-After synchronization:
-
-Both records exist independently.
-
-Correlation Candidate may estimate that both describe the same humanitarian situation.
-
-No automatic merge occurs.
-
----
-
-# 9. Conflict Handling
-
-Conflicts are expected.
-
-Different observers may report:
-
-different ages
-
-different names
-
-different conditions
-
-different locations
-
-These are not considered synchronization errors.
-
-They are independent observations.
-
-The Trust Model and Correlation Candidate determine their relationship.
-
----
-
-# 10. Incremental Synchronization
-
-Nodes should synchronize only new records whenever possible.
-
-Example:
-
-Last synchronization:
-
-2026-07-05T14:00 UTC
-
-Current time:
-
-2026-07-05T16:00 UTC
-
-Only records created after 14:00 are exchanged.
-
-This minimizes bandwidth usage.
-
----
-
-# 11. Partial Synchronization
-
-Nodes are not required to synchronize everything.
-
-Examples:
-
-A hospital may only exchange hospital events.
-
-A rescue team may synchronize rescue operations.
-
-A regional government may synchronize only one municipality.
-
-This flexibility enables scalable deployments.
-
----
-
-# 12. Synchronization Security
-
-Nodes verify:
-
-Record UUID
-
-Node Signature
-
-Timestamp integrity
-
-Protocol compatibility
-
-Invalid records must be rejected.
-
----
-
-# 13. Reliability
-
-Synchronization is best-effort.
-
-Temporary communication failures are expected.
-
-Nodes retry synchronization later.
-
-No permanent connection is required.
-
----
-
-# 14. Large Scale Operation
-
-HCP assumes thousands of independent nodes.
-
-Synchronization naturally forms a distributed humanitarian network.
-
-Each new node increases redundancy rather than creating dependency.
-
-No single server becomes a mandatory point of operation.
-
----
-
-# 15. Reference Synchronization Sequence
-
-```
-Create Record
-
-↓
-
-Store Local
-
-↓
-
-Discover Peers
-
-↓
-
-Exchange Metadata
-
-↓
-
-Identify Missing Records
-
-↓
-
-Transfer Records
-
-↓
-
-Validate Signatures
-
-↓
-
-Store Records
-
-↓
-
-Run Correlation Candidate
-
-↓
-
-Update Local Search Index
-```
-
----
-
-# 16. Interoperability
-
-Any implementation following this specification may synchronize with any other HCP implementation.
-
-Programming language, operating system, database engine and internal architecture are irrelevant.
-
-Interoperability depends only on compliance with the HCP protocol.
-
----
-
-# 17. Future Extensions
-
-Future versions may introduce:
-
-- compression
-- encrypted synchronization
-- selective replication
-- delta synchronization
-- synchronization priorities
-- disaster-specific routing
-- peer discovery protocols
-
-These extensions must remain backward compatible whenever possible.
-
----
-
-# 18. Summary
-
-The Synchronization Model enables autonomous humanitarian nodes to exchange observations without relying on centralized infrastructure.
-
-Synchronization distributes Humanitarian Records.
-
-Correlation Candidate identifies probable relationships.
-
-Trust Model evaluates credibility.
-
-Together, these mechanisms create a decentralized humanitarian information network capable of operating under real emergency conditions.
+**People verify reality.**

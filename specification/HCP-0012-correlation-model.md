@@ -2,7 +2,7 @@
 
 # Correlation Model
 
-Version: 0.3 (Draft)
+Version: 0.4 (Draft)
 
 Status: Draft
 
@@ -19,8 +19,8 @@ Depends On:
 - HCP-0000 — Architecture and Overview
 - HCP-0001 — Humanitarian Record
 - HCP-0003 — Subject Model
+- HCP-0004 — Correlation Candidate Model
 - HCP-0006 — Observation Model
-- HCP-0007 — Status Model
 - HCP-0008 — Event Type Model
 - HCP-0010 — Canonical JSON Specification
 - HCP-0011 — Query Model
@@ -37,31 +37,31 @@ None
 
 This document defines the Correlation Model of the Humanitarian Connection Protocol (HCP).
 
-The Correlation Model describes how HCP Nodes compare independent Humanitarian Records in order to identify compatible humanitarian observations.
+The Correlation Model describes how HCP Nodes evaluate humanitarian evidence contained within independent Humanitarian Records.
 
-Rather than attempting to identify people or animals directly, HCP correlates humanitarian evidence contained within independent Observations.
+Rather than attempting to identify people or animals directly, HCP evaluates the semantic compatibility of humanitarian evidence contributed by independent observations.
 
-The result of correlation is a collection of Correlation Candidates representing probabilistic relationships between humanitarian observations.
+Correlation transforms humanitarian evidence into humanitarian understanding.
 
-The protocol standardizes semantic meaning.
+The protocol standardizes the semantic principles governing correlation.
 
-It does not prescribe correlation algorithms.
+It does not prescribe algorithms, statistical methods or implementation techniques.
 
 ---
 
 # 1. Introduction
 
-Humanitarian emergencies frequently generate multiple independent observations describing the same real-world situation.
+Humanitarian emergencies frequently generate multiple independent Humanitarian Records describing related aspects of the same humanitarian reality.
 
-Hospitals, volunteers, families, emergency responders and humanitarian organizations may report compatible observations without knowing they refer to the same Subject.
+Hospitals, volunteers, families, emergency responders and humanitarian organizations may independently report compatible humanitarian observations without knowing they concern the same Subject.
 
-The Correlation Model enables HCP Nodes to evaluate those independent observations using standardized humanitarian semantics.
+The Correlation Model enables HCP Nodes to evaluate those independent Humanitarian Records using a shared semantic framework.
 
-Correlation compares humanitarian evidence.
+Correlation evaluates humanitarian evidence.
 
-It never compares identities.
+It never evaluates identity.
 
-The purpose of correlation is to assist human interpretation.
+Its purpose is to assist people in understanding possible humanitarian relationships between independent observations.
 
 Identity confirmation always remains a human responsibility.
 
@@ -71,54 +71,58 @@ Identity confirmation always remains a human responsibility.
 
 The purpose of the Correlation Model is to define the semantic principles governing humanitarian correlation.
 
-The protocol intentionally avoids prescribing specific algorithms, mathematical models or implementation techniques.
+Rather than prescribing specific algorithms or mathematical models, this specification defines:
 
-Instead, it defines:
-
-- what humanitarian evidence may be compared;
+- what humanitarian evidence may be evaluated;
 - what correlation attempts to produce;
 - what correlation never guarantees;
 - how correlation contributes to humanitarian interoperability.
 
-Every compatible implementation remains free to innovate while preserving the semantic behavior defined by HCP.
+Every compatible implementation remains completely free to innovate while preserving the semantic behavior defined by HCP.
+
+The Correlation Model answers one fundamental question:
+
+> **What humanitarian evidence may be related?**
 
 ---
 
 # 3. Design Principles
 
-Every HCP Correlation Model follows the fundamental architectural principles of HCP.
-
----
-
-## Observation-Based
-
-Correlation compares independent Observations.
-
-It never correlates identities.
-
----
+Every HCP Correlation Model follows the architectural principles of HCP.
 
 ## Evidence-Based
 
-Correlation evaluates multiple independent pieces of humanitarian evidence.
+Correlation evaluates humanitarian evidence contained within Humanitarian Records.
 
-No individual field is sufficient to establish identity.
+It never evaluates identity.
+
+---
+
+## Observation-Oriented
+
+Correlation evaluates humanitarian observations represented by Humanitarian Records.
+
+The original observations remain immutable.
+
+Correlation never modifies humanitarian evidence.
 
 ---
 
 ## Probabilistic
 
-Correlation produces probabilistic compatibility.
+Correlation estimates humanitarian compatibility.
 
-It never produces certainty.
+It never establishes certainty.
+
+It never confirms identity.
 
 ---
 
 ## Explainable
 
-Correlation should be explainable whenever reasonably possible.
+Correlation should produce results that can be explained to people.
 
-Users should understand why a Correlation Candidate was generated.
+Supporting and conflicting humanitarian evidence should remain available whenever reasonably possible.
 
 ---
 
@@ -126,107 +130,90 @@ Users should understand why a Correlation Candidate was generated.
 
 Every HCP Node remains free to implement its own correlation strategy.
 
-The protocol standardizes semantic meaning.
+The protocol standardizes humanitarian semantics.
 
-It does not standardize algorithms.
+Implementations define correlation.
 
 ---
 
 ## Evolvable
 
-Correlation strategies may improve continuously without requiring modifications to the protocol itself.
+Correlation strategies may continuously improve without requiring modifications to the protocol.
 
-Future implementations may incorporate new statistical methods, artificial intelligence or other techniques while remaining semantically compatible.
+Future implementations may adopt statistical models, artificial intelligence, graph analysis or future techniques while preserving semantic interoperability.
 
 ---
 
 # 4. Correlation Philosophy
 
-The Humanitarian Connection Protocol intentionally separates humanitarian evidence from identity.
+The Humanitarian Connection Protocol intentionally separates humanitarian evidence from humanitarian interpretation.
 
-Independent observations represent humanitarian evidence.
+Humanitarian Records preserve humanitarian observations.
 
-Correlation evaluates compatibility between those observations.
+Correlation evaluates the compatibility of humanitarian evidence contained within those records.
 
-The result is never identity confirmation.
+Correlation never determines identity.
 
-Instead, correlation produces humanitarian hypotheses that assist people during humanitarian emergencies.
+Correlation never modifies Humanitarian Records.
 
-This distinction preserves implementation flexibility while reducing the risk of treating probabilistic relationships as verified facts.
+Correlation never creates truth.
 
-The fundamental philosophy of HCP correlation is:
+Instead, it creates humanitarian understanding that assists people during humanitarian emergencies.
 
-**Observations preserve humanitarian evidence.**
+The Correlation Model exists to organize humanitarian evidence, not to replace human judgment.
 
-**Correlation relates compatible observations.**
+Its fundamental philosophy is:
 
-**People interpret the results.**
+**Humanitarian Records preserve observations.**
 
-**Reality is verified by humans.**
+**Correlation evaluates humanitarian evidence.**
+
+**Correlation creates humanitarian understanding.**
+
+**People verify reality.**
+
 ---
 
-# 5. Humanitarian Evidence
+# 5. Correlation Scope
+
+Correlation operates exclusively on humanitarian evidence contained within Humanitarian Records.
+
+Correlation never:
+
+- determines identity;
+- modifies Humanitarian Records;
+- validates humanitarian facts;
+- replaces human verification.
+
+Instead, correlation evaluates semantic compatibility between independent humanitarian observations.
+
+The purpose of correlation is not to discover certainty.
+
+Its purpose is to organize humanitarian evidence into meaningful humanitarian understanding while preserving transparency and explainability.
+
+---
+
+# 6. Humanitarian Evidence
 
 Correlation evaluates humanitarian evidence contained within independent Humanitarian Records.
 
-Typical evidence includes:
+Typical humanitarian evidence includes:
 
 - Subject Type;
 - Reported Label;
 - Estimated Age;
 - Recognition Features;
 - Event Type;
-- Status;
 - Reported Location;
 - Reported By;
-- Temporal Proximity.
+- Observation Timestamp.
 
-Different implementations may evaluate additional evidence provided that semantic compatibility is preserved.
+Different implementations may evaluate additional humanitarian evidence provided semantic compatibility is preserved.
 
-No individual piece of humanitarian evidence is sufficient to establish identity.
+No individual element is sufficient to establish identity.
 
-Correlation emerges from the combined interpretation of multiple compatible observations.
-
+Correlation emerges from the combined interpretation of multiple compatible pieces of humanitarian evidence.
 ---
-
-# 6. Correlation Process
-
-Although implementations remain free to define their own algorithms, the semantic correlation process follows the same conceptual stages.
-
-```text
-Humanitarian Records
-
-        │
-
-        ▼
-
-Humanitarian Evidence
-
-        │
-
-        ▼
-
-Compatibility Evaluation
-
-        │
-
-        ▼
-
-Correlation Candidates
-
-        │
-
-        ▼
-
-Humanitarian Timeline Reconstruction
-```
-
-The protocol standardizes this conceptual model.
-
-Implementations remain free to optimize or replace every internal processing step.
-
----
-
 # 7. Compatibility Evaluation
 
 Compatibility Evaluation compares the humanitarian evidence contained within independent Humanitarian Records.
@@ -238,34 +225,38 @@ Typical comparisons include:
 - similarity of Recognition Features;
 - geographic proximity of Reported Location;
 - compatibility of Event Types;
-- compatibility of Status values;
-- similarity of Reported By;
+- similarity of Reporting Sources;
 - temporal proximity between Observations.
 
 Different implementations may assign different weights to different pieces of humanitarian evidence.
 
 The protocol intentionally leaves weighting strategies unspecified.
 
+Only semantic meaning is standardized.
+
 ---
 
 # 8. Correlation Candidates
 
-The result of correlation is a collection of Correlation Candidates.
+The immediate result of correlation is a collection of Correlation Candidates.
 
-A Correlation Candidate represents a probabilistic relationship between independent Humanitarian Records.
+A Correlation Candidate represents one possible relationship between independent Humanitarian Records based on humanitarian compatibility.
 
 A Correlation Candidate does not represent:
 
 - identity;
 - certainty;
 - verification;
-- ownership.
+- ownership;
+- humanitarian truth.
 
-Instead, it represents humanitarian compatibility between independent observations.
+Instead, it represents one possible interpretation of humanitarian evidence.
 
 Multiple Correlation Candidates may legitimately exist for the same Query.
 
-Different implementations may return different candidates while remaining fully compliant with HCP.
+Different implementations may generate different Correlation Candidates while remaining fully compliant with HCP.
+
+The Correlation Candidate model is defined by **HCP-0004 — Correlation Candidate Model**.
 
 ---
 
@@ -273,7 +264,7 @@ Different implementations may return different candidates while remaining fully 
 
 Implementations may assign a Correlation Score to every Correlation Candidate.
 
-Example:
+Illustrative example:
 
 ```json
 {
@@ -287,11 +278,11 @@ The protocol intentionally does not define:
 
 - mathematical formulas;
 - probability models;
-- machine learning techniques;
 - statistical methods;
+- machine learning techniques;
 - score ranges.
 
-Only one semantic rule is defined:
+Only one semantic rule is standardized:
 
 Higher Correlation Scores represent stronger humanitarian compatibility.
 
@@ -299,81 +290,52 @@ They never represent identity confirmation.
 
 Correlation Scores assist human interpretation.
 
-They never replace human verification.
+They never replace human judgment.
+
 ---
 
 # 10. Explainability
 
 Correlation should be explainable whenever reasonably possible.
 
-HCP encourages implementations to provide human-readable explanations describing why a Correlation Candidate was generated.
+HCP strongly encourages implementations to provide human-readable explanations describing why humanitarian evidence appears compatible.
 
-Typical explanations may include:
+Typical explanations may reference:
 
-- compatible Reported Label;
+- compatible Reported Labels;
 - compatible Estimated Age;
 - compatible Recognition Features;
-- geographically compatible Reported Location;
-- compatible Event Type;
-- compatible Status;
-- compatible reporting source;
-- temporal proximity.
+- geographically compatible Reported Locations;
+- compatible Event Types;
+- compatible Reporting Sources;
+- temporal proximity between Observations.
 
-Explainability improves transparency and supports human interpretation.
+Explainability improves transparency.
 
-The protocol encourages explanations without prescribing a mandatory explanation format.
+People should understand why humanitarian evidence appears related.
+
+The explainability model is defined by **HCP-0014 — Explainable Correlation**.
 
 ---
 
-# 11. Timeline Reconstruction
+# 11. Humanitarian Understanding
 
-Correlation enables the dynamic reconstruction of Humanitarian Timelines.
+Correlation organizes humanitarian evidence.
 
-A Humanitarian Timeline is not stored as a permanent protocol object.
+Presentation communicates humanitarian understanding.
 
-Instead, it is reconstructed by organizing correlated Humanitarian Records according to their observed chronology.
+A Humanitarian Case is not generated directly by correlation alone.
 
-Typical sequence:
+Instead, correlation produces Correlation Candidates that may later contribute to one or more Humanitarian Cases presented by an implementation.
 
-```text
-Missing Report
+This separation preserves a clear distinction between:
 
-        │
+- humanitarian evidence;
+- humanitarian correlation;
+- humanitarian presentation;
+- human verification.
 
-        ▼
-
-Rescue
-
-        │
-
-        ▼
-
-Hospital Admission
-
-        │
-
-        ▼
-
-Transfer
-
-        │
-
-        ▼
-
-Shelter Registration
-
-        │
-
-        ▼
-
-Family Reunification
-```
-
-The timeline represents one possible humanitarian evolution inferred from correlated observations.
-
-It remains subject to human interpretation and verification.
-
-Timeline presentation is defined by **HCP-0015 — Result Presentation Model**.
+Presentation of Humanitarian Cases is defined by **HCP-0015 — Result Presentation**.
 
 ---
 
@@ -392,67 +354,101 @@ Compatible HCP Nodes may implement correlation using technologies such as:
 - hybrid approaches;
 - future techniques.
 
-Regardless of implementation strategy, every compliant implementation shall preserve the semantic behavior defined by this specification.
+Regardless of implementation strategy, every compliant implementation shall preserve the semantic principles defined by this specification.
 
 The protocol standardizes humanitarian semantics.
 
-Implementations standardize correlation behavior.
+Implementations define correlation behavior.
 
 ---
 
 # 13. Relationship with Other Specifications
 
-The Correlation Model defines how independent humanitarian observations are compared.
+The Correlation Model defines how humanitarian evidence is evaluated in order to discover possible relationships between independent Humanitarian Records.
 
 Complementary specifications define the remaining concepts involved in this process.
 
-- **HCP-0001** defines the Humanitarian Record.
-- **HCP-0004** defines the Explainable Correlation Model.
-- **HCP-0006** defines the Observation Model.
-- **HCP-0007** defines the Status Model.
-- **HCP-0008** defines the Event Type Model.
-- **HCP-0010** defines the Canonical JSON Specification.
-- **HCP-0011** defines the Query Model.
-- **HCP-0015** defines the Result Presentation Model.
+```text
+Query
 
-Together, these specifications define how humanitarian evidence is represented, queried, correlated and ultimately presented to people while preserving semantic interoperability across independent HCP implementations.
+        │
+
+        ▼
+
+Humanitarian Records
+
+        │
+
+        ▼
+
+Correlation
+
+        │
+
+        ▼
+
+Correlation Candidates
+
+        │
+
+        ▼
+
+Humanitarian Cases
+
+        │
+
+        ▼
+
+Presentation
+
+        │
+
+        ▼
+
+Human Verification
+```
+
+Each specification has a distinct responsibility.
+
+- **HCP-0004** defines the Correlation Candidate Model.
+- **HCP-0010** defines the Canonical JSON representation.
+- **HCP-0011** defines humanitarian Queries.
+- **HCP-0012** defines humanitarian correlation.
+- **HCP-0014** defines explainable correlation.
+- **HCP-0015** defines Humanitarian Case presentation.
+
+Together, these specifications define how humanitarian evidence is represented, evaluated, interpreted and ultimately presented while preserving semantic interoperability and implementation independence.
 
 ---
 
 # 14. Summary
 
-The Correlation Model defines the semantic principles used by HCP Nodes to compare independent humanitarian observations.
+The Correlation Model defines the semantic principles governing humanitarian correlation within HCP.
 
-Correlation compares humanitarian evidence.
+Correlation evaluates humanitarian evidence contained within independent Humanitarian Records.
 
-It does not compare identities.
+It never evaluates identity.
 
-Independent Humanitarian Records remain immutable.
+It never modifies Humanitarian Records.
 
-Correlation dynamically relates compatible observations.
+It never determines truth.
 
-The result is a collection of Correlation Candidates representing probabilistic relationships between humanitarian observations.
+Correlation organizes humanitarian evidence into Correlation Candidates representing possible humanitarian relationships.
 
-Correlation assists people.
+Humanitarian Cases communicate local interpretation.
 
-It never replaces human judgment.
+People determine reality.
 
-Humanitarian Timelines emerge from correlated observations.
-
-People interpret the results.
-
-People verify reality.
-
-By separating semantic meaning from correlation algorithms, HCP enables continuous innovation without sacrificing interoperability.
+By separating humanitarian evidence from correlation behavior, HCP enables continuous innovation while preserving universal semantic interoperability.
 
 The Correlation Model reinforces one of the central architectural principles of HCP:
 
-**The protocol standardizes humanitarian semantics.**
+**Humanitarian Records preserve observations.**
 
-**Correlation compares humanitarian evidence.**
+**Correlation evaluates humanitarian evidence.**
 
-**Nodes generate Correlation Candidates.**
+**Correlation Candidates organize humanitarian evidence.**
 
-**People interpret results.**
+**Humanitarian Cases communicate interpretation.**
 
-**Reality is verified by humans.**
+**People verify reality.**

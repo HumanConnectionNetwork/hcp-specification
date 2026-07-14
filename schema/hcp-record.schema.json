@@ -1,0 +1,189 @@
+{
+"$schema": "https://json-schema.org/draft/2020-12/schema",
+"$id": "https://humanconnectionnetwork.org/schemas/hcp-record.schema.json",
+"title": "HCP Humanitarian Record",
+"description": "Machine-readable structural definition of a Humanitarian Record conforming to HCP-0010 Canonical JSON Specification version 0.5.",
+"type": "object",
+"required": [
+"id",
+"schema_version",
+"source_client",
+"subject",
+"observation"
+],
+"properties": {
+"id": {
+"$ref": "#/$defs/recordUuid"
+},
+"schema_version": {
+"type": "string",
+"const": "0.5",
+"description": "Version of the Canonical JSON Specification used to represent this Humanitarian Record."
+},
+"source_client": {
+"type": "string",
+"minLength": 1,
+"description": "Technical identifier of the implementation that generated the Humanitarian Record. This field must never participate in humanitarian correlation.",
+"examples": [
+"hcp-client-telegram",
+"hcp-client-web",
+"hospital-system",
+"veterinary-plugin"
+]
+},
+"subject": {
+"$ref": "#/$defs/subject"
+},
+"observation": {
+"$ref": "#/$defs/observation"
+}
+},
+"additionalProperties": true,
+"$defs": {
+"recordUuid": {
+"type": "string",
+"format": "uuid",
+"description": "Globally unique identifier of one Humanitarian Record. It identifies the record, never the observed Subject."
+},
+"timestamp": {
+"type": "string",
+"format": "date-time",
+"description": "ISO 8601 / RFC 3339 timestamp."
+},
+"nonEmptyString": {
+"type": "string",
+"minLength": 1
+},
+"subject": {
+"type": "object",
+"required": [
+"type"
+],
+"properties": {
+"type": {
+"type": "string",
+"enum": [
+"human",
+"animal"
+],
+"description": "Type of living being referenced by the Humanitarian Observation."
+},
+"reported_label": {
+"type": "string",
+"minLength": 1,
+"description": "Human-readable label reported by the observer. It does not imply verified identity.",
+"examples": [
+"María González",
+"Unknown child",
+"Max",
+"White dog"
+]
+},
+"estimated_age": {
+"type": "integer",
+"minimum": 0,
+"description": "Approximate age of a human Subject. This field is not applicable to animal Subjects."
+},
+"recognition_features": {
+"type": "string",
+"minLength": 1,
+"description": "Concise free-text description of directly observable characteristics.",
+"examples": [
+"Blue jacket, small black backpack, gray hair",
+"Light brown coat, red collar, white patch on chest"
+]
+}
+},
+"allOf": [
+{
+"if": {
+"properties": {
+"type": {
+"const": "animal"
+}
+},
+"required": [
+"type"
+]
+},
+"then": {
+"properties": {
+"estimated_age": false
+}
+}
+}
+],
+"additionalProperties": true
+},
+"observation": {
+"type": "object",
+"required": [
+"event_type",
+"reported_by",
+"observed_at"
+],
+"properties": {
+"event_type": {
+"type": "string",
+"minLength": 1,
+"pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$",
+"description": "Canonical language-independent Event Type describing what happened. Unknown future Event Types must not automatically invalidate an otherwise compatible Humanitarian Record.",
+"examples": [
+"missing_report",
+"hospital_admission",
+"shelter_registration",
+"rescue",
+"medical_evaluation",
+"transfer",
+"family_reunification",
+"public_emergency_report",
+"found_animal",
+"shelter_admission",
+"veterinary_assistance",
+"animal_transfer",
+"animal_reunification"
+]
+},
+"reported_location": {
+"type": "string",
+"minLength": 1,
+"description": "Free-text description of where the Humanitarian Observation occurred.",
+"examples": [
+"Central Community Shelter",
+"Regional General Hospital",
+"Near Plaza Bolívar"
+]
+},
+"reported_by": {
+"type": "string",
+"minLength": 1,
+"pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$",
+"description": "Humanitarian source that reported the Observation.",
+"examples": [
+"family",
+"hospital",
+"volunteer",
+"fire_department",
+"police",
+"friend",
+"unknown"
+]
+},
+"observed_at": {
+"$ref": "#/$defs/timestamp"
+},
+"public_contact": {
+"type": "string",
+"minLength": 1,
+"description": "Optional communication channel voluntarily provided for humanitarian communication. It must never participate in correlation.",
+"examples": [
+"+58 412 555 1234",
+"@hospital",
+"[contact@example.org](mailto:contact@example.org)"
+]
+}
+},
+"additionalProperties": true
+}
+}
+}

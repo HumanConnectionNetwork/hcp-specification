@@ -1,1 +1,12 @@
-
+{
+  "subject": {
+    "type": "human",
+    "reported_label": "María González",
+    "estimated_age": 74,
+    "recognition_features": "Blue jacket, small black backpack, gray hair, approximately 160 cm tall"
+  },
+  "observation": {
+    "event_type": "missing_report",
+    "reported_location": "Central Community Shelter, Riverside District"
+  }
+}

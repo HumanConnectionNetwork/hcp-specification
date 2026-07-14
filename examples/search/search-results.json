@@ -1,1 +1,24 @@
+{
+  "hcp_version": "0.3",
+  "query_uuid": "3e5f8b71-2d46-4b93-a0c8-8d5f1b7c9e24",
+  "search_timestamp": "2026-07-14T13:30:08Z",
 
+  "results": [
+    {
+      "record_uuid": "9b3d7d88-4f2d-4e75-a2a5-5aaf8b5c1d91",
+      "event_type": "missing_person"
+    },
+    {
+      "record_uuid": "0a8f0b65-c0d2-4c8e-8d8a-f4f0c8d6d321",
+      "event_type": "hospitalized_person"
+    },
+    {
+      "record_uuid": "7c4d8b12-9e51-4f87-a2f4-5e8c9d7a3b64",
+      "event_type": "refugee_person"
+    },
+    {
+      "record_uuid": "f2b7f4e1-7b54-4d0f-9d7f-6d0e7b3d4c85",
+      "event_type": "found_person"
+    }
+  ]
+}

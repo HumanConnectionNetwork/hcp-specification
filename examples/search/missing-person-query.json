@@ -1,1 +1,21 @@
+{
+  "hcp_version": "0.3",
+  "query_uuid": "3e5f8b71-2d46-4b93-a0c8-8d5f1b7c9e24",
+  "query_timestamp": "2026-07-14T13:30:00Z",
 
+  "subject": {
+    "type": "person",
+    "reported_label": "María González",
+    "estimated_age": 74
+  },
+
+  "criteria": {
+    "reported_location": "Central Community Shelter",
+    "recognition_features": [
+      "Blue jacket",
+      "Small black backpack",
+      "Gray hair",
+      "Approximately 160 cm tall"
+    ]
+  }
+}

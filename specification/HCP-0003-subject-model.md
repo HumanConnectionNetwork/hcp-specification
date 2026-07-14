@@ -30,69 +30,118 @@ None
 
 # Abstract
 
-This document defines the **Subject Model** of the Humanitarian Connection Protocol (HCP).
+This document defines the Subject Model of the Humanitarian Connection Protocol (HCP).
 
-A Humanitarian Subject is the living being about which a Humanitarian Record is created.
+A Subject is the living being to which a Humanitarian Observation refers.
 
-The Subject Model intentionally separates the observed subject from identity, administrative records and institutional information.
+The Subject Model intentionally separates the observed living being from concepts such as identity, ownership, legal status and administrative registration.
 
-By defining a common semantic representation of the observed living being, HCP enables independent implementations to exchange and correlate humanitarian observations while preserving interoperability, privacy and organizational autonomy.
+By providing a common semantic definition of the observed Subject, HCP enables independent implementations to exchange Humanitarian Records while preserving semantic interoperability, privacy and organizational autonomy.
+
+This document defines what Humanitarian Records are about.
 
 ---
 
 # 1. Introduction
 
-Every Humanitarian Record describes exactly one observed subject.
+Every Humanitarian Record refers to exactly one observed Subject.
 
-Within HCP, a **Subject** is the living being that is the focus of a humanitarian observation.
+Within HCP, a Subject is the living being that is the focus of a Humanitarian Observation.
 
-The protocol intentionally distinguishes the observed subject from concepts such as identity, ownership, legal status or administrative registration.
+A Subject is not created by the protocol.
+
+A Subject exists independently of HCP.
+
+The protocol simply provides a common semantic model for describing humanitarian observations concerning that living being.
+
+The Subject Model intentionally distinguishes the observed Subject from concepts such as:
+
+- identity;
+- ownership;
+- legal status;
+- nationality;
+- administrative registration;
+- institutional records.
 
 A Subject is therefore not a permanent identity.
 
-It is the living being described by an independent humanitarian observation.
+It is the living being about which a Humanitarian Observation is made.
 
-Multiple Humanitarian Records may independently describe the same Subject.
+Multiple Humanitarian Records may independently refer to the same Subject.
 
-Those observations remain independent until compatible HCP implementations determine that they may represent the same humanitarian case through explainable correlation.
+Those observations remain independent.
+
+Only local correlation may later suggest that they contribute to the same Humanitarian Case.
 
 ---
 
 # 2. Purpose
 
-The purpose of the Subject Model is to define what a Humanitarian Record is about.
+The purpose of the Subject Model is to define what a Humanitarian Record refers to.
 
-Rather than describing institutions, facilities, inventories or administrative entities, HCP intentionally focuses on living beings affected by humanitarian events.
+HCP intentionally focuses on living beings affected by humanitarian events.
 
-This design keeps the protocol simple, implementation-independent and focused on humanitarian interoperability.
+The protocol does not describe institutions, facilities, inventories, infrastructure or administrative entities.
 
-The Subject Model enables independent systems to describe the same living being using a common semantic model while preserving observation independence and avoiding centralized identity management.
+Instead, it provides a common semantic model for representing observations concerning living beings.
+
+This design keeps HCP focused on humanitarian interoperability while preserving implementation independence and long-term semantic consistency.
+
+The Subject Model answers one simple question:
+
+> **Who or what is this Humanitarian Observation about?**
 
 ---
 
-# 3. Design Principles
+# 3. Subject vs Identity
 
-Every Humanitarian Subject should preserve the following principles.
+The Subject Model intentionally separates the concept of a Subject from the concept of identity.
+
+A Subject is the living being observed.
+
+Identity is the human process of determining who that living being actually is.
+
+HCP does not establish identity.
+
+It represents humanitarian observations.
+
+Identity may eventually be confirmed by families, hospitals, emergency responders or other responsible organizations through human verification.
+
+The protocol itself remains independent of identity systems.
+
+This distinction allows humanitarian information to be exchanged even when official identification is unavailable, incomplete or uncertain.
+
+Subjects are observed.
+
+Humanitarian Records represent observations.
+
+People determine identity.
+
+---
+
+# 4. Design Principles
+
+Every Subject represented within HCP should preserve the following architectural principles.
 
 ## Living Being
 
 A Subject always represents a living being.
 
-The protocol currently supports observations concerning humans and animals.
+The current version of HCP supports observations concerning humans and animals.
 
 ---
 
-## Observation-Based
+## Observation-Oriented
 
-Subjects are described through humanitarian observations.
+Subjects are described through Humanitarian Observations.
 
-The protocol does not attempt to define permanent identities.
+The protocol never attempts to replace those observations with inferred conclusions.
 
 ---
 
 ## Identity Independent
 
-Subjects remain independent from government identifiers, passports, medical record numbers or other administrative identity systems.
+Subjects remain independent from passports, medical record numbers, government identifiers or any other administrative identity systems.
 
 Identity verification remains outside the scope of HCP.
 
@@ -102,190 +151,252 @@ Identity verification remains outside the scope of HCP.
 
 Subjects are designed to support explainable humanitarian correlation.
 
-Independent observations may later be related through compatible correlation implementations without requiring centralized identity databases.
+Independent Humanitarian Records may later contribute to the same Humanitarian Case without requiring centralized identity databases.
 
 ---
 
-## Infrastructure Independent
+## Implementation Independent
 
 The Subject Model is independent of programming languages, databases, software architectures and deployment environments.
 
-Every compatible implementation represents Subjects using the common semantic definitions established by HCP.
+Every compatible implementation represents Subjects using the same semantic definitions established by HCP.
 
 ---
 
-## Extensible
+## Minimal
 
-Future versions of HCP may introduce additional subject classifications while preserving backward compatibility whenever reasonably possible.
+The Subject Model intentionally defines only the semantic concept of the observed living being.
+
+All additional interpretation belongs to other HCP specifications.
 ---
-
-# 4. Supported Subject Types
+# 5. Supported Subject Types
 
 The current version of HCP defines two Subject Types.
 
-## Human
+## Human Subject
 
 Represents an individual human being observed during a humanitarian event.
 
 Examples include:
 
-- missing person
-- hospitalized person
-- sheltered person
-- located person
-- injured person
-- rescued person
-- unidentified person
+- missing person;
+- hospitalized person;
+- sheltered person;
+- located person;
+- injured person;
+- rescued person;
+- unidentified person.
 
-The protocol does not distinguish subjects by nationality, legal status, gender, ethnicity or other administrative classifications.
+The Subject Model intentionally avoids administrative classifications such as nationality, legal status, ethnicity, religion or citizenship.
 
-Those attributes remain outside the scope of the Subject Model.
+Those concepts remain outside the scope of HCP.
 
 ---
 
-## Animal
+## Animal Subject
 
 Represents an individual non-human animal observed during a humanitarian event.
 
 Examples include:
 
-- missing pet
-- found pet
-- rescued animal
-- displaced animal
-- injured animal
-- unidentified animal
+- missing animal;
+- found animal;
+- rescued animal;
+- displaced animal;
+- injured animal;
+- unidentified animal.
 
-The protocol intentionally treats animals as humanitarian subjects because they frequently become part of humanitarian emergencies and family reunification efforts.
+Animals are included because they frequently become part of humanitarian emergencies, evacuation processes and family reunification efforts.
 
-Future specifications may extend animal classifications while preserving interoperability.
+The current version of HCP does not distinguish between companion animals, working animals or wildlife.
+
+Those distinctions may be defined by future complementary specifications without changing the Subject Model.
 
 ---
 
-# 5. Observation Independence
+# 6. Observation Independence
 
-Subjects are described through independent humanitarian observations.
+Subjects are described through independent Humanitarian Observations.
 
-Each Humanitarian Record represents one observation concerning one Subject.
+Every Humanitarian Record represents one observation concerning one Subject.
 
 Different organizations may independently observe the same Subject.
 
-Each observation remains valid on its own.
+Each observation remains valid independently of all others.
 
-The protocol does not merge observations.
+The protocol never merges observations.
 
-Instead, compatible HCP implementations may later determine that multiple observations probably describe the same Subject through explainable correlation.
+Instead, independent implementations may later correlate Humanitarian Records when sufficient humanitarian evidence suggests they refer to the same Subject.
 
-This approach preserves transparency, explainability and historical consistency.
+Observation independence improves:
+
+- transparency;
+- explainability;
+- historical consistency;
+- semantic interoperability.
 
 ---
 
-# 6. Subject Identification
+# 7. Subject Identity
 
-Subjects do not receive permanent identifiers from HCP.
+Subjects are not identified by the Humanitarian Connection Protocol.
 
 Only Humanitarian Records receive protocol identifiers such as UUIDs.
 
-Reported names, estimated ages and similar information are treated as observation evidence rather than permanent identity.
+Subjects themselves do not receive permanent protocol identifiers.
 
-Identity may eventually be confirmed by people or responsible institutions.
+Reported Labels, estimated ages, Recognition Features and similar attributes represent humanitarian observations rather than identity.
 
-The protocol itself remains focused on describing observations rather than establishing identity.
+Identity may eventually be confirmed through human verification performed by families, hospitals, emergency responders or other responsible organizations.
 
-This distinction enables humanitarian interoperability even when official identification is unavailable or uncertain.
+The protocol intentionally separates humanitarian observations from identity determination.
+
+This separation allows humanitarian interoperability even when official identification is unavailable, incomplete or uncertain.
+
+HCP minimizes identity.
+
+HCP maximizes humanitarian evidence.
 
 ---
 
-# 7. Subject Representation
+# 8. Subject Representation
 
-Every Humanitarian Record references exactly one Subject.
+Every Humanitarian Record refers to exactly one observed Subject.
 
-The Subject represents the living being observed.
+The Subject represents the living being.
 
-The Humanitarian Record represents the humanitarian observation describing that Subject.
+The Humanitarian Record represents the humanitarian observation concerning that living being.
 
-This distinction is fundamental to the HCP semantic model.
+Multiple Humanitarian Records may independently refer to the same Subject.
 
-A Subject may be represented by multiple independent Humanitarian Records created by different HCP Nodes.
+Those observations remain independent throughout their lifecycle.
 
-Likewise, every Humanitarian Record always refers to one and only one observed Subject.
+Only local correlation may later suggest that multiple Humanitarian Records contribute to the same Humanitarian Case.
 
-This model allows observations to remain independent while enabling future correlation between compatible implementations.
+This separation between Subject, Humanitarian Record and Humanitarian Case is fundamental to the architecture of HCP.
+
 ---
 
-# 8. Interoperability
+# 9. Interoperability
 
 The Subject Model provides a common semantic definition of the observed living being.
 
-Every compatible HCP implementation should represent Subjects according to this specification regardless of its internal technologies or data models.
+Every compatible implementation should interpret Subjects according to this specification regardless of its internal technologies or software architecture.
 
 Implementations remain free to choose:
 
-- programming languages
-- database technologies
-- deployment architectures
-- communication mechanisms
-- internal data structures
+- programming languages;
+- database technologies;
+- deployment architectures;
+- communication mechanisms;
+- internal data structures.
 
-The protocol standardizes the semantic meaning of the Subject.
+HCP standardizes the semantic meaning of the Subject.
 
-It does not standardize software implementation.
+It does not standardize implementation details.
 
 Shared meaning replaces shared infrastructure.
 
-This enables independent HCP Nodes to exchange humanitarian observations while preserving technological independence.
+Semantic interoperability allows independent HCP Nodes to exchange Humanitarian Records while preserving complete technological independence.
 
 ---
 
-# 9. Privacy
+# 10. Privacy
 
-The Subject Model intentionally minimizes identity assumptions.
+The Subject Model intentionally minimizes assumptions about identity.
 
-Subjects should be described using only the information necessary to support humanitarian coordination and explainable correlation.
+Subjects should be described using only the information necessary to support humanitarian interoperability and explainable correlation.
 
-Whenever possible, implementations should prioritize observable characteristics over permanent personal identifiers.
+Whenever equivalent humanitarian value can be achieved through humanitarian observations, implementations should prefer observation-based evidence over permanent identifiers.
 
 The Subject Model separates the observed living being from administrative identity systems, reducing unnecessary exposure of sensitive information while preserving humanitarian usefulness.
+
+Privacy is achieved primarily through protocol architecture rather than through infrastructure.
 
 Additional privacy requirements are defined in:
 
 - **HCP-0021 — Privacy and Data Minimization**
+- ---
+# 11. Relationship with Other Specifications
 
----
+The Subject Model defines what a Humanitarian Record refers to.
 
-# 10. Relationship with Other Specifications
+It complements the remaining HCP Core specifications, each of which defines a different aspect of humanitarian interoperability.
 
-This document defines what a Humanitarian Subject is.
+```text
+HCP-0000
+Architecture and Overview
+        │
+        ▼
+HCP-0001
+Humanitarian Record
+        │
+        ▼
+HCP-0003
+Subject Model
+        │
+        ├───────────────┐
+        ▼               ▼
+HCP-0006          HCP-0008
+Observation       Event Type
+Model             Model
+        │               │
+        └───────┬───────┘
+                ▼
+          HCP-0010
+      Canonical JSON
+                │
+        ┌───────┼────────┐
+        ▼       ▼        ▼
+   HCP-0011 HCP-0012 HCP-0013
+     Query  Correlation Synchronization
+                │
+                ▼
+          HCP-0015
+    Result Presentation
+```
 
-Other HCP specifications define complementary aspects of the protocol.
+Each specification has a distinct responsibility.
 
-- **HCP-0000** defines the overall architecture and philosophy of HCP.
+- **HCP-0000** defines the architectural principles of HCP.
 - **HCP-0001** defines the Humanitarian Record.
-- **HCP-0002** defines the HCP Node.
+- **HCP-0003** defines the Subject of a Humanitarian Observation.
 - **HCP-0006** defines the Observation Model.
-- **HCP-0008** defines the Event Type Model.
-- **HCP-0010** defines the Canonical HCP JSON Representation.
-- **HCP-0012** defines the Correlation Model.
-- **HCP-0016** defines the Humanitarian Record Lifecycle.
+- **HCP-0008** defines the semantic meaning of observations through Event Types.
+- **HCP-0010** defines the Canonical JSON representation.
+- **HCP-0011** defines how Humanitarian Records are queried.
+- **HCP-0012** defines how Humanitarian Records are correlated.
+- **HCP-0013** defines synchronization between autonomous Nodes.
+- **HCP-0015** defines the local presentation of Humanitarian Cases.
 
-Together, these specifications establish a common semantic model for representing, exchanging and correlating humanitarian observations concerning living beings.
+Together, these specifications establish a complete semantic model while maintaining a clear separation between the observed Subject, the Humanitarian Record and the resulting Humanitarian Case.
 
 ---
 
-# 11. Summary
+# 12. Summary
 
-The Subject Model defines the living being described by a Humanitarian Record.
+The Subject Model defines the living being to which a Humanitarian Observation refers.
 
-Within HCP, a Subject is not an identity, a database entity or an administrative record.
+A Subject is not an identity.
+
+A Subject is not an administrative entity.
+
+A Subject is not a protocol object.
 
 It is the living being observed during a humanitarian event.
 
-Humanitarian Records describe observations.
+Humanitarian Records describe observations concerning a Subject.
 
-Subjects represent the living beings to which those observations refer.
+Humanitarian Cases are local interpretations created from one or more Humanitarian Records.
 
-This distinction allows independent organizations to exchange meaningful humanitarian information while preserving observation independence, organizational autonomy and technological independence.
+By intentionally separating Subjects, observations and identity, HCP enables independent organizations to exchange humanitarian evidence while preserving privacy, organizational autonomy and semantic interoperability.
 
-By limiting the Subject Model to humans and animals, HCP remains focused on its primary mission: enabling humanitarian interoperability for living beings affected by humanitarian events.
+Subjects represent living beings.
 
-The Subject Model provides the semantic foundation upon which Humanitarian Records, correlation and humanitarian interoperability are built.
+Humanitarian Records preserve observations.
+
+Correlation creates understanding.
+
+Human verification determines identity.
+
+This separation enables humanitarian collaboration without requiring centralized identity systems, centralized databases or shared software platforms.

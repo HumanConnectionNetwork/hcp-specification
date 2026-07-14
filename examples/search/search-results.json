@@ -1,24 +1,79 @@
 {
-  "hcp_version": "0.3",
-  "query_uuid": "3e5f8b71-2d46-4b93-a0c8-8d5f1b7c9e24",
-  "search_timestamp": "2026-07-14T13:30:08Z",
-
+  "query_id": "3e5f8b71-2d46-4b93-a0c8-8d5f1b7c9e24",
+  "executed_at": "2026-07-14T13:30:08Z",
+  "result_count": 4,
   "results": [
     {
-      "record_uuid": "9b3d7d88-4f2d-4e75-a2a5-5aaf8b5c1d91",
-      "event_type": "missing_person"
+      "id": "9b3d7d88-4f2d-4e75-a2a5-5aaf8b5c1d91",
+      "schema_version": "0.5",
+      "source_client": "hcp-client-mobile",
+      "subject": {
+        "type": "human",
+        "reported_label": "María González",
+        "estimated_age": 74,
+        "recognition_features": "Blue jacket, small black backpack, gray hair, approximately 160 cm tall"
+      },
+      "observation": {
+        "event_type": "missing_report",
+        "reported_location": "Central Community Shelter, Riverside District",
+        "reported_by": "family",
+        "observed_at": "2026-07-13T18:45:00Z",
+        "public_contact": "+58 412 555 0187"
+      }
     },
     {
-      "record_uuid": "0a8f0b65-c0d2-4c8e-8d8a-f4f0c8d6d321",
-      "event_type": "hospitalized_person"
+      "id": "0a8f0b65-c0d2-4c8e-8d8a-f4f0c8d6d321",
+      "schema_version": "0.5",
+      "source_client": "hcp-hospital-system",
+      "subject": {
+        "type": "human",
+        "reported_label": "María",
+        "estimated_age": 74,
+        "recognition_features": "Blue jacket, small black backpack, gray hair, approximately 160 cm tall"
+      },
+      "observation": {
+        "event_type": "hospital_admission",
+        "reported_location": "Regional General Hospital, Emergency Department",
+        "reported_by": "hospital",
+        "observed_at": "2026-07-13T22:10:00Z",
+        "public_contact": "+58 212 555 1200"
+      }
     },
     {
-      "record_uuid": "7c4d8b12-9e51-4f87-a2f4-5e8c9d7a3b64",
-      "event_type": "refugee_person"
+      "id": "7c4d8b12-9e51-4f87-a2f4-5e8c9d7a3b64",
+      "schema_version": "0.5",
+      "source_client": "hcp-shelter-system",
+      "subject": {
+        "type": "human",
+        "reported_label": "María",
+        "estimated_age": 74,
+        "recognition_features": "Blue jacket, small black backpack, gray hair, approximately 160 cm tall"
+      },
+      "observation": {
+        "event_type": "shelter_registration",
+        "reported_location": "Central Community Shelter",
+        "reported_by": "shelter",
+        "observed_at": "2026-07-14T01:35:00Z",
+        "public_contact": "+58 212 555 1300"
+      }
     },
     {
-      "record_uuid": "f2b7f4e1-7b54-4d0f-9d7f-6d0e7b3d4c85",
-      "event_type": "found_person"
+      "id": "f2b7f4e1-7b54-4d0f-9d7f-6d0e7b3d4c85",
+      "schema_version": "0.5",
+      "source_client": "hcp-client-mobile",
+      "subject": {
+        "type": "human",
+        "reported_label": "María",
+        "estimated_age": 74,
+        "recognition_features": "Blue jacket, small black backpack, gray hair, approximately 160 cm tall"
+      },
+      "observation": {
+        "event_type": "located",
+        "reported_location": "Northern Evacuation Route, Riverside District",
+        "reported_by": "volunteer",
+        "observed_at": "2026-07-14T09:20:00Z",
+        "public_contact": "+58 412 555 0145"
+      }
     }
   ]
 }

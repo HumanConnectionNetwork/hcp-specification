@@ -2,7 +2,7 @@
 
 # Event Type Model
 
-Version: 0.3 (Draft)
+Version: 0.4 (Draft)
 
 Status: Draft
 
@@ -20,7 +20,6 @@ Depends On:
 - HCP-0001 — Humanitarian Record
 - HCP-0003 — Subject Model
 - HCP-0006 — Observation Model
-- HCP-0007 — Status Model
 
 Replaces:
 None
@@ -34,93 +33,85 @@ None
 
 This document defines the Event Type Model of the Humanitarian Connection Protocol (HCP).
 
-An Event Type classifies the humanitarian event that generated an Observation.
+An Event Type defines the humanitarian meaning of a Humanitarian Observation.
 
 It answers one fundamental question:
 
 > **What happened?**
 
-Event Types classify humanitarian observations.
+Event Types are one of the core semantic concepts of HCP.
 
-They do not describe humanitarian condition.
+They provide the common humanitarian vocabulary that allows independent implementations to exchange Humanitarian Records while preserving semantic interoperability.
 
-Humanitarian condition is represented independently by the Status Model.
+The protocol standardizes the humanitarian meaning associated with every Event Type.
 
-This separation allows HCP to distinguish the event being reported from the condition observed, improving semantic clarity, interoperability and long-term protocol evolution.
+Implementations remain free to define workflows, operational procedures and user experiences.
 
 ---
 
 # 1. Introduction
 
-Every Humanitarian Observation is created because something happened.
+Every Humanitarian Observation describes a humanitarian event.
 
-That humanitarian occurrence is represented by an Event Type.
+That event is represented by an Event Type.
 
-An Event Type classifies the humanitarian event that generated an Observation.
+An Event Type defines the humanitarian meaning of the Observation.
 
-It does not describe the current condition of the observed Subject.
+Rather than describing identities, histories or operational procedures, Event Types provide a shared semantic vocabulary that allows independent organizations to interpret humanitarian observations consistently.
 
-For example:
+Humanitarian Records preserve observations.
 
-A person may be admitted to a hospital.
+Event Types define their humanitarian meaning.
 
-The Event Type is:
-
-```text
-Hospital Admission
-```
-
-The observed Status may be:
-
-```text
-Stable
-```
-
-These represent different semantic concepts.
-
-Separating Event Type from Status allows HCP to represent humanitarian evidence with greater precision while preserving semantic interoperability.
+Because every compatible implementation interprets Event Types consistently, Humanitarian Records remain semantically interoperable regardless of software architecture, programming language or communication technology.
 
 ---
 
 # 2. Purpose
 
-The purpose of the Event Type Model is to standardize how humanitarian events are classified.
+The purpose of the Event Type Model is to define the humanitarian semantics of Humanitarian Observations.
 
-Rather than defining operational workflows or implementation behavior, Event Types provide a common semantic vocabulary describing what humanitarian event generated an Observation.
+Rather than standardizing workflows or implementation behavior, HCP standardizes the meaning of humanitarian events.
 
-Event Types classify humanitarian observations.
+This shared semantic model allows independent organizations to exchange Humanitarian Records while preserving:
 
-Status describes observed humanitarian condition.
+- semantic interoperability;
+- organizational autonomy;
+- implementation independence;
+- explainable correlation;
+- long-term protocol stability.
 
-Together they provide the semantic context necessary for humanitarian interoperability, explainable correlation and Humanitarian Timeline reconstruction.
+The Event Type Model answers one simple question:
+
+> **What happened?**
 
 ---
 
 # 3. Design Principles
 
-Every Event Type should preserve the following principles.
-
-## Event-Oriented
-
-An Event Type describes what humanitarian event occurred.
-
-It does not describe humanitarian condition.
-
----
+Every Event Type should preserve the following architectural principles.
 
 ## Semantic
 
 Event Types define humanitarian meaning.
 
-They do not define workflows, operational procedures or implementation behavior.
+They do not define implementation behavior.
+
+---
+
+## Observation-Oriented
+
+Every Event Type describes the humanitarian event represented by a Humanitarian Observation.
+
+It does not describe identity, ownership or historical evolution.
 
 ---
 
 ## Subject-Aware
 
-An Event Type should be compatible with the reported Subject Type.
+The humanitarian interpretation of an Event Type depends upon the Subject associated with the Observation.
 
-Not every Event Type applies to every Subject.
+The same Event Type may therefore be applied to different Subject Types while preserving its semantic meaning.
 
 ---
 
@@ -128,27 +119,31 @@ Not every Event Type applies to every Subject.
 
 Canonical Event Type values remain language-independent.
 
-HCP Clients may present localized translations without changing semantic meaning.
+Clients may translate or localize Event Types without changing their humanitarian semantics.
+
+---
+
+## Semantic Stability
+
+Event Types should evolve conservatively.
+
+Once introduced, their humanitarian meaning should remain stable across protocol versions whenever reasonably possible.
+
+This stability protects long-term interoperability between independent HCP implementations.
 
 ---
 
 ## Infrastructure Independent
 
-The Event Type Model remains independent of programming languages, databases, communication technologies and software architectures.
+The Event Type Model remains independent of programming languages, databases, communication technologies and deployment architectures.
 
-Only semantic meaning is standardized.
-
----
-
-## Extensible
-
-Future HCP specifications may introduce additional Event Types while preserving semantic compatibility whenever reasonably possible.
+Only humanitarian semantics are standardized.
 
 ---
 
 # 4. Relationship with Subject
 
-The interpretation of an Event Type depends on the observed Subject.
+The humanitarian interpretation of an Event Type always depends upon the Subject referenced by the Observation.
 
 For example:
 
@@ -172,322 +167,209 @@ Whereas:
 
 represents a report that an animal has been reported missing.
 
-The Event Type remains semantically identical.
+The humanitarian meaning of **missing_report** remains identical.
 
-Only its humanitarian interpretation changes according to the Subject.
+Only the Subject changes.
 
-This allows HCP to reuse a common semantic vocabulary across different Subject Types while preserving interoperability.
----
-
-# 5. Human Event Types
-
-Human Event Types classify humanitarian events concerning individual human beings.
-
-The following Event Types represent the core vocabulary recommended by HCP.
+This allows HCP to reuse a common semantic vocabulary across multiple Subject Types while preserving semantic consistency and interoperability.
 
 ---
 
-## Missing Report
+# 5. Core Event Types
 
-A person has been reported as missing.
+The current version of HCP defines a common humanitarian vocabulary shared across compatible implementations.
 
-Typical situations include:
+Detailed organization of Event Types into Event Families is defined by **HCP-0017 — Event Classification**.
 
-- family reports a disappearance;
-- emergency responders receive a missing person report;
-- humanitarian organizations register a missing individual.
+The following Event Types constitute the recommended core vocabulary.
 
+## Human Event Types
+
+- Missing Report
+- Hospital Admission
+- Shelter Registration
+- Rescue
+- Medical Evaluation
+- Transfer
+- Family Reunification
+- Public Emergency Report
+
+## Animal Event Types
+
+- Missing Report
+- Found Animal
+- Shelter Admission
+- Veterinary Assistance
+- Animal Transfer
+- Animal Reunification
+
+Future HCP specifications may extend this vocabulary while preserving semantic compatibility with previously defined Event Types.
 ---
+# 6. Event Types and Correlation
 
-## Hospital Admission
+Event Types contribute semantic meaning during humanitarian correlation.
 
-A person has been admitted to a medical facility.
+Rather than determining identity, Event Types help implementations understand how different Humanitarian Observations may relate to one another.
 
-This Event Type describes the admission event itself.
-
-The observed humanitarian condition is represented separately through Status.
-
----
-
-## Shelter Registration
-
-A person has been registered at a temporary shelter or humanitarian refuge.
-
-The Event Type represents the registration event.
-
-Status describes the observed humanitarian condition.
-
----
-
-## Rescue
-
-A person has been rescued or recovered during a humanitarian emergency.
-
-Examples include:
-
-- fire department rescue;
-- flood rescue;
-- earthquake rescue;
-- maritime rescue.
-
----
-
-## Medical Evaluation
-
-A medical assessment has been performed.
-
-The Event Type represents the evaluation itself.
-
-Observed medical condition belongs to Status.
-
----
-
-## Transfer
-
-A person has been transferred between humanitarian locations.
-
-Examples include:
-
-- hospital transfer;
-- shelter transfer;
-- evacuation transfer.
-
----
-
-## Family Reunification
-
-A person has been reunited with relatives or responsible caregivers.
-
-This Event Type represents the reunification event itself.
-
----
-
-## Public Emergency Report
-
-A humanitarian observation has been reported directly by the public without belonging to another predefined Event Type.
-
-This Event Type provides flexibility while preserving semantic interoperability.
-
----
-
-# 6. Animal Event Types
-
-Animal Event Types classify humanitarian events concerning individual animals.
-
-Typical Event Types include:
-
----
-
-## Missing Report
-
-An animal has been reported as missing.
-
----
-
-## Found Animal
-
-An unidentified or missing animal has been found.
-
----
-
-## Shelter Admission
-
-An animal has been admitted to a temporary shelter or rescue organization.
-
----
-
-## Veterinary Assistance
-
-An animal has received veterinary evaluation or treatment.
-
----
-
-## Animal Transfer
-
-An animal has been transferred between humanitarian facilities or responsible caregivers.
-
----
-
-## Animal Reunification
-
-An animal has been reunited with its responsible family or caretaker.
-
-Future HCP specifications may extend these vocabularies while remaining fully compatible with this semantic model.
-
----
-
-# 7. Event Type and Status
-
-Although closely related, Event Type and Status describe different aspects of an Observation.
-
-Event Type answers:
-
-> **What happened?**
-
-Status answers:
-
-> **What was the observed condition?**
-
-Example:
-
-```json
-{
-  "subject": "human",
-  "event_type": "hospital_admission",
-  "status": "stable"
-}
-```
-
-This means:
-
-The humanitarian event was:
-
-```text
-Hospital Admission
-```
-
-The observed humanitarian condition was:
-
-```text
-Stable
-```
-
-Another example:
-
-```json
-{
-  "subject": "human",
-  "event_type": "missing_report",
-  "status": "missing"
-}
-```
-
-The humanitarian event was:
-
-```text
-Missing Report
-```
-
-The observed humanitarian condition was:
-
-```text
-Missing
-```
-
-Keeping these concepts separate allows HCP to represent humanitarian evidence with greater semantic precision.
-
----
-
-# 8. Correlation
-
-Event Types contribute valuable humanitarian evidence during correlation.
-
-Compatible Event Types generally increase correlation confidence.
-
-However, correlation is not restricted to identical Event Types.
+Compatible Event Types generally strengthen humanitarian correlation.
 
 For example:
 
 ```text
 Missing Report
-```
 
-may reasonably correlate with:
+        │
 
-```text
-Hospital Admission
-```
+        ▼
 
-or
-
-```text
 Rescue
+
+        │
+
+        ▼
+
+Hospital Admission
+
+        │
+
+        ▼
+
+Transfer
+
+        │
+
+        ▼
+
+Family Reunification
 ```
 
-when other humanitarian evidence strongly suggests that the Observations describe the same Subject.
+Each Event Type contributes humanitarian context.
 
-Correlation evaluates the complete humanitarian context.
+Correlation evaluates Event Types together with other humanitarian evidence, including:
 
-Event Type is one source of humanitarian evidence.
+- Reported Label;
+- Recognition Features;
+- observation timestamp;
+- reported location;
+- reporting source;
+- protocol-defined metadata.
 
-It is never sufficient by itself to establish identity.
+No Event Type alone is sufficient to establish identity or humanitarian certainty.
 
-The detailed Correlation Model is defined in **HCP-0004**.
----
-
-# 9. Interoperability
-
-Every compliant HCP Node shall exchange canonical Event Type values defined by the protocol.
-
-User interfaces may translate Event Types into local languages or adapt their presentation without changing their semantic meaning.
-
-Internal implementations may organize Event Types differently according to their own software architecture.
-
-However, their humanitarian semantics shall remain consistent across all compatible HCP implementations.
-
-The protocol standardizes humanitarian semantics.
-
-Implementations remain free to define behavior.
-
-Clients remain free to define presentation.
+Correlation always evaluates the complete humanitarian context.
 
 ---
 
-# 10. Relationship with Other Specifications
+# 7. Semantic Interoperability
 
-This document defines the semantic model used to classify humanitarian events.
+Semantic interoperability depends upon preserving the humanitarian meaning of every Event Type.
 
-Complementary specifications define other aspects of humanitarian observations.
+Different HCP implementations may internally organize, store or process Event Types differently.
 
-- **HCP-0001** defines the Humanitarian Record.
-- **HCP-0003** defines the Subject Model.
-- **HCP-0004** defines the Correlation Model.
-- **HCP-0006** defines the Observation Model.
-- **HCP-0007** defines the Status Model.
-- **HCP-0010** defines the Canonical HCP JSON Representation.
-- **HCP-0011** defines the Query Model.
-- **HCP-0012** defines the Correlation Model.
+However, they should preserve the same humanitarian semantics when exchanging Humanitarian Records.
 
-Together, these specifications define how humanitarian observations are represented, exchanged, interpreted and correlated while preserving semantic interoperability across independent HCP implementations.
+Interoperability therefore depends on shared meaning rather than identical implementation.
+
+Clients may:
+
+- translate Event Types;
+- display localized terminology;
+- use icons;
+- apply accessibility adaptations;
+- organize user interfaces differently.
+
+None of these presentation differences affect protocol interoperability.
+
+The protocol standardizes humanitarian meaning.
+
+Clients define user experience.
 
 ---
 
-# 11. Summary
+# 8. Relationship with Other Specifications
 
-The Event Type Model defines how humanitarian events are classified within the Humanitarian Connection Protocol.
+The Event Type Model defines the humanitarian meaning associated with Humanitarian Observations.
 
-An Event Type answers one question:
+Complementary HCP specifications define how those observations are represented, exchanged, interpreted and presented.
+
+```text
+Reality
+        │
+        ▼
+Humanitarian Observation
+        │
+        ▼
+HCP-0006
+Observation Model
+        │
+        ▼
+HCP-0008
+Event Type Model
+        │
+        ▼
+HCP-0010
+Canonical JSON
+        │
+        ▼
+HCP-0012
+Correlation Model
+        │
+        ▼
+HCP-0015
+Result Presentation
+```
+
+Each specification has a distinct responsibility.
+
+- **HCP-0006** defines what a Humanitarian Observation is.
+- **HCP-0008** defines the humanitarian meaning of that Observation.
+- **HCP-0010** defines the Canonical JSON representation.
+- **HCP-0012** defines how Humanitarian Records are locally correlated.
+- **HCP-0015** defines how correlated observations are presented to people.
+- **HCP-0017** organizes Event Types into Event Families without changing their semantic meaning.
+
+Together, these specifications separate humanitarian evidence, semantic meaning, protocol representation, local interpretation and presentation while preserving universal semantic interoperability.
+
+---
+
+# 9. Summary
+
+The Event Type Model defines the humanitarian meaning of Humanitarian Observations within the Humanitarian Connection Protocol.
+
+Every Humanitarian Observation is associated with one Event Type.
+
+Every Event Type answers one fundamental question:
 
 > **What happened?**
 
-Status answers a different question:
+Event Types define humanitarian semantics.
 
-> **What was the observed condition?**
+They do not define workflows.
 
-This separation allows humanitarian observations to describe both the event that generated the Observation and the condition observed at that moment without confusing the two concepts.
+They do not define implementation behavior.
 
-Event Types classify humanitarian observations.
+They do not determine identity.
 
-Status contributes humanitarian evidence.
+Humanitarian Observations preserve humanitarian evidence.
 
-Observations preserve humanitarian evidence.
+Event Types define humanitarian meaning.
 
-Correlation relates compatible observations.
+Correlation creates local understanding.
 
-Humanitarian Timelines emerge from correlated observations.
-
-People interpret the results.
+Humanitarian Cases communicate interpretation.
 
 People verify reality.
 
-By separating semantic meaning from implementation behavior and human interpretation, HCP enables organizations to exchange meaningful humanitarian information without requiring centralized databases, global identity systems or shared software infrastructure.
+By standardizing humanitarian semantics independently of software architecture, databases, programming languages and communication technologies, HCP enables autonomous implementations to exchange meaningful humanitarian information while preserving organizational autonomy and long-term interoperability.
 
-The Event Type Model reinforces one of the fundamental principles of HCP:
+The Event Type Model reinforces one of the central architectural principles of HCP:
 
-**The protocol standardizes semantics.**
+**Humanitarian Observations preserve evidence.**
 
-**Nodes correlate observations.**
+**Event Types define meaning.**
 
-**People interpret results.**
+**Correlation creates understanding.**
 
-**Reality is verified by humans.**
+**Humanitarian Cases communicate interpretation.**
+
+**People verify reality.**

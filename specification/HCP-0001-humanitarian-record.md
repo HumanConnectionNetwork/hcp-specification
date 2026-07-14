@@ -28,13 +28,17 @@ None
 
 # Abstract
 
-This document defines the **Humanitarian Record**, the fundamental semantic unit of the Humanitarian Connection Protocol (HCP).
+This document defines the Humanitarian Record, the fundamental semantic unit of the Humanitarian Connection Protocol (HCP).
 
-A Humanitarian Record represents an independent humanitarian observation describing a living being involved in a humanitarian event.
+A Humanitarian Record is the canonical representation of a single Humanitarian Observation.
 
-It is designed to be portable, interoperable and implementation-independent, allowing compatible systems to exchange humanitarian observations without requiring centralized identity management.
+It represents humanitarian evidence reported by a person, institution or system during a humanitarian event.
 
-This document establishes the conceptual model upon which Canonical HCP JSON representations, queries, correlation and synchronization are built.
+Humanitarian Records are intentionally simple, portable, interoperable and implementation-independent.
+
+They enable independent implementations to exchange humanitarian observations while preserving organizational autonomy, technological independence and local interpretation.
+
+This document establishes the conceptual foundation upon which Canonical JSON, synchronization, queries, correlation and presentation are built.
 
 ---
 
@@ -42,55 +46,103 @@ This document establishes the conceptual model upon which Canonical HCP JSON rep
 
 The Humanitarian Record is the fundamental semantic unit of the Humanitarian Connection Protocol.
 
-It represents an independent humanitarian observation recorded by a person, institution or system during a humanitarian event.
+It provides a standardized representation of humanitarian observations that can be exchanged and understood by independent HCP implementations.
 
-A Humanitarian Record is intentionally simple.
+A Humanitarian Record represents humanitarian evidence.
 
-It is designed to be exchanged, understood and correlated across independent HCP implementations.
+It does not represent:
 
-A Humanitarian Record is **not**:
+- an identity;
+- a person;
+- a medical history;
+- a humanitarian case;
+- verified truth.
 
-- a digital identity
-- a personal profile
-- a medical record
-- a government registry
-- a permanent history of an individual
-
-Instead, it records what was observed at a specific moment in time using the common language defined by HCP.
+Instead, it records what was observed, received or documented at a specific moment in time using the common semantic language defined by HCP.
 
 Multiple Humanitarian Records may describe the same humanitarian reality from different perspectives.
 
-Those observations remain independent until correlation suggests they may refer to the same humanitarian case.
+Those observations remain independent.
+
+Only local correlation may later suggest that they describe the same Humanitarian Case.
+
+Humanitarian Records preserve evidence.
+
+Humanitarian Cases represent interpretation.
 
 ---
 
-# 2. Purpose
+# 2. Humanitarian Observation
+
+A Humanitarian Observation exists independently of HCP.
+
+It represents information observed, received or documented during a humanitarian event.
+
+Observations exist regardless of whether HCP is used.
+
+The protocol does not create observations.
+
+Instead, it provides a canonical representation that allows observations to be exchanged between independent implementations.
+
+Every Humanitarian Observation represents a single humanitarian event witnessed, reported or documented by a person, institution or system.
+
+Examples include:
+
+- a volunteer reports seeing a missing child;
+- a hospital admits an unidentified patient;
+- a shelter registers a displaced family;
+- a firefighter reports rescuing an injured person;
+- a citizen reports finding a lost dog.
+
+Each observation may generate one Humanitarian Record.
+
+Independent organizations may observe the same humanitarian situation without communicating with one another.
+
+Rather than attempting to eliminate these independent observations, HCP preserves them as separate pieces of humanitarian evidence.
+
+This separation improves transparency, explainability and long-term interoperability.
+
+---
+
+# 3. Purpose
 
 The purpose of a Humanitarian Record is to enable humanitarian interoperability.
 
-Rather than requiring organizations to exchange databases or adopt common software, HCP enables them to exchange structured humanitarian observations through a shared semantic model.
+Rather than requiring organizations to exchange databases or adopt common software, HCP enables them to exchange humanitarian observations through a shared semantic model.
 
-A Humanitarian Record allows independent systems to describe the same humanitarian reality using a common language.
+Because every implementation represents observations consistently, Humanitarian Records created by different organizations can later be synchronized, queried and correlated while preserving organizational autonomy.
 
-Because every implementation represents observations consistently, records created by different organizations can later be queried, exchanged and correlated while preserving organizational autonomy and technological independence.
+The protocol therefore standardizes humanitarian meaning rather than software architecture.
 
-The Humanitarian Record therefore becomes the fundamental building block of humanitarian interoperability.
+Evidence can be exchanged universally.
+
+Interpretation remains local.
 
 ---
 
-# 3. Design Principles
+# 4. Design Principles
 
-Every Humanitarian Record should preserve the following principles.
+Every Humanitarian Record should preserve the following architectural principles.
 
 ## Observation-Based
 
-A Humanitarian Record describes an observation rather than a verified fact.
+A Humanitarian Record represents a humanitarian observation rather than verified reality.
 
-It records what is known at the time of reporting.
+It records what was observed at the time of reporting.
 
 Future observations may confirm, refine or contradict previous observations.
 
-The protocol intentionally preserves independent observations rather than replacing them.
+Independent observations should always be preserved.
+
+---
+
+## Evidence-Oriented
+
+Humanitarian Records provide humanitarian evidence.
+
+They intentionally avoid making assumptions about identity or certainty.
+
+Their purpose is to support future humanitarian understanding through explainable correlation.
 
 ---
 
@@ -98,11 +150,11 @@ The protocol intentionally preserves independent observations rather than replac
 
 Humanitarian Records are designed to maximize the quality of future correlation.
 
-Correlation evaluates the consistency of multiple independent observations rather than relying on permanent identifiers.
+Correlation evaluates the consistency of multiple independent observations.
 
-Each observation contributes evidence that may increase or decrease the probability that two records describe the same humanitarian case.
+No individual field should ever be interpreted as definitive proof of identity.
 
-No individual field should be interpreted as definitive proof of identity.
+Every observation contributes evidence that may strengthen or weaken a future correlation.
 
 ---
 
@@ -110,11 +162,11 @@ No individual field should be interpreted as definitive proof of identity.
 
 Every Humanitarian Record exists independently.
 
-Independent observations should never overwrite one another.
+Observations should never overwrite one another.
 
-As humanitarian situations evolve, new observations may complement previous ones according to the lifecycle defined by HCP.
+As humanitarian situations evolve, new observations generate new Humanitarian Records.
 
-Preserving observation history improves transparency and explainability.
+Previous observations remain part of the humanitarian history.
 
 ---
 
@@ -122,170 +174,130 @@ Preserving observation history improves transparency and explainability.
 
 Humanitarian Records are implementation-independent.
 
-Any compatible HCP Node may create, store and exchange Humanitarian Records using its own programming languages, databases and infrastructure.
+Any compatible HCP Node may create, store, synchronize and exchange Humanitarian Records using its own technologies.
 
-Interoperability is achieved through the shared protocol specification rather than through shared software.
+Interoperability is achieved through shared semantics rather than shared software.
 
 ---
 
 ## Minimal
 
-Humanitarian Records should contain only the information necessary to improve humanitarian coordination and future correlation.
+Humanitarian Records should contain only the information necessary to support humanitarian interoperability.
 
-Implementations should avoid collecting unnecessary personal information whenever possible.
+Implementations should minimize unnecessary personal information whenever possible.
 
-Data minimization improves both privacy and interoperability.
+Privacy and interoperability are strengthened through data minimization.
 ---
-
-# 4. Humanitarian Observation
-
-Every Humanitarian Record represents a single humanitarian observation.
-
-An observation records that a person, institution or system witnessed, received or documented information about a humanitarian event at a particular point in time.
-
-Examples include:
-
-- A volunteer reports seeing a missing child.
-- A hospital admits an unidentified patient.
-- A shelter reports a family arriving safely.
-- A firefighter reports rescuing an injured person.
-- A citizen reports finding a lost dog.
-
-Each observation generates its own Humanitarian Record.
-
-Independent organizations may observe the same humanitarian event without communicating with one another.
-
-Rather than attempting to eliminate these independent observations, HCP preserves them and allows compatible implementations to correlate them later.
-
-This approach improves transparency, explainability and resilience during humanitarian emergencies.
-
----
-
 # 5. Correlation Evidence
 
-The primary purpose of a Humanitarian Record is to provide evidence that may contribute to future humanitarian correlation.
+The primary purpose of a Humanitarian Record is to provide humanitarian evidence that may contribute to future correlation.
 
-Instead of relying on a single identifier, HCP evaluates the consistency of multiple independent observations.
+Rather than relying on permanent identifiers, HCP encourages implementations to evaluate the overall consistency of multiple independent observations.
 
 Typical correlation evidence may include:
 
-- reported name
-- estimated age
-- reported location
-- observation time
-- humanitarian status
-- event type
-- reporting source
-- recognition features
-- protocol-defined metadata
+- Reported Label;
+- estimated age;
+- reported location;
+- observation time;
+- Event Type;
+- reporting source;
+- Recognition Features;
+- protocol-defined metadata.
 
-No individual attribute should be interpreted as definitive proof of identity.
+No individual attribute should ever be interpreted as definitive proof of identity.
 
-Correlation emerges from the combined consistency of multiple pieces of evidence.
+Correlation emerges from the combined consistency of multiple independent observations.
 
 Different HCP implementations may apply different correlation strategies or weighting algorithms while remaining fully interoperable.
+
+Because correlation is a local process, different implementations may reach different conclusions from the same Humanitarian Records.
+
+This behavior is expected.
 
 ---
 
 # 6. Recognition Features
 
-One of the most valuable forms of correlation evidence is the set of observable characteristics recorded in the field:
+Recognition Features are one of the most valuable forms of humanitarian evidence available for correlation.
 
-```text
-recognition_features
-```
+They describe directly observable characteristics recorded during a humanitarian observation.
 
-Recognition Features describe characteristics that may assist future humanitarian correlation.
-
-They describe observable evidence rather than inferred attributes.
+Recognition Features represent observations rather than inferred attributes.
 
 Examples for persons include:
 
-- clothing
-- colors
-- tattoos
-- scars
-- glasses
-- backpacks
-- hairstyle
-- beard
-- mobility aids
-- visible injuries
+- clothing;
+- colors;
+- tattoos;
+- scars;
+- glasses;
+- backpacks;
+- hairstyle;
+- beard;
+- mobility aids;
+- visible injuries.
 
 Examples for animals include:
 
-- collar
-- harness
-- coat color
-- visible markings
-- scars
-- injuries
-- tail characteristics
-- ear shape
-- distinctive physical features
+- collar;
+- harness;
+- coat color;
+- visible markings;
+- scars;
+- injuries;
+- tail characteristics;
+- ear shape;
+- distinctive physical features.
 
-Recognition Features should remain concise and objective.
+Recognition Features should remain concise, objective and directly observable.
 
-Implementations should avoid subjective opinions or speculative descriptions whenever possible.
+Implementations should avoid subjective opinions, assumptions or speculative descriptions whenever possible.
+
+Recognition Features improve humanitarian correlation while minimizing dependence on permanent identifiers.
 
 ---
 
 # 7. Humanitarian Record Lifecycle
 
-A Humanitarian Record evolves as additional humanitarian observations become available.
+Humanitarian Records are immutable.
 
-Rather than modifying the historical meaning of previous observations, new information should complement the existing humanitarian record according to the lifecycle defined by the protocol.
+Each Humanitarian Record represents one humanitarian observation recorded at a specific moment in time.
 
-A typical lifecycle may include:
+As humanitarian situations evolve, new observations generate new Humanitarian Records.
 
-```text
-Reported
+Previous Humanitarian Records are never modified.
 
-        │
+This approach preserves:
 
-        ▼
+- observation history;
+- explainability;
+- transparency;
+- long-term interoperability.
 
-Correlated
+The complete lifecycle governing Humanitarian Records is defined in **HCP-0016 — Humanitarian Record Lifecycle**.
 
-        │
-
-        ▼
-
-Validated
-
-        │
-
-        ▼
-
-Updated
-
-        │
-
-        ▼
-
-Closed
-```
-
-The detailed lifecycle model is defined in **HCP-0016 — Humanitarian Record Lifecycle Model**.
-
-Maintaining independent observations throughout this lifecycle improves explainability, transparency and long-term interoperability.
 ---
 
 # 8. Identity
 
 Humanitarian Records intentionally separate humanitarian observations from permanent identity.
 
-Identity may eventually be confirmed through human verification performed by families, hospitals, emergency responders or other responsible institutions.
+Identity verification remains an essential human responsibility.
+
+Families, hospitals, emergency responders and other responsible organizations may eventually confirm that multiple observations refer to the same individual.
 
 The protocol itself does not attempt to establish identity as a technical certainty.
 
-Instead, it provides a structured representation of humanitarian observations that may later contribute to that verification process.
+Instead, it provides structured humanitarian evidence that may contribute to human verification.
 
-Reported names, estimated ages and similar attributes are treated as reported information rather than unique identifiers.
+Reported Labels, estimated ages and similar attributes are treated as reported observations rather than unique identifiers.
 
-This approach allows HCP to remain effective even when official identification is unavailable, incomplete or uncertain.
+HCP minimizes identity.
 
-By separating observations from identity, the protocol improves interoperability while minimizing unnecessary dependence on centralized identity systems.
+HCP maximizes humanitarian evidence.
+
+By separating observations from identity, the protocol improves interoperability while reducing unnecessary dependence on centralized identity systems.
 
 ---
 
@@ -293,59 +305,95 @@ By separating observations from identity, the protocol improves interoperability
 
 Every compliant HCP implementation exchanges Humanitarian Records using the Canonical HCP JSON Representation defined in **HCP-0010**.
 
-Implementations remain free to use:
+Implementations remain free to choose:
 
-- any programming language
-- any database technology
-- any deployment architecture
-- any communication infrastructure
+- any programming language;
+- any database technology;
+- any deployment architecture;
+- any communication infrastructure.
 
-The protocol standardizes the semantic meaning of Humanitarian Records rather than their internal implementation.
+The protocol standardizes the semantic meaning of Humanitarian Records rather than their technical implementation.
 
 Shared meaning replaces shared infrastructure.
 
-This allows independent HCP Nodes to exchange and interpret humanitarian observations while preserving technological independence.
+This allows independent HCP Nodes to exchange and understand humanitarian observations while preserving complete technological independence.
+
+Semantic interoperability remains the primary interoperability objective of HCP.
 
 ---
 
 # 10. Security and Privacy
 
-Humanitarian Records should contain only the information necessary to support humanitarian coordination and explainable correlation.
+Humanitarian Records should contain only the information necessary to support humanitarian interoperability and explainable correlation.
 
 Implementations should minimize the collection and exchange of personally identifiable information whenever possible.
 
-Whenever equivalent humanitarian value can be achieved through observable characteristics, implementations should prefer observation-based evidence over permanent identifiers.
+Whenever equivalent humanitarian value can be achieved through observable evidence, implementations should prefer observations over permanent identifiers.
 
-Privacy protection should never unnecessarily reduce humanitarian interoperability.
+Privacy is preserved primarily through protocol architecture rather than through infrastructure.
 
 Likewise, interoperability should never require excessive exposure of personal information.
 
-The protocol seeks to balance humanitarian usefulness, privacy protection and long-term interoperability.
+HCP seeks to balance humanitarian usefulness, privacy protection and long-term interoperability.
 
-Additional security and privacy requirements are defined in:
+Additional requirements are defined in:
 
 - **HCP-0020 — Security Model**
 - **HCP-0021 — Privacy and Data Minimization**
-
----
-
+- ---
 # 11. Relationship with Other Specifications
 
-This document defines the conceptual model of the Humanitarian Record.
+The Humanitarian Record is the central semantic object of the Humanitarian Connection Protocol.
 
-Additional HCP specifications define complementary aspects of that model.
+All subsequent HCP specifications extend, process or exchange Humanitarian Records while preserving their original humanitarian meaning.
 
+The relationship between this specification and the remainder of the HCP Core is illustrated below.
+
+```text
+HCP-0000
+Architecture and Overview
+        │
+        ▼
+HCP-0001
+Humanitarian Record
+        │
+        ├───────────────┐
+        ▼               ▼
+HCP-0006          HCP-0008
+Observation       Event Type
+Model             Model
+        │               │
+        └───────┬───────┘
+                ▼
+          HCP-0010
+      Canonical JSON
+                │
+        ┌───────┼────────┐
+        ▼       ▼        ▼
+   HCP-0011 HCP-0012 HCP-0013
+     Query  Correlation Synchronization
+                │
+                ▼
+          HCP-0015
+    Result Presentation
+                │
+                ▼
+      Humanitarian Case
+```
+
+Each specification has a distinct responsibility.
+
+- **HCP-0000** defines the architectural vision of the protocol.
+- **HCP-0001** defines the Humanitarian Record.
 - **HCP-0006** defines the Observation Model.
-- **HCP-0007** defines the Status Model.
-- **HCP-0008** defines the Event Type Model.
-- **HCP-0009** defines Node APIs for exchanging Humanitarian Records.
-- **HCP-0010** defines the Canonical HCP JSON Representation.
-- **HCP-0011** defines the Query Model.
-- **HCP-0012** defines the Correlation Model.
-- **HCP-0014** defines Explainable Correlation.
-- **HCP-0016** defines the Humanitarian Record Lifecycle.
+- **HCP-0008** defines humanitarian semantic meaning through Event Types.
+- **HCP-0010** defines the Canonical JSON representation.
+- **HCP-0011** defines how humanitarian evidence is queried.
+- **HCP-0012** defines how observations are correlated.
+- **HCP-0013** defines synchronization between independent Nodes.
+- **HCP-0015** defines how Humanitarian Cases are presented locally.
 
-Together, these specifications establish a common semantic model that allows independent systems to create, exchange, query, correlate and understand Humanitarian Records while preserving organizational autonomy and technological independence.
+Together, these specifications establish a complete semantic model while maintaining a clear separation between observations, interpretation and presentation.
 
 ---
 
@@ -353,18 +401,32 @@ Together, these specifications establish a common semantic model that allows ind
 
 The Humanitarian Record is the fundamental semantic unit of the Humanitarian Connection Protocol.
 
-It represents an independent humanitarian observation rather than a permanent identity.
+It is the canonical representation of a single Humanitarian Observation.
 
-Its purpose is to enable humanitarian interoperability by providing a common language through which independent systems can describe the same humanitarian reality.
+Humanitarian Records preserve humanitarian evidence.
+
+They do not represent identities.
+
+They do not represent Humanitarian Cases.
+
+They do not establish truth.
+
+Instead, they provide a common semantic language that allows independent implementations to exchange humanitarian observations while preserving organizational autonomy and technological independence.
+
+Every Humanitarian Record remains an independent observation.
+
+Synchronization exchanges Humanitarian Records.
+
+Correlation evaluates Humanitarian Records.
+
+Presentation creates Humanitarian Cases.
+
+Human verification determines reality.
+
+By separating evidence from interpretation, HCP enables humanitarian collaboration without requiring centralized databases, centralized identity systems or common software platforms.
 
 Humanitarian Records preserve observations.
 
-Correlation relates observations.
+Shared observations enable semantic interoperability.
 
-Human verification confirms identities.
-
-Together, these principles allow HCP to improve humanitarian collaboration without requiring centralized databases or centralized identity management.
-
-The Humanitarian Record is not simply a data structure.
-
-It is the shared semantic foundation upon which the entire Humanitarian Connection Protocol is built.
+Semantic interoperability enables humanitarian collaboration.

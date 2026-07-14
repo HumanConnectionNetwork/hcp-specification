@@ -1,0 +1,39 @@
+{
+  "hcp_version": "0.3",
+  "record_uuid": "81d3a9f7-4b2e-4f8d-a6c9-5e7f1d2b3a84",
+  "event_type": "found_animal",
+  "observation_timestamp": "2026-07-13T19:10:00Z",
+
+  "subject": {
+    "type": "animal",
+    "species": "dog",
+    "reported_label": "Max",
+    "breed": "Mixed Breed",
+    "size": "medium"
+  },
+
+  "observation": {
+    "reported_location": "Riverside Emergency Shelter",
+    "recognition_features": [
+      "Light brown coat",
+      "Red collar",
+      "White patch on chest",
+      "Approximately 20 kg"
+    ]
+  },
+
+  "reported_by": {
+    "relationship": "volunteer"
+  },
+
+  "public_contact": {
+    "name": "Community Animal Rescue Team",
+    "contact": "+58 412 555 0315"
+  },
+
+  "metadata": {
+    "created_by": "hcp-client-mobile",
+    "language": "es",
+    "country": "VE"
+  }
+}

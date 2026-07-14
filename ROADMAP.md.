@@ -1,0 +1,388 @@
+# HCP Roadmap
+
+Version: 0.1 (Draft)
+
+Status: Informational
+
+Project: Human Connection Network (HCN)
+
+License: Apache-2.0
+
+Last Updated: 2026-07-14
+
+---
+
+# Introduction
+
+This document describes the planned evolution of the Humanitarian Connection Protocol (HCP).
+
+Unlike the HCP Specifications, this roadmap is informative.
+
+It does not define normative protocol behavior.
+
+Instead, it communicates the long-term direction of the project and the major milestones planned for future development.
+
+The roadmap may evolve as the protocol matures.
+
+---
+
+# Vision
+
+HCP aims to become an open, implementation-independent interoperability standard for humanitarian observations.
+
+The protocol is designed to enable organizations, institutions, communities and software systems to exchange structured humanitarian information while preserving:
+
+* decentralization;
+* interoperability;
+* explainability;
+* privacy;
+* implementation independence.
+
+The roadmap reflects this long-term vision.
+
+---
+
+# Development Philosophy
+
+HCP evolves in incremental phases.
+
+Each phase builds upon the previous one while preserving protocol stability whenever reasonably possible.
+
+The project prioritizes:
+
+* architectural consistency;
+* semantic interoperability;
+* backward compatibility;
+* implementation simplicity;
+* long-term maintainability.
+
+Features are introduced only when they improve humanitarian interoperability.
+
+---
+
+# Phase 1 — Architecture
+
+**Status:** Completed
+
+Objectives:
+
+* define the overall architecture;
+* establish protocol principles;
+* define protocol scope;
+* separate observations from interpretation;
+* define implementation independence.
+
+Deliverables:
+
+* ARCHITECTURE.md
+* Architecture Principles
+* Terminology
+* Glossary
+
+---
+
+# Phase 2 — Core Specification
+
+**Status:** Completed
+
+Objectives:
+
+* define the normative protocol specifications;
+* define Humanitarian Records;
+* define Queries;
+* define Correlation;
+* define Synchronization;
+* define Security;
+* define Privacy;
+* define Conformance.
+
+Deliverables:
+
+* HCP-0000 through HCP-0022
+
+---
+
+# Phase 3 — Reference Documentation
+
+**Status:** Completed
+
+Objectives:
+
+* simplify protocol adoption;
+* establish common terminology;
+* provide canonical examples;
+* document implementation principles.
+
+Deliverables:
+
+* Reference documentation
+* Canonical Examples
+* Conformance Checklist
+
+---
+
+# Phase 4 — Examples
+
+**Status:** Completed
+
+Objectives:
+
+* demonstrate complete protocol behavior;
+* illustrate Humanitarian Records;
+* illustrate Queries;
+* illustrate Correlation;
+* illustrate Humanitarian Cases;
+* illustrate complete humanitarian workflows.
+
+Deliverables:
+
+* Human examples
+* Animal examples
+* Search examples
+* Correlation examples
+* Complete Flow examples
+
+---
+
+# Phase 5 — Schema
+
+**Status:** Completed
+
+Objectives:
+
+* provide machine-readable protocol definitions;
+* validate Canonical JSON;
+* validate Queries;
+* validate Humanitarian Cases;
+* document validation rules.
+
+Deliverables:
+
+* JSON Schemas
+* Validation Rules
+
+---
+
+# Phase 6 — Conformance
+
+**Status:** In Progress
+
+Objectives:
+
+* define implementation requirements;
+* provide conformance resources;
+* define validation examples;
+* establish behavioral verification.
+
+Current Deliverables:
+
+* Conformance documentation
+* Valid examples
+* Invalid examples
+
+Remaining Work:
+
+* behavioral test vectors;
+* interoperability scenarios;
+* automated conformance testing guidance.
+
+---
+
+# Phase 7 — Reference Test Suite
+
+**Status:** Planned
+
+Objectives:
+
+* provide standardized protocol test vectors;
+* enable repeatable interoperability testing;
+* simplify independent implementation validation.
+
+Illustrative deliverables include:
+
+* synchronization scenarios;
+* search scenarios;
+* correlation scenarios;
+* presentation scenarios;
+* interoperability scenarios.
+
+---
+
+# Phase 8 — SDK Guidelines
+
+**Status:** Planned
+
+Objectives:
+
+* provide implementation guidance;
+* simplify SDK development;
+* encourage consistent APIs;
+* document recommended implementation patterns.
+
+Possible deliverables include:
+
+* SDK Guidelines
+* Error Handling
+* Version Compatibility
+* Migration Guidance
+
+Reference SDKs may later be developed independently.
+
+---
+
+# Phase 9 — Ecosystem Growth
+
+**Status:** Planned
+
+Objectives:
+
+* encourage independent implementations;
+* promote protocol adoption;
+* improve interoperability;
+* expand humanitarian use cases.
+
+Illustrative implementations include:
+
+* mobile clients;
+* web applications;
+* messaging platforms;
+* hospital integrations;
+* NGO systems;
+* emergency coordination platforms.
+
+The protocol remains independent of any specific implementation.
+
+---
+
+# Phase 10 — Stable Release
+
+**Status:** Future
+
+Objectives:
+
+* stabilize protocol semantics;
+* complete interoperability testing;
+* publish a stable protocol release;
+* preserve long-term compatibility.
+
+Future stable releases will be announced through the official project repositories.
+
+---
+
+# Ongoing Priorities
+
+Regardless of development phase, HCP continues to prioritize:
+
+* semantic interoperability;
+* implementation independence;
+* decentralized architecture;
+* privacy by design;
+* explainable correlation;
+* human verification;
+* backward compatibility whenever reasonably possible.
+
+These principles remain stable throughout protocol evolution.
+
+---
+
+# Community Participation
+
+HCP is developed as an open specification.
+
+Contributions are encouraged through:
+
+* issue reports;
+* implementation feedback;
+* interoperability testing;
+* documentation improvements;
+* reference implementations;
+* protocol discussions.
+
+Protocol evolution is driven by practical humanitarian needs rather than implementation-specific preferences.
+
+---
+
+# Roadmap Flexibility
+
+This roadmap is informative.
+
+Future phases may:
+
+* change priorities;
+* introduce new milestones;
+* postpone planned work;
+* incorporate community feedback.
+
+Normative protocol behavior is defined exclusively by the HCP Specifications.
+
+---
+
+# Relationship with the Specification
+
+The roadmap complements the HCP Specification.
+
+```text
+Architecture
+
+        │
+
+        ▼
+
+Specification
+
+        │
+
+        ▼
+
+Reference Documentation
+
+        │
+
+        ▼
+
+Examples
+
+        │
+
+        ▼
+
+Schema
+
+        │
+
+        ▼
+
+Conformance
+
+        │
+
+        ▼
+
+Reference Test Suite
+
+        │
+
+        ▼
+
+SDK Guidelines
+
+        │
+
+        ▼
+
+Ecosystem Growth
+```
+
+The roadmap describes how the project evolves.
+
+The specification defines how the protocol behaves.
+
+---
+
+# Summary
+
+The HCP Roadmap provides a long-term view of protocol development.
+
+Its purpose is to communicate priorities, milestones and future direction while preserving architectural consistency and implementation independence.
+
+As HCP matures, this roadmap will continue evolving to support an open, interoperable and community-driven humanitarian ecosystem.

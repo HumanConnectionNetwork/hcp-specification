@@ -1,0 +1,38 @@
+{
+  "hcp_version": "0.3",
+  "record_uuid": "5d7b9e43-8a2c-47f1-9c64-2e8b5a6d1f90",
+  "event_type": "public_emergency",
+  "observation_timestamp": "2026-07-14T11:05:00Z",
+
+  "subject": {
+    "type": "person",
+    "reported_label": null,
+    "estimated_age": 78
+  },
+
+  "observation": {
+    "reported_location": "Central Public Square",
+    "recognition_features": [
+      "Gray sweater",
+      "Black trousers",
+      "Gray hair",
+      "Approximately 170 cm tall",
+      "Appeared confused and unable to communicate clearly"
+    ]
+  },
+
+  "reported_by": {
+    "relationship": "volunteer"
+  },
+
+  "public_contact": {
+    "name": "Community Volunteer Team",
+    "contact": "+58 412 555 0145"
+  },
+
+  "metadata": {
+    "created_by": "hcp-client-mobile",
+    "language": "es",
+    "country": "VE"
+  }
+}

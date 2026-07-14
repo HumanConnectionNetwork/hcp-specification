@@ -2,7 +2,7 @@
 
 # Explainable Correlation Model
 
-Version: 0.3 (Draft)
+Version: 0.4 (Draft)
 
 Status: Draft
 
@@ -17,6 +17,8 @@ Last Updated: 2026-07-13
 Depends On:
 
 - HCP-0004 — Correlation Candidate Model
+- HCP-0008 — Event Type Model
+- HCP-0010 — Canonical JSON Specification
 - HCP-0011 — Query Model
 - HCP-0012 — Correlation Model
 
@@ -32,25 +34,25 @@ None
 
 This document defines the Explainable Correlation Model of the Humanitarian Connection Protocol (HCP).
 
-The Explainable Correlation Model describes how HCP Nodes communicate the humanitarian evidence supporting a Correlation Candidate.
+The Explainable Correlation Model describes how HCP Nodes communicate humanitarian reasoning derived from humanitarian evidence.
 
-Rather than exposing internal algorithms or implementation details, HCP explains the humanitarian evidence that contributed to a correlation.
+Rather than exposing algorithms, implementation details or mathematical calculations, HCP explains the humanitarian evidence that contributed to a correlation result.
 
-Explainability transforms probabilistic correlation into understandable humanitarian reasoning.
+Explainability transforms humanitarian evidence into understandable humanitarian reasoning.
 
 The protocol standardizes the semantic meaning of explanations.
 
-It does not standardize correlation algorithms.
+It does not standardize explanation formats, user interfaces or correlation algorithms.
 
 ---
 
 # 1. Introduction
 
-Correlation assists humanitarian decision-making by identifying compatible observations.
+Correlation assists humanitarian decision-making by identifying compatible humanitarian evidence.
 
-However, a Correlation Score alone is often insufficient for people to understand why a Correlation Candidate was generated.
+However, a Correlation Score alone is frequently insufficient for people to understand why humanitarian evidence appears related.
 
-The Explainable Correlation Model enables HCP Nodes to communicate the humanitarian evidence supporting a candidate in a transparent and understandable manner.
+The Explainable Correlation Model enables HCP Nodes to communicate humanitarian reasoning in a transparent and understandable manner.
 
 Explainability improves:
 
@@ -59,9 +61,9 @@ Explainability improves:
 - human verification;
 - humanitarian decision-making.
 
-The objective of explainability is not to reveal implementation details.
+Its objective is not to reveal implementation techniques.
 
-Its objective is to explain the humanitarian evidence that contributed to a Correlation Candidate.
+Its objective is to explain the humanitarian reasoning derived from humanitarian evidence.
 
 ---
 
@@ -71,22 +73,24 @@ The purpose of the Explainable Correlation Model is to define the semantic princ
 
 Explainability enables HCP implementations to communicate:
 
-- why a Correlation Candidate was generated;
-- which humanitarian evidence supported the correlation;
-- which humanitarian evidence reduced confidence;
-- how people may better interpret correlation results.
+- why humanitarian evidence appears related;
+- which humanitarian evidence supports correlation;
+- which humanitarian evidence reduces confidence;
+- how people may better interpret humanitarian understanding.
 
 The protocol intentionally avoids prescribing explanation formats or user interface designs.
 
 Only the semantic meaning of humanitarian explanations is standardized.
 
+The Explainable Correlation Model answers one fundamental question:
+
+> **Why does this humanitarian interpretation appear reasonable?**
+
 ---
 
 # 3. Design Principles
 
-Every Explainable Correlation Model follows the fundamental architectural principles of HCP.
-
----
+Every Explainable Correlation Model follows the architectural principles of HCP.
 
 ## Human Readable
 
@@ -108,7 +112,7 @@ Different applications may present the same explanation differently.
 
 Explanations describe humanitarian evidence.
 
-They never describe internal correlation algorithms.
+They never describe implementation algorithms.
 
 ---
 
@@ -116,17 +120,27 @@ They never describe internal correlation algorithms.
 
 Supporting and conflicting humanitarian evidence should be communicated whenever reasonably possible.
 
-Transparent explanations improve trust and facilitate human verification.
+Transparency strengthens human verification.
+
+---
+
+## Neutral
+
+Explanations should communicate humanitarian reasoning without suggesting certainty or verified identity.
+
+They support interpretation.
+
+They never replace human judgment.
 
 ---
 
 ## Implementation Independent
 
-Different HCP Nodes may generate different explanations while preserving identical semantic meaning.
+Different HCP Nodes may generate different explanations while preserving identical humanitarian semantics.
 
 The protocol standardizes humanitarian evidence.
 
-Implementations define how that evidence is explained.
+Implementations define explanations.
 
 ---
 
@@ -146,24 +160,44 @@ It does not exist to justify algorithms.
 
 The protocol intentionally separates humanitarian evidence from implementation techniques.
 
-Different HCP Nodes may generate Correlation Candidates using completely different algorithms while presenting similar humanitarian explanations.
+Different HCP Nodes may generate Correlation Candidates using completely different algorithms while communicating similar humanitarian reasoning.
 
 The fundamental philosophy of explainability is:
 
-**Correlation explains humanitarian evidence.**
+**Humanitarian evidence supports reasoning.**
 
-**It does not explain algorithms.**
+**Explainability communicates reasoning.**
 
 **People interpret the evidence.**
 
 **Reality is verified by humans.**
+
 ---
 
-# 5. Humanitarian Evidence
+# 5. Explainability Boundaries
 
-Explainability is built from the humanitarian evidence evaluated during correlation.
+Explainability intentionally defines strict architectural boundaries.
 
-Rather than exposing mathematical calculations or algorithmic details, HCP communicates the humanitarian evidence that contributed to a Correlation Candidate.
+Explainability never communicates:
+
+- internal algorithms;
+- probability formulas;
+- implementation details;
+- machine learning models;
+- artificial intelligence internals;
+- optimization strategies.
+
+Explainability communicates only humanitarian reasoning derived from humanitarian evidence.
+
+This separation preserves implementation independence while maintaining transparency.
+
+---
+
+# 6. Humanitarian Evidence
+
+Explainability is constructed from the humanitarian evidence evaluated during correlation.
+
+Rather than exposing mathematical calculations, HCP communicates the humanitarian evidence that contributed to humanitarian reasoning.
 
 Typical humanitarian evidence includes:
 
@@ -171,78 +205,120 @@ Typical humanitarian evidence includes:
 - Reported Label;
 - Estimated Age;
 - Recognition Features;
-- Reported Location;
 - Event Type;
-- Status;
-- Reported By;
+- Reported Location;
+- Reporting Source;
 - Temporal Proximity.
 
 Future protocol versions may introduce additional forms of humanitarian evidence while preserving semantic interoperability.
-
 ---
+# 7. Supporting Evidence
 
-# 6. Supporting Evidence
+Supporting Evidence describes the humanitarian evidence that increases confidence in a humanitarian interpretation.
 
-Supporting Evidence describes the humanitarian observations that increased the Correlation Score.
+Supporting Evidence does not establish identity.
+
+It explains why humanitarian evidence appears compatible.
 
 Typical examples include:
 
-- compatible Reported Label;
-- compatible Estimated Age;
+- compatible Reported Labels;
+- compatible Estimated Ages;
 - compatible Recognition Features;
-- geographically compatible Reported Location;
-- compatible Event Type;
-- compatible Status;
-- compatible reporting source;
-- compatible temporal proximity.
+- geographically compatible Reported Locations;
+- compatible Event Types;
+- compatible Reporting Sources;
+- compatible Temporal Proximity.
 
-Supporting Evidence explains why a Correlation Candidate appears plausible.
-
-It assists people in understanding the humanitarian reasoning behind the candidate.
+Supporting Evidence assists people in understanding why a humanitarian interpretation appears plausible.
 
 ---
 
-# 7. Conflicting Evidence
+# 8. Conflicting Evidence
 
-Conflicting Evidence describes humanitarian observations that reduce confidence without necessarily invalidating the Correlation Candidate.
+Conflicting Evidence describes humanitarian evidence that reduces confidence without necessarily invalidating humanitarian compatibility.
 
 Typical examples include:
 
-- incompatible Estimated Age;
+- incompatible Estimated Ages;
 - conflicting Recognition Features;
 - geographically distant observations;
-- incompatible Event evolution;
-- contradictory Status values;
-- inconsistent temporal sequence.
+- incompatible Event Types;
+- inconsistent Reporting Sources;
+- unexpected temporal sequence.
 
-Conflicting Evidence provides additional humanitarian context.
+Conflicting Evidence contributes additional humanitarian context.
 
-Presenting both supporting and conflicting evidence improves transparency and enables better human judgment.
+Presenting both Supporting Evidence and Conflicting Evidence improves transparency and strengthens human interpretation.
 
 ---
 
-# 8. Correlation Score and Explanation
+# 9. Humanitarian Reasoning
+
+Humanitarian reasoning emerges from the relationship between:
+
+- Supporting Evidence;
+- Conflicting Evidence;
+- Correlation Score.
+
+Conceptually:
+
+```text
+Supporting Evidence
+
+        +
+
+Conflicting Evidence
+
+        +
+
+Correlation Score
+
+        │
+
+        ▼
+
+Humanitarian Reasoning
+
+        │
+
+        ▼
+
+Human Understanding
+```
+
+The protocol standardizes the humanitarian meaning of this reasoning.
+
+Implementations remain free to communicate it using different formats.
+
+---
+
+# 10. Correlation Score and Explanation
 
 The Correlation Score and the Explanation represent different concepts.
 
 The Correlation Score estimates humanitarian compatibility.
 
-The Explanation communicates the humanitarian evidence supporting that estimation.
+The Explanation communicates the humanitarian reasoning supporting that estimation.
 
-A high Correlation Score without explanation provides limited value.
+Neither element should replace the other.
 
-Likewise, an explanation without a Correlation Score may make prioritization more difficult.
+A Correlation Score without humanitarian reasoning provides limited transparency.
 
-Together, they provide both:
+Likewise, humanitarian reasoning without a Correlation Score may reduce prioritization efficiency.
+
+Together they provide:
 
 - quantitative estimation;
-- qualitative justification.
+- qualitative explanation.
 
-The protocol intentionally standardizes explanation semantics rather than scoring methodologies.
+The protocol standardizes explanation semantics.
+
+It does not standardize scoring methodologies.
 
 ---
 
-# 9. Example
+# 11. Illustrative Example
 
 Instead of returning only a Correlation Score:
 
@@ -252,7 +328,7 @@ Instead of returning only a Correlation Score:
 }
 ```
 
-An HCP Node is encouraged to provide humanitarian explanations together with the score.
+An HCP Node is encouraged to communicate humanitarian reasoning together with the score.
 
 Illustrative example:
 
@@ -260,7 +336,7 @@ Illustrative example:
 {
   "score": 0.91,
 
-  "explanation": {
+  "reasoning": {
 
     "supporting_evidence": [
 
@@ -279,25 +355,27 @@ Illustrative example:
       "Estimated Age differs by approximately two years"
 
     ]
+
   }
 }
 ```
 
-Applications remain free to present this information using different user interface designs.
+Applications remain free to present this humanitarian reasoning using different user experiences.
 
-The protocol standardizes only the semantic meaning of the explanation.
+The protocol standardizes only its semantic meaning.
+
 ---
 
-# 10. Human-Friendly Presentation
+# 12. Human-Friendly Presentation
 
-The presentation of explanations remains entirely implementation-specific.
+Presentation of humanitarian reasoning remains entirely implementation-specific.
 
-Different HCP Clients may present identical humanitarian explanations using different user experiences.
+Different HCP Clients may communicate identical humanitarian reasoning using different user experiences.
 
-For example, an implementation may present:
+Illustrative example:
 
 ```text
-Why was this candidate suggested?
+Why was this humanitarian case suggested?
 
 ✓ Similar Reported Label
 
@@ -310,44 +388,50 @@ Why was this candidate suggested?
 ⚠ Estimated Age differs slightly
 ```
 
-Another implementation may visualize the same humanitarian evidence using icons, colors, timelines or other presentation techniques.
+Other implementations may present the same humanitarian reasoning using:
+
+- icons;
+- colors;
+- timelines;
+- accessibility adaptations;
+- voice interfaces.
 
 The protocol standardizes humanitarian meaning.
 
-It does not standardize user interface design.
+It does not standardize presentation.
+
+Presentation is defined by **HCP-0015 — Result Presentation**.
 
 ---
 
-# 11. Artificial Intelligence Independence
+# 13. Algorithm Independence
 
-The Explainable Correlation Model remains independent of the correlation algorithm used by the implementation.
+The Explainable Correlation Model remains completely independent of the correlation algorithm.
 
-Compatible HCP Nodes may generate Correlation Candidates using:
+Compatible implementations may generate humanitarian reasoning using:
 
 - deterministic rules;
-- weighted scoring systems;
+- weighted scoring;
 - statistical models;
 - machine learning;
 - artificial intelligence;
-- graph-based correlation;
-- hybrid approaches;
-- future techniques.
+- graph analysis;
+- hybrid techniques;
+- future approaches.
 
-Regardless of the implementation strategy, humanitarian explanations should describe the supporting humanitarian evidence rather than the internal algorithm.
+Regardless of implementation strategy, humanitarian explanations should communicate humanitarian reasoning rather than implementation techniques.
 
 This separation enables continuous innovation while preserving transparency.
 
 ---
 
-# 12. Privacy
+# 14. Privacy
 
-Humanitarian explanations should expose only the information necessary to justify a Correlation Candidate.
+Humanitarian explanations should expose only the humanitarian evidence necessary to justify a humanitarian interpretation.
 
-Implementations should avoid unnecessarily revealing sensitive personal information.
+Implementations should avoid unnecessarily revealing personally identifiable information.
 
-Whenever possible, explanations should prioritize humanitarian evidence over personally identifiable information.
-
-If voluntarily disclosed personal information appears within a Humanitarian Record, implementations should reveal only the information genuinely required for humanitarian interpretation.
+Whenever equivalent humanitarian value can be achieved through humanitarian observations, implementations should prioritize humanitarian evidence.
 
 Additional privacy guidance is defined in:
 
@@ -355,55 +439,106 @@ Additional privacy guidance is defined in:
 
 ---
 
-# 13. Interoperability
+# 15. Interoperability
 
 Explainability forms part of the semantic interoperability provided by HCP.
 
-Although different HCP Nodes may generate different Correlation Candidates, every compatible implementation should communicate humanitarian explanations using the semantic principles defined by this specification.
+Although different HCP Nodes may generate different Correlation Candidates and Humanitarian Cases, compatible implementations should communicate humanitarian reasoning using the semantic principles defined by this specification.
 
-Applications remain free to present explanations differently while preserving their humanitarian meaning.
+Applications remain free to present humanitarian reasoning differently while preserving identical humanitarian meaning.
 
 Interoperability depends upon shared humanitarian semantics rather than identical user interfaces.
 
 ---
 
-# 14. Relationship with Other Specifications
+# 16. Relationship with Other Specifications
 
-The Explainable Correlation Model defines how humanitarian evidence supporting a Correlation Candidate is communicated.
+The Explainable Correlation Model defines how humanitarian reasoning derived from humanitarian evidence is communicated.
 
 Complementary specifications define the remaining stages of humanitarian interoperability.
 
-- **HCP-0004** defines the Correlation Candidate Model.
-- **HCP-0011** defines the Query Model.
-- **HCP-0012** defines the Correlation Model.
-- **HCP-0015** defines the Result Presentation Model.
+```text
+Query
 
-Together, these specifications define how humanitarian evidence is queried, correlated, explained and ultimately presented to people while preserving implementation independence.
+        │
+
+        ▼
+
+Humanitarian Records
+
+        │
+
+        ▼
+
+Correlation
+
+        │
+
+        ▼
+
+Correlation Candidates
+
+        │
+
+        ▼
+
+Humanitarian Reasoning
+
+        │
+
+        ▼
+
+Humanitarian Cases
+
+        │
+
+        ▼
+
+Presentation
+
+        │
+
+        ▼
+
+Human Verification
+```
+
+Each specification has a distinct responsibility.
+
+- **HCP-0004** defines the Correlation Candidate Model.
+- **HCP-0008** defines Event Types.
+- **HCP-0010** defines the Canonical JSON representation.
+- **HCP-0011** defines the Query Model.
+- **HCP-0012** defines humanitarian correlation.
+- **HCP-0014** defines humanitarian reasoning and explainability.
+- **HCP-0015** defines Humanitarian Case presentation.
+
+Together, these specifications define how humanitarian evidence is represented, evaluated, explained and communicated while preserving semantic interoperability and implementation independence.
 
 ---
 
-# 15. Summary
+# 17. Summary
 
 The Explainable Correlation Model defines the semantic principles governing humanitarian explanations within HCP.
 
-Explainability communicates humanitarian evidence.
+Explainability communicates humanitarian reasoning.
 
-It does not communicate correlation algorithms.
+It never communicates algorithms.
 
-Supporting Evidence explains why a Correlation Candidate appears compatible.
+Supporting Evidence explains why humanitarian compatibility increases.
 
 Conflicting Evidence explains why uncertainty remains.
 
-Together with the Correlation Score, humanitarian explanations enable people to better understand, evaluate and verify correlation results.
+Together with the Correlation Score, humanitarian reasoning enables people to better understand, evaluate and verify humanitarian interpretations.
 
-By separating humanitarian reasoning from implementation techniques, HCP allows Nodes to continuously improve their correlation algorithms while maintaining transparency and user trust.
+By separating humanitarian reasoning from implementation techniques, HCP enables Nodes to continuously improve their correlation algorithms while maintaining transparency, explainability and user trust.
 
 The Explainable Correlation Model reinforces one of the central architectural principles of HCP:
 
-**Correlation explains humanitarian evidence.**
+**Humanitarian evidence supports reasoning.**
 
-**It does not explain algorithms.**
+**Explainability communicates reasoning.**
 
-**People interpret the evidence.**
+**Humanitarian Cases communicate interpretation.**
 
-**Reality is verified by humans.**
+**People verify reality.**

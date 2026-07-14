@@ -1,1 +1,37 @@
+{
+  "hcp_version": "0.3",
+  "record_uuid": "0a8f0b65-c0d2-4c8e-8d8a-f4f0c8d6d321",
+  "event_type": "hospitalized_person",
+  "observation_timestamp": "2026-07-13T22:10:00Z",
 
+  "subject": {
+    "type": "person",
+    "reported_label": "María",
+    "estimated_age": 74
+  },
+
+  "observation": {
+    "reported_location": "Regional General Hospital, Emergency Department",
+    "recognition_features": [
+      "Blue jacket",
+      "Small black backpack",
+      "Gray hair",
+      "Approximately 160 cm tall"
+    ]
+  },
+
+  "reported_by": {
+    "relationship": "hospital"
+  },
+
+  "public_contact": {
+    "name": "Regional General Hospital",
+    "contact": "+58 212 555 1200"
+  },
+
+  "metadata": {
+    "created_by": "hcp-hospital-system",
+    "language": "es",
+    "country": "VE"
+  }
+}

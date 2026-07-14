@@ -1,0 +1,37 @@
+{
+  "hcp_version": "0.3",
+  "record_uuid": "9b3d7d88-4f2d-4e75-a2a5-5aaf8b5c1d91",
+  "event_type": "missing_person",
+  "observation_timestamp": "2026-07-13T18:45:00Z",
+
+  "subject": {
+    "type": "person",
+    "reported_label": "María González",
+    "estimated_age": 74
+  },
+
+  "observation": {
+    "reported_location": "Central Community Shelter, Riverside District",
+    "recognition_features": [
+      "Blue jacket",
+      "Small black backpack",
+      "Gray hair",
+      "Approximately 160 cm tall"
+    ]
+  },
+
+  "reported_by": {
+    "relationship": "family"
+  },
+
+  "public_contact": {
+    "name": "Ana González",
+    "contact": "+58 412 555 0187"
+  },
+
+  "metadata": {
+    "created_by": "hcp-client-mobile",
+    "language": "es",
+    "country": "VE"
+  }
+}

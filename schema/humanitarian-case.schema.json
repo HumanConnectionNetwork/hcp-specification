@@ -1,0 +1,287 @@
+{
+"$schema": "https://json-schema.org/draft/2020-12/schema",
+"$id": "https://humanconnectionnetwork.org/schemas/humanitarian-case.schema.json",
+"title": "HCP Humanitarian Case — Reference Schema",
+"description": "Reference machine-readable structure for a locally generated Humanitarian Case based on HCP-0015 Result Presentation Model. Humanitarian Cases are local interpretation objects and must never be synchronized between HCP Nodes.",
+"type": "object",
+"required": [
+"case_id",
+"generated_at",
+"humanitarian_summary",
+"correlation",
+"related_records",
+"verification"
+],
+"properties": {
+"case_id": {
+"type": "string",
+"minLength": 1,
+"description": "Local identifier of the Humanitarian Case. It identifies only this implementation-specific interpretation and never identifies a Subject.",
+"examples": [
+"case-6f24a95e-127d-49e1-94fc-33de70e7d846"
+]
+},
+"generated_at": {
+"$ref": "#/$defs/timestamp"
+},
+"source_query_id": {
+"type": "string",
+"minLength": 1,
+"description": "Optional local identifier of the Query that contributed to generation of the Humanitarian Case."
+},
+"humanitarian_summary": {
+"type": "string",
+"minLength": 1,
+"description": "Concise human-readable summary of the current humanitarian interpretation. It must not be presented as verified fact."
+},
+"current_situation": {
+"$ref": "#/$defs/currentSituation"
+},
+"correlation": {
+"$ref": "#/$defs/correlation"
+},
+"related_records": {
+"type": "array",
+"minItems": 1,
+"items": {
+"$ref": "#/$defs/relatedRecord"
+},
+"description": "References to immutable Humanitarian Records contributing evidence to this local interpretation."
+},
+"humanitarian_timeline": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/timelineEntry"
+},
+"description": "Optional chronological organization of related humanitarian observations. The timeline is local and does not represent verified history."
+},
+"verification": {
+"$ref": "#/$defs/verification"
+}
+},
+"additionalProperties": true,
+"$defs": {
+"timestamp": {
+"type": "string",
+"format": "date-time",
+"description": "ISO 8601 / RFC 3339 timestamp."
+},
+"eventType": {
+"type": "string",
+"minLength": 1,
+"pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$",
+"description": "Canonical language-independent Event Type."
+},
+"currentSituation": {
+"type": "object",
+"properties": {
+"likely_event_type": {
+"$ref": "#/$defs/eventType"
+},
+"reported_location": {
+"type": "string",
+"minLength": 1,
+"description": "Location associated with the current local humanitarian interpretation."
+},
+"observed_at": {
+"$ref": "#/$defs/timestamp"
+}
+},
+"minProperties": 1,
+"additionalProperties": true
+},
+"correlation": {
+"type": "object",
+"required": [
+"score",
+"supporting_evidence",
+"conflicting_evidence"
+],
+"properties": {
+"score": {
+"type": "number",
+"description": "Implementation-specific estimation of humanitarian compatibility. HCP does not prescribe a numerical range or scoring methodology."
+},
+"evidence_level": {
+"type": "string",
+"minLength": 1,
+"pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$",
+"description": "Optional implementation-specific human-readable classification of evidence strength.",
+"examples": [
+"very_strong",
+"strong",
+"moderate",
+"limited",
+"insufficient"
+]
+},
+"supporting_evidence": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/evidenceItem"
+},
+"description": "Evidence that increases confidence in the humanitarian interpretation."
+},
+"conflicting_evidence": {
+"type": "array",
+"items": {
+"$ref": "#/$defs/evidenceItem"
+},
+"description": "Evidence that reduces confidence or introduces uncertainty."
+},
+"reasoning": {
+"type": "string",
+"minLength": 1,
+"description": "Optional human-readable explanation summarizing why the related observations appear compatible."
+}
+},
+"additionalProperties": true
+},
+"evidenceItem": {
+"type": "object",
+"required": [
+"type",
+"description"
+],
+"properties": {
+"type": {
+"type": "string",
+"minLength": 1,
+"pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$",
+"description": "Semantic category of the humanitarian evidence.",
+"examples": [
+"reported_label",
+"estimated_age",
+"recognition_features",
+"reported_location",
+"temporal_proximity",
+"event_type"
+]
+},
+"description": {
+"type": "string",
+"minLength": 1,
+"description": "Human-readable explanation of how the evidence affects the humanitarian interpretation."
+},
+"related_record_ids": {
+"type": "array",
+"uniqueItems": true,
+"items": {
+"type": "string",
+"format": "uuid"
+},
+"description": "Optional Humanitarian Record UUIDs associated with this evidence."
+}
+},
+"additionalProperties": true
+},
+"relatedRecord": {
+"type": "object",
+"required": [
+"record_id",
+"event_type",
+"observed_at"
+],
+"properties": {
+"record_id": {
+"type": "string",
+"format": "uuid",
+"description": "UUID of an immutable Humanitarian Record contributing evidence to the Humanitarian Case."
+},
+"event_type": {
+"$ref": "#/$defs/eventType"
+},
+"observed_at": {
+"$ref": "#/$defs/timestamp"
+},
+"source": {
+"type": "string",
+"minLength": 1,
+"description": "Optional human-readable description of the reporting source."
+}
+},
+"additionalProperties": true
+},
+"timelineEntry": {
+"type": "object",
+"required": [
+"record_id",
+"event_type",
+"observed_at"
+],
+"properties": {
+"record_id": {
+"type": "string",
+"format": "uuid"
+},
+"event_type": {
+"$ref": "#/$defs/eventType"
+},
+"observed_at": {
+"$ref": "#/$defs/timestamp"
+},
+"reported_location": {
+"type": "string",
+"minLength": 1
+},
+"description": {
+"type": "string",
+"minLength": 1
+}
+},
+"additionalProperties": true
+},
+"verification": {
+"type": "object",
+"required": [
+"status",
+"message"
+],
+"properties": {
+"status": {
+"type": "string",
+"enum": [
+"unverified",
+"under_review",
+"human_verified",
+"rejected"
+],
+"description": "Local verification status of the Humanitarian Case."
+},
+"message": {
+"type": "string",
+"minLength": 1,
+"description": "Human-readable statement explaining that the Humanitarian Case is a local interpretation and may require direct human verification."
+},
+"verified_at": {
+"$ref": "#/$defs/timestamp"
+},
+"verified_by": {
+"type": "string",
+"minLength": 1,
+"description": "Optional local description of the person or organization that performed human verification."
+}
+},
+"allOf": [
+{
+"if": {
+"properties": {
+"status": {
+"const": "human_verified"
+}
+},
+"required": [
+"status"
+]
+},
+"then": {
+"required": [
+"verified_at"
+]
+}
+}
+],
+"additionalProperties": true
+}
+}
+}

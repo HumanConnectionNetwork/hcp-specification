@@ -27,31 +27,35 @@ None
 
 # Abstract
 
-This document introduces the Humanitarian Connection Protocol (HCP), an open semantic interoperability protocol for humanitarian observations.
+This document introduces the Humanitarian Connection Protocol (HCP), an open semantic interoperability standard for humanitarian observations.
 
 It defines the vision, philosophy and architectural principles that guide the protocol and establish the conceptual foundation for all subsequent HCP specifications.
 
-Rather than prescribing technologies or centralized infrastructures, HCP defines a common language that enables independent systems to exchange and interpret humanitarian observations while preserving organizational autonomy and technological independence.
+Rather than prescribing technologies, software architectures or centralized infrastructures, HCP defines a shared semantic language that enables independent systems to exchange humanitarian observations while preserving organizational autonomy, technological independence and local interpretation.
 
 ---
 
 # 1. Introduction
 
-The Humanitarian Connection Protocol (HCP) is an open semantic interoperability protocol designed for humanitarian information exchange.
+The Humanitarian Connection Protocol (HCP) is an open semantic interoperability standard designed for humanitarian information exchange.
 
-Its purpose is to enable independent people, hospitals, emergency organizations, governments, universities, NGOs, humanitarian initiatives and digital platforms to exchange structured humanitarian observations using a common language.
+Its purpose is to enable independent people, hospitals, emergency organizations, governments, universities, NGOs, humanitarian initiatives and digital platforms to exchange structured humanitarian observations using a common semantic language.
 
-HCP does not define a centralized platform.
+HCP is not a software platform.
 
-It does not define a mandatory database.
+It is not a centralized database.
 
-It does not prescribe a specific software architecture.
+It is not a search engine.
 
-Instead, HCP defines how humanitarian observations are represented, exchanged and interpreted so that independent systems can understand the same humanitarian reality.
+It is not an identity system.
 
-The protocol is implementation-independent.
+Instead, HCP defines how humanitarian observations are represented, exchanged and interpreted so that independent implementations can understand the same humanitarian reality.
 
-Organizations remain free to choose their own programming languages, databases, infrastructures and operational models while maintaining interoperability through a shared specification.
+The protocol is intentionally implementation-independent.
+
+Organizations remain free to choose their own programming languages, databases, infrastructures, deployment models and operational procedures while maintaining interoperability through shared semantics.
+
+Humanitarian interoperability should depend on shared meaning rather than shared infrastructure.
 
 ---
 
@@ -73,59 +77,68 @@ Communities share local information.
 
 Most of these observations describe the same humanitarian reality.
 
-However, they are usually represented using incompatible systems, incompatible data models and incompatible terminology.
+Unfortunately, they are often represented using incompatible systems, incompatible data models and incompatible terminology.
 
-As a result, valuable humanitarian information becomes fragmented, duplicated and difficult to correlate.
+As a result, humanitarian information becomes fragmented, duplicated and difficult to correlate across organizations.
 
 HCP exists to solve that interoperability problem.
 
-Instead of asking organizations to replace their existing systems, HCP enables them to communicate through a common humanitarian language.
+Rather than asking organizations to replace their existing systems, HCP enables them to communicate through a common humanitarian language.
 
-Humanitarian interoperability should depend on shared meaning, not shared infrastructure.
+Independent implementations may continue using different technologies while exchanging humanitarian observations with shared semantic meaning.
 
 ---
 
 # 3. Mission
 
-The mission of HCP is to provide an open and implementation-independent protocol that allows humanitarian observations to be represented, exchanged, queried, correlated and explained across independent systems.
+The mission of HCP is to provide an open, implementation-independent semantic interoperability standard that enables humanitarian observations to be represented, exchanged, queried, correlated and explained across independent systems.
 
 The protocol seeks to improve humanitarian collaboration while preserving:
 
 - organizational autonomy
 - technological independence
-- privacy
+- privacy by architecture
 - explainability
 - long-term interoperability
 
-Rather than centralizing humanitarian information, HCP standardizes the language used to describe humanitarian observations.
+Rather than centralizing humanitarian information, HCP standardizes the meaning used to describe humanitarian observations.
+
+Evidence can therefore be exchanged universally while interpretation remains local.
 
 ---
 
 # 4. Humanitarian Philosophy
 
-HCP is founded on a simple principle:
+HCP is founded on a simple principle.
 
-**Humanitarian interoperability begins with observations, not identities.**
+> **Humanitarian interoperability begins with observations, not identities.**
 
 Humanitarian emergencies are dynamic.
 
-Information is often incomplete, uncertain or contradictory during the first hours of an event.
+Information is frequently incomplete, uncertain or even contradictory during the early stages of an event.
 
-Attempting to establish identity before exchanging information may delay humanitarian response and reduce interoperability between independent organizations.
+Attempting to establish identity before exchanging humanitarian information may delay collaboration and reduce interoperability between independent organizations.
 
-HCP therefore focuses on observations.
+For that reason, HCP focuses on observations.
 
-A humanitarian observation represents information reported by a person, institution or system regarding a humanitarian event.
+A Humanitarian Observation represents information reported by a person, institution or system regarding a humanitarian event.
 
-Identity verification remains an essential human process, but it is intentionally separated from the protocol itself.
+Observations exist independently of the protocol.
 
-The protocol does not attempt to create a global identity database.
+HCP simply provides their canonical representation through Humanitarian Records.
+
+Identity verification remains an essential human responsibility, but it is intentionally separated from the protocol itself.
+
+The protocol does not attempt to establish permanent digital identities or create a global identity database.
 
 Instead, it enables compatible humanitarian observations to be exchanged and later correlated by independent HCP implementations.
 
-This distinction allows organizations to collaborate while minimizing unnecessary dependence on centralized identity systems.
----
+Humanitarian evidence is exchanged.
 
+Humanitarian understanding is created locally.
+
+This separation between evidence and interpretation allows organizations to collaborate while preserving autonomy, minimizing unnecessary identity exposure and supporting independent humanitarian decision-making.
+---
 # 5. Scope
 
 HCP is intentionally scoped to humanitarian observations involving living beings.
@@ -135,7 +148,7 @@ The protocol currently supports observations related to:
 - Humans
 - Animals
 
-This scope reflects the primary objective of HCP: helping independent organizations exchange information that may assist in locating, identifying or reconnecting living beings affected by humanitarian events.
+This scope reflects the primary objective of HCP: enabling independent organizations to exchange humanitarian observations that may assist in locating, identifying or reconnecting living beings affected by humanitarian events.
 
 HCP intentionally does not define standards for:
 
@@ -148,89 +161,109 @@ HCP intentionally does not define standards for:
 
 Those domains are better addressed by specialized systems.
 
-Future specifications may extend HCP through complementary protocols while preserving interoperability with the core specification.
+Future specifications may extend HCP through complementary protocols while preserving semantic interoperability with the HCP Core Specification.
 
 ---
 
 # 6. Humanitarian Record
 
-The **Humanitarian Record** is the fundamental information unit defined by HCP.
+The Humanitarian Record is the fundamental information unit defined by HCP.
 
-A Humanitarian Record represents an independent humanitarian observation.
+A Humanitarian Record is the canonical representation of a single Humanitarian Observation.
 
-It records that a person, institution or system observed a humanitarian event and described it using the common language defined by the protocol.
+It records that a person, institution or system observed a humanitarian situation and described it using the common semantic language defined by the protocol.
 
-A Humanitarian Record is intentionally:
+Every Humanitarian Record represents one observation.
 
-- simple
-- portable
-- interoperable
-- implementation-independent
-- explainable
+It does not represent:
 
-Most importantly, a Humanitarian Record represents an **observation**, not a permanent identity.
+- an identity;
+- a person;
+- a medical history;
+- a humanitarian case;
+- verified truth.
 
-Different organizations may independently create Humanitarian Records describing the same real-world situation.
+Instead, it represents humanitarian evidence.
 
-Those records remain independent observations until correlation suggests they may refer to the same humanitarian case.
+Humanitarian Records are intentionally:
 
-The Humanitarian Record therefore becomes the common language through which humanitarian information can be exchanged without requiring centralized identity management.
+- simple;
+- portable;
+- interoperable;
+- implementation-independent;
+- immutable;
+- explainable.
+
+Multiple organizations may independently create Humanitarian Records describing the same real-world situation.
+
+Those observations remain independent until an implementation performs local correlation.
+
+The protocol never merges Humanitarian Records.
+
+It only standardizes how they are represented and exchanged.
 
 ---
 
 # 7. Correlation
 
-One of the defining characteristics of HCP is that it correlates observations rather than attempting to establish identity.
+One of the defining characteristics of HCP is that it correlates humanitarian observations rather than attempting to establish identity.
 
-The objective of correlation is not to determine who someone is.
+Correlation evaluates relationships between Humanitarian Records.
 
-The objective is to estimate whether independent humanitarian observations are likely to describe the same humanitarian case.
+Its objective is to estimate whether independent observations may describe the same humanitarian situation.
 
-Correlation may consider information such as:
+Correlation may consider evidence such as:
 
-- approximate location
-- estimated time
-- reported name
-- estimated age
-- humanitarian status
-- observable characteristics
-- event evolution
-- reporting source
-- protocol-defined metadata
+- approximate location;
+- estimated observation time;
+- Reported Label;
+- estimated age;
+- humanitarian status;
+- Recognition Features;
+- event evolution;
+- reporting source;
+- protocol-defined metadata.
 
-No individual attribute should be considered sufficient to establish identity.
+No individual attribute should ever be considered sufficient to establish identity.
 
-Instead, HCP encourages implementations to evaluate the overall consistency between multiple observations.
+Instead, implementations evaluate the overall consistency of multiple observations.
 
-Correlation produces probabilities.
+Correlation produces interpretation.
 
 It does not produce certainty.
 
-Final verification always belongs to people, institutions and humanitarian professionals.
+It never modifies Humanitarian Records.
+
+Different implementations may correlate the same Humanitarian Records differently.
+
+This behavior is expected because interpretation remains local to each implementation.
+
+Final verification always belongs to people and humanitarian organizations.
 
 ---
 
 # 8. Interoperability
 
-HCP is designed to maximize interoperability while preserving organizational independence.
+HCP is designed to maximize semantic interoperability while preserving organizational independence.
 
 Each implementation remains free to choose its own:
 
-- programming language
-- database technology
-- deployment architecture
-- security model
-- operational procedures
+- programming language;
+- database technology;
+- deployment architecture;
+- communication mechanisms;
+- security model;
+- operational procedures.
 
-The protocol standardizes only the meaning of humanitarian observations.
+The protocol standardizes only the humanitarian meaning of exchanged observations.
 
-Different organizations may therefore exchange compatible Humanitarian Records without adopting the same software or infrastructure.
+Different implementations may therefore exchange compatible Humanitarian Records without adopting the same software, infrastructure or internal architecture.
 
 Shared meaning replaces shared infrastructure.
 
-This approach naturally enables federated and decentralized deployments without requiring them.
+Interoperability is therefore achieved through semantics rather than technology.
 
-Interoperability is therefore a property of the protocol itself rather than a consequence of any particular architecture.
+This approach naturally supports centralized, decentralized and federated deployments without requiring any specific architectural model.
 
 ---
 
@@ -238,167 +271,23 @@ Interoperability is therefore a property of the protocol itself rather than a co
 
 Humanitarian correlation should never operate as a black box.
 
-Whenever possible, HCP implementations should explain why two or more Humanitarian Records appear related.
+Whenever possible, implementations should explain why two or more Humanitarian Records appear related.
 
-Explainability increases transparency, improves trust and helps humanitarian workers evaluate possible matches using understandable evidence rather than opaque scores.
+Explainability improves transparency, increases trust and enables humanitarian workers to evaluate possible relationships using understandable evidence rather than opaque numerical scores.
 
-Typical explanations may reference factors such as:
+Typical explanations may reference:
 
-- compatible locations
-- compatible observation times
-- similar estimated ages
-- consistent observable characteristics
-- compatible humanitarian status
-- matching event context
+- supporting evidence;
+- conflicting evidence;
+- compatible locations;
+- compatible observation times;
+- similar estimated ages;
+- compatible humanitarian status;
+- Recognition Features;
+- event evolution.
 
 Explainability does not replace human judgment.
 
-It supports it.
+It supports informed humanitarian decision-making.
 
 Transparent reasoning allows humanitarian decisions to remain accountable while reducing misinformation during emergencies.
----
-
-# 10. Open Standard
-
-HCP is developed as an open specification.
-
-Any individual or organization may:
-
-- implement an HCP Node
-- develop an HCP Client
-- build an SDK
-- integrate existing software
-- create compatible humanitarian applications
-- contribute to the protocol specification
-
-No organization owns humanitarian interoperability.
-
-The protocol is intended to encourage broad adoption through open collaboration, transparent governance and implementation independence.
-
----
-
-# 11. Humanitarian Ecosystem
-
-Human Connection Network (HCN) represents the broader humanitarian technology ecosystem.
-
-Within that ecosystem:
-
-- **HCP** defines the interoperability protocol.
-- **HCP Nodes** implement the protocol.
-- **HCP Clients** allow people and organizations to create, query and exchange Humanitarian Records.
-- **Reference implementations** demonstrate protocol behavior.
-- **Independent organizations** remain free to build compatible solutions using their own technologies.
-
-The protocol itself is implementation-independent.
-
-Multiple independent implementations may coexist while remaining interoperable through compliance with the HCP specification.
-
----
-
-# 12. Design Principles
-
-Every HCP implementation should preserve the following principles.
-
-## Semantic Interoperability
-
-Independent systems should understand humanitarian observations using a common language.
-
-## Shared Meaning over Shared Infrastructure
-
-Interoperability should depend on shared semantics rather than shared databases or common software platforms.
-
-## Observations over Identities
-
-Humanitarian information begins as observations.
-
-Identity verification remains a human process outside the scope of the protocol.
-
-## Correlation over Identification
-
-The protocol estimates relationships between independent observations without asserting identity as a technical certainty.
-
-## Explainability
-
-Correlation should be understandable and transparent.
-
-Users should be able to understand why observations appear related.
-
-## Privacy by Design
-
-Implementations should collect only the information necessary for humanitarian purposes and minimize unnecessary exposure of personal information.
-
-## Infrastructure Independence
-
-Organizations remain free to choose their own technologies, databases, deployment models and operational procedures.
-
-## Human Verification
-
-Protocol-generated correlations assist humanitarian decision-making.
-
-Final verification always belongs to people.
-
-## Offline-first
-
-Implementations should support operation under limited or intermittent connectivity whenever practical.
-
-## Long-term Compatibility
-
-The protocol should evolve while preserving interoperability between compatible implementations whenever reasonably possible.
-
----
-
-# 13. Typical Architecture
-
-The following diagram illustrates the conceptual architecture of the Human Connection Network ecosystem.
-
-```text
-                    Human Connection Network
-                               │
-                               ▼
-         Humanitarian Connection Protocol (HCP)
-                               │
-        ┌──────────────────────┼──────────────────────┐
-        │                      │                      │
-        ▼                      ▼                      ▼
-  HCP Clients             HCP Nodes           Reference Software
-(Telegram, SMS,       (Hospitals, NGOs,      SDKs, Examples,
- Mobile, Web, API)     Governments, etc.)    Test Implementations
-        │                      │
-        └──────────────┬───────┘
-                       ▼
-             Humanitarian Records
-                       │
-                       ▼
-          Explainable Correlation
-                       │
-                       ▼
-              Human Verification
-```
-
-This architecture is conceptual.
-
-The specification does not prescribe how implementations are internally designed.
-
-It only defines how they communicate and interpret humanitarian observations.
-
----
-
-# 14. Summary
-
-The Humanitarian Connection Protocol is an open semantic interoperability protocol for humanitarian observations.
-
-It does not prescribe infrastructure.
-
-It does not require centralized databases.
-
-It does not define permanent digital identities.
-
-Instead, HCP provides a common language that allows independent systems to represent, exchange and correlate humanitarian observations while preserving organizational autonomy and technological independence.
-
-By standardizing meaning rather than infrastructure, HCP enables hospitals, governments, humanitarian organizations, volunteers and communities to collaborate without abandoning their existing systems.
-
-HCP connects humanitarian observations.
-
-Independent systems understand the same humanitarian reality.
-
-People reconnect lives.

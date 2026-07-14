@@ -2,7 +2,7 @@
 
 # Query Model
 
-Version: 0.3 (Draft)
+Version: 0.4 (Draft)
 
 Status: Draft
 
@@ -19,10 +19,10 @@ Depends On:
 - HCP-0000 — Architecture and Overview
 - HCP-0001 — Humanitarian Record
 - HCP-0003 — Subject Model
-- HCP-0004 — Correlation Model
 - HCP-0006 — Observation Model
 - HCP-0008 — Event Type Model
 - HCP-0010 — Canonical JSON Specification
+- HCP-0012 — Correlation Model
 
 Replaces:
 None
@@ -36,17 +36,19 @@ None
 
 This document defines the Query Model of the Humanitarian Connection Protocol (HCP).
 
-A Query is the standardized semantic representation of the humanitarian evidence known by the person initiating a search.
+A Query is the standardized semantic representation of the humanitarian evidence currently known by the person initiating a search.
 
-Rather than searching for identities or exact matches, an HCP Query describes available humanitarian evidence that may correspond to one or more independent Observations.
+Rather than searching for identities or exact matches, an HCP Query represents the available humanitarian evidence that may correspond to one or more independent Humanitarian Records.
 
-The purpose of a Query is to enable HCP Nodes to perform explainable correlation while preserving implementation independence and semantic interoperability.
+The purpose of a Query is to enable compatible HCP Nodes to perform explainable humanitarian correlation while preserving semantic interoperability and implementation independence.
 
 Queries describe what is known.
 
-Nodes correlate Observations.
+Nodes evaluate Humanitarian Records.
 
-People interpret the results.
+Correlation creates Humanitarian Cases.
+
+People verify reality.
 
 ---
 
@@ -56,53 +58,57 @@ Humanitarian emergencies frequently involve incomplete, uncertain or fragmented 
 
 Families, volunteers, hospitals and emergency responders often know only part of what happened.
 
-A Query allows that partial humanitarian evidence to be represented using a standardized semantic model.
+An HCP Query provides a standardized semantic representation of that partial humanitarian evidence.
 
 The Query does not attempt to identify a person or animal directly.
 
-Instead, it describes the available humanitarian evidence so that compatible HCP Nodes may correlate it with existing Humanitarian Records.
+Instead, it represents the humanitarian evidence currently known by the person initiating the search.
+
+Compatible HCP Nodes evaluate that evidence against locally available Humanitarian Records.
 
 The result of a Query is never identity confirmation.
 
-It is a collection of compatible humanitarian observations that may assist human interpretation and later verification.
+It is a locally generated humanitarian interpretation that assists people in evaluating possible relationships between independent Humanitarian Records.
 
 ---
 
 # 2. Purpose
 
-The purpose of the Query Model is to standardize how humanitarian evidence is described when searching for compatible observations.
+The purpose of the Query Model is to standardize how humanitarian evidence is represented when requesting humanitarian correlation.
 
-Queries maximize the humanitarian evidence available for correlation.
+Queries maximize the humanitarian evidence available for local evaluation.
 
-Every Query may contain as much or as little information as the reporter knows.
+Every Query may contain as much or as little information as the person initiating the search currently knows.
 
 Partial Queries are expected.
 
 Unknown information does not invalidate a Query.
 
-By standardizing the semantic representation of humanitarian evidence, HCP enables independent implementations to perform compatible searches while remaining free to innovate in their correlation algorithms.
+By standardizing the semantic representation of humanitarian evidence, HCP enables independent implementations to perform compatible humanitarian searches while remaining completely free to innovate in their correlation algorithms.
+
+The Query Model answers one fundamental question:
+
+> **What is currently known?**
 
 ---
 
 # 3. Design Principles
 
-Every HCP Query follows the fundamental architectural principles of HCP.
-
----
-
-## Observation-Based
-
-Queries describe humanitarian observations.
-
-They do not describe identities.
-
----
+Every HCP Query follows the architectural principles of HCP.
 
 ## Evidence-Based
 
-Every field contributes humanitarian evidence.
+Queries represent humanitarian evidence.
 
-No individual field establishes identity.
+They never represent verified identity.
+
+---
+
+## Observation-Oriented
+
+Queries describe humanitarian observations remembered, reported or known by the person performing the search.
+
+They do not describe complete humanitarian histories.
 
 ---
 
@@ -110,7 +116,9 @@ No individual field establishes identity.
 
 Incomplete Queries are expected.
 
-Unknown information should simply be omitted whenever possible.
+Unknown information should simply be omitted whenever reasonably possible.
+
+Partial humanitarian evidence frequently produces valuable humanitarian correlation.
 
 ---
 
@@ -118,21 +126,27 @@ Unknown information should simply be omitted whenever possible.
 
 The Query Model standardizes humanitarian meaning.
 
-It does not standardize search algorithms.
+It does not standardize search engines, databases or correlation algorithms.
 
 ---
 
 ## Explainable
 
-Queries should produce explainable correlation results whenever reasonably possible.
+Queries should enable explainable humanitarian correlation.
 
-Returned candidates should include sufficient humanitarian evidence to support human interpretation.
+Returned Humanitarian Cases should provide sufficient humanitarian evidence to support human interpretation.
 
 ---
 
 ## Implementation Independent
 
-Every HCP implementation may use different search engines, databases or correlation strategies.
+Compatible implementations remain free to choose:
+
+- search engines;
+- databases;
+- indexing strategies;
+- optimization techniques;
+- correlation algorithms.
 
 Only the semantic meaning of the Query is standardized.
 
@@ -174,12 +188,17 @@ Users search for people or animals.
 
 Clients build Queries.
 
-Nodes correlate Observations.
+Nodes evaluate Humanitarian Records.
+
+Correlation creates Humanitarian Cases.
+
+People verify reality.
+
 ---
 
 # 5. Canonical Query Structure
 
-A Canonical Query follows the same semantic organization as the Canonical JSON Specification.
+The Canonical Query follows the same semantic organization used by the Canonical JSON Specification.
 
 This consistency allows implementations to compare humanitarian evidence without requiring structural transformations.
 
@@ -208,8 +227,6 @@ Illustrative structure:
 
     "event_type": "missing_report",
 
-    "status": "missing",
-
     "reported_location": "Caracas"
 
   }
@@ -224,9 +241,9 @@ Unknown information should simply be omitted.
 
 # 6. Subject Query
 
-The Subject section describes the known humanitarian evidence concerning the observed living being.
+The Subject section represents the humanitarian evidence currently known about the observed Subject.
 
-Example:
+Illustrative example:
 
 ```json
 {
@@ -239,9 +256,12 @@ Example:
     "estimated_age": 42,
 
     "recognition_features": "Blue jacket, glasses"
+
   }
 }
 ```
+
+The Subject Query follows the semantic definitions established by **HCP-0003 — Subject Model**.
 
 ---
 
@@ -261,7 +281,7 @@ animal
 
 ## reported_label
 
-Human-readable description provided by the person performing the search.
+Human-readable label provided by the person initiating the search.
 
 Examples:
 
@@ -275,9 +295,9 @@ White dog
 Green parrot
 ```
 
-The reported label contributes humanitarian evidence.
+Reported Labels contribute humanitarian evidence.
 
-It is never interpreted as a permanent identifier.
+They never establish identity.
 
 ---
 
@@ -289,24 +309,26 @@ Applicable only to human Subjects.
 
 If unknown, this field should be omitted.
 
+Estimated Age contributes humanitarian evidence.
+
+It never establishes identity.
+
 ---
 
 ## recognition_features
 
 Observable characteristics remembered by the person initiating the search.
 
-Typical examples include:
-
-Humans:
+Typical examples for humans include:
 
 - clothing;
 - glasses;
 - scars;
 - tattoos;
-- backpack;
-- hairstyle.
+- hairstyle;
+- backpacks.
 
-Animals:
+Typical examples for animals include:
 
 - collar;
 - coat color;
@@ -314,15 +336,13 @@ Animals:
 - ear shape;
 - visible injuries.
 
-Recognition Features frequently provide some of the strongest humanitarian evidence available for correlation.
-
+Recognition Features frequently provide some of the strongest humanitarian evidence available for explainable correlation.
 ---
-
 # 7. Observation Query
 
-The Observation section describes the humanitarian event being searched.
+The Observation section represents the humanitarian evidence associated with the event being searched.
 
-Example:
+Illustrative example:
 
 ```json
 {
@@ -330,24 +350,24 @@ Example:
 
     "event_type": "missing_report",
 
-    "status": "missing",
-
     "reported_location": "Caracas"
+
   }
 }
 ```
 
-The Observation section answers questions such as:
+The Observation Query answers questions such as:
 
-- What humanitarian event is being searched?
-- What humanitarian condition is known?
-- Where was the observation reported?
+- What happened?
+- Where was it observed?
+
+The Observation Query follows the semantic definitions established by **HCP-0006 — Observation Model**.
 
 ---
 
 ## event_type
 
-Describes the humanitarian event known by the person initiating the search.
+Defines the humanitarian event known by the person initiating the search.
 
 Examples:
 
@@ -359,35 +379,17 @@ hospital_admission
 rescue
 
 shelter_registration
+
+family_reunification
+
+veterinary_assistance
 ```
 
-This field contributes humanitarian evidence.
+Event Types contribute humanitarian meaning.
 
-It never guarantees that matching observations represent the same Subject.
+They never establish identity.
 
----
-
-## status
-
-Represents the humanitarian condition known at the time of the search.
-
-Examples:
-
-```
-missing
-
-stable
-
-critical
-
-safe
-```
-
-Status contributes humanitarian evidence.
-
-It should not be interpreted as a mandatory filter.
-
-Different implementations may use this information differently during correlation.
+The complete semantic model is defined by **HCP-0008 — Event Type Model**.
 
 ---
 
@@ -407,112 +409,120 @@ Near Plaza Bolívar
 Highway KM 18
 ```
 
-Reported Location contributes humanitarian context.
+Reported Location contributes humanitarian evidence.
 
-It is evaluated together with all other available evidence.
+It is evaluated together with all other available humanitarian evidence.
 
 ---
 
 # 8. Humanitarian Evidence
 
-Every field contained in a Query contributes humanitarian evidence.
+Every field contained within a Query contributes humanitarian evidence.
 
-Typical evidence includes:
+Typical humanitarian evidence includes:
 
 - Subject Type;
 - Reported Label;
 - Estimated Age;
 - Recognition Features;
 - Event Type;
-- Status;
 - Reported Location;
 - temporal proximity.
 
-No single element is sufficient to identify a Subject.
+No individual element is sufficient to establish identity.
 
-Correlation emerges from the combined evaluation of multiple compatible pieces of humanitarian evidence.
+Correlation evaluates the complete humanitarian context represented by the Query together with the humanitarian evidence contained within independent Humanitarian Records.
 
-Different HCP implementations may prioritize different evidence according to their humanitarian context while preserving semantic interoperability.
+Different HCP implementations may assign different importance to different evidence while preserving semantic interoperability.
+
+The protocol standardizes humanitarian evidence.
+
+Implementations define correlation.
+
 ---
 
-# 9. Correlation
+# 9. Humanitarian Correlation
 
 A Query requests humanitarian correlation.
 
-It does not request exact matching.
+It never requests identity confirmation.
 
-The HCP Node compares the humanitarian evidence contained in the Query with the humanitarian evidence contained in independent Humanitarian Records.
+The HCP Node evaluates the humanitarian evidence contained within the Query against locally available Humanitarian Records.
 
-Correlation evaluates compatible observations.
+Correlation remains entirely implementation-specific.
 
-It never evaluates identity.
+Different HCP implementations may adopt completely different correlation strategies while preserving semantic interoperability.
 
-Different HCP implementations may adopt different correlation strategies.
+Only the semantic representation of humanitarian evidence is standardized.
 
-The protocol intentionally does not prescribe a mandatory algorithm.
-
-Only the semantic meaning of the Query is standardized.
+The correlation process itself is defined by **HCP-0012 — Correlation Model**.
 
 ---
 
-# 10. Correlation Results
+# 10. Humanitarian Results
 
-The result of a Query is a collection of Correlation Candidates.
+The result of a Query is a collection of Humanitarian Cases generated locally by the HCP Node.
 
-Each candidate represents an independent Humanitarian Record whose humanitarian evidence appears compatible with the submitted Query.
+Each Humanitarian Case represents one possible humanitarian interpretation of compatible Humanitarian Records.
 
-Typical response:
+Illustrative response:
 
 ```json
 {
   "results": [
     {
-      "record_id": "d71b5f...",
+      "case_id": "case-001",
 
       "score": 0.93,
 
-      "event_type": "hospital_admission",
+      "supporting_evidence": [
 
-      "status": "stable"
-    },
-    {
-      "record_id": "ab91de...",
+        "Reported Labels are compatible",
 
-      "score": 0.81,
+        "Recognition Features are compatible",
 
-      "event_type": "missing_report",
+        "Reported Locations are compatible"
 
-      "status": "missing"
+      ],
+
+      "conflicting_evidence": [
+
+        "Estimated Age differs by approximately five years"
+
+      ]
     }
   ]
 }
 ```
 
-Returned candidates should be ordered according to the implementation's correlation strategy.
+Returned Humanitarian Cases should be ordered according to the implementation's correlation strategy.
 
 A higher Correlation Score indicates stronger humanitarian compatibility.
 
-It does not confirm identity.
+It never confirms identity.
+
+Presentation of Humanitarian Cases is defined by **HCP-0015 — Result Presentation**.
 
 ---
 
 # 11. Explainability
 
-Implementations are strongly encouraged to explain why a Correlation Candidate was returned.
+Implementations are strongly encouraged to explain why a Humanitarian Case was presented.
 
 Typical explanations include:
 
-- compatible Reported Label;
+- compatible Reported Labels;
 - compatible Estimated Age;
 - compatible Recognition Features;
-- geographically compatible Reported Location;
-- compatible Event Type;
-- compatible Status;
+- geographically compatible Reported Locations;
+- compatible Event Types;
 - compatible temporal proximity.
 
-Explainable correlation improves transparency and supports human interpretation.
+Explainable correlation improves transparency.
 
-Users should understand why a candidate was presented.
+People should understand why humanitarian evidence appears related.
+
+The explainability model is defined by **HCP-0014 — Explainable Correlation**.
 
 ---
 
@@ -520,12 +530,12 @@ Users should understand why a candidate was presented.
 
 Humanitarian emergencies frequently involve incomplete information.
 
-A person searching may remember only:
+A person initiating a search may remember only:
 
 - clothing;
 - approximate age;
-- hospital;
 - municipality;
+- hospital;
 - animal color;
 - collar;
 - last known location.
@@ -536,19 +546,27 @@ Unknown information should simply be omitted.
 
 Partial humanitarian evidence frequently produces valuable humanitarian correlation.
 
-Future Observations may strengthen or complement previous search results without modifying earlier Humanitarian Records.
+Future Humanitarian Observations may strengthen previous search results without modifying earlier Humanitarian Records.
 
 ---
 
 # 13. Interoperability
 
-Every compatible HCP implementation shall accept Queries following this semantic model.
+Every compatible HCP implementation shall accept Queries following the semantic model defined by this specification.
 
-Internal search engines, correlation algorithms, databases and optimization techniques remain implementation-specific.
+Internal implementation details remain entirely independent.
 
-The protocol standardizes only the semantic representation of humanitarian evidence.
+Implementations remain free to choose:
 
-This allows independent HCP implementations to exchange compatible Queries while preserving complete implementation independence.
+- databases;
+- search engines;
+- indexing strategies;
+- optimization techniques;
+- correlation algorithms.
+
+Only the semantic representation of humanitarian evidence is standardized.
+
+Shared semantics enable universal interoperability.
 
 ---
 
@@ -556,17 +574,57 @@ This allows independent HCP implementations to exchange compatible Queries while
 
 The Query Model defines how humanitarian evidence is represented when requesting humanitarian correlation.
 
-Complementary specifications define the remaining concepts involved in this process.
+Complementary specifications define the remaining stages of the humanitarian search process.
 
-- **HCP-0001** defines the Humanitarian Record.
-- **HCP-0004** defines the Correlation Model.
-- **HCP-0006** defines the Observation Model.
-- **HCP-0008** defines the Event Type Model.
-- **HCP-0010** defines the Canonical JSON Specification.
-- **HCP-0012** defines the Correlation Model.
-- **HCP-0015** defines the Result Presentation Model.
+```text
+User
 
-Together, these specifications define how humanitarian evidence is represented, queried, correlated and presented while preserving semantic interoperability.
+        │
+
+        ▼
+
+Query
+
+        │
+
+        ▼
+
+Humanitarian Records
+
+        │
+
+        ▼
+
+Correlation
+
+        │
+
+        ▼
+
+Humanitarian Cases
+
+        │
+
+        ▼
+
+Presentation
+
+        │
+
+        ▼
+
+Human Verification
+```
+
+Each specification has a distinct responsibility.
+
+- **HCP-0010** defines the Canonical JSON representation.
+- **HCP-0011** defines the Query Model.
+- **HCP-0012** defines humanitarian correlation.
+- **HCP-0014** defines explainable correlation.
+- **HCP-0015** defines Humanitarian Case presentation.
+
+Together, these specifications define how humanitarian evidence is represented, evaluated, interpreted and presented while preserving semantic interoperability.
 
 ---
 
@@ -574,36 +632,30 @@ Together, these specifications define how humanitarian evidence is represented, 
 
 The Query Model defines the standardized semantic representation of humanitarian evidence used to request humanitarian correlation.
 
-A Query does not describe an identity.
+A Query does not represent identity.
 
-It describes what is currently known.
+It represents what is currently known.
 
-Queries represent humanitarian evidence.
+Queries describe humanitarian evidence.
 
-Nodes correlate Observations.
+Humanitarian Records preserve observations.
 
-Correlation produces Correlation Candidates.
+Correlation creates local understanding.
 
-People interpret the results.
+Humanitarian Cases communicate interpretation.
 
 People verify reality.
 
-The Query Model intentionally separates humanitarian evidence from identity, allowing independent HCP implementations to assist humanitarian reunification without requiring centralized identity systems or exact matching.
-
-Users search for people and animals.
-
-Clients build Queries.
-
-Nodes correlate Observations.
+By separating humanitarian evidence from identity, HCP enables independent implementations to assist humanitarian reunification without requiring centralized identity systems or exact matching.
 
 The Query Model embodies one of the central architectural principles of HCP:
 
-**The protocol standardizes humanitarian semantics.**
+**Queries describe known humanitarian evidence.**
 
-**Queries standardize humanitarian evidence.**
+**Humanitarian Records preserve observations.**
 
-**Nodes correlate observations.**
+**Correlation creates local understanding.**
 
-**People interpret results.**
+**Humanitarian Cases communicate interpretation.**
 
-**Reality is verified by humans.**
+**People verify reality.**

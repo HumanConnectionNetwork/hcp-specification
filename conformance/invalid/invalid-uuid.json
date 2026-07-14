@@ -1,1 +1,23 @@
+```json
+{
+  "id": "12345",
+  "schema_version": "0.5",
+  "source_client": "hcp-client-telegram",
+
+  "subject": {
+    "type": "human",
+    "reported_label": "María González",
+    "estimated_age": 74,
+    "recognition_features": "Blue jacket, small black backpack, gray hair, approximately 160 cm tall"
+  },
+
+  "observation": {
+    "event_type": "missing_report",
+    "reported_location": "Central Community Shelter, Riverside District",
+    "reported_by": "family",
+    "observed_at": "2026-07-13T18:45:00Z",
+    "public_contact": "+58 412 555 0187"
+  }
+}
+```
 

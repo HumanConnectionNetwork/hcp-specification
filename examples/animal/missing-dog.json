@@ -1,0 +1,39 @@
+{
+  "hcp_version": "0.3",
+  "record_uuid": "d6e2c4b9-6d4e-4a5f-9b4e-3c1f8e5d7a12",
+  "event_type": "missing_animal",
+  "observation_timestamp": "2026-07-13T17:30:00Z",
+
+  "subject": {
+    "type": "animal",
+    "species": "dog",
+    "reported_label": "Max",
+    "breed": "Mixed Breed",
+    "size": "medium"
+  },
+
+  "observation": {
+    "reported_location": "Riverside Park",
+    "recognition_features": [
+      "Light brown coat",
+      "Red collar",
+      "White patch on chest",
+      "Approximately 20 kg"
+    ]
+  },
+
+  "reported_by": {
+    "relationship": "owner"
+  },
+
+  "public_contact": {
+    "name": "Carlos Pérez",
+    "contact": "+58 412 555 0220"
+  },
+
+  "metadata": {
+    "created_by": "hcp-client-mobile",
+    "language": "es",
+    "country": "VE"
+  }
+}

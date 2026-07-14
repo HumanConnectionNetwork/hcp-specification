@@ -2,7 +2,7 @@
 
 # Humanitarian Record Lifecycle Model
 
-Version: 0.2 (Draft)
+Version: 0.3 (Draft)
 
 Status: Draft
 
@@ -19,6 +19,7 @@ Depends On:
 - HCP-0000 — Architecture and Overview
 - HCP-0001 — Humanitarian Record
 - HCP-0006 — Observation Model
+- HCP-0008 — Event Type Model
 - HCP-0010 — Canonical JSON Specification
 - HCP-0012 — Correlation Model
 - HCP-0013 — Synchronization Model
@@ -35,17 +36,17 @@ None
 
 This document defines the Humanitarian Record Lifecycle Model of the Humanitarian Connection Protocol (HCP).
 
-Every Humanitarian Record represents a humanitarian snapshot captured at a specific point in time.
+Every Humanitarian Record represents one immutable humanitarian observation captured at a specific point in time.
 
 Humanitarian Records never evolve.
 
-Humanitarian situations evolve.
+Humanitarian understanding evolves.
 
 Whenever new humanitarian information becomes available, a new Humanitarian Record is created.
 
-Previously published Humanitarian Records remain immutable.
+Previously published Humanitarian Records remain permanently unchanged.
 
-The protocol preserves humanitarian history as a sequence of independent observations rather than as continuously updated personal records.
+The protocol preserves humanitarian history as a sequence of immutable observations rather than as continuously updated records.
 
 ---
 
@@ -59,17 +60,17 @@ Patients are transferred.
 
 Families reunite.
 
-Shelters open and close.
+Shelters receive new arrivals.
 
 Animals are found.
 
-However, the Humanitarian Connection Protocol does not represent these changes by modifying existing Humanitarian Records.
+However, the Humanitarian Connection Protocol never represents these changes by modifying previously published Humanitarian Records.
 
 Instead, every new humanitarian observation generates a new immutable Humanitarian Record.
 
-Each record captures a single humanitarian observation at one specific moment in time.
+Each record preserves one humanitarian observation exactly as it was reported at one specific moment in time.
 
-Humanitarian history emerges from the relationship between multiple observations.
+Humanitarian understanding evolves as additional Humanitarian Records become available.
 
 Individual Humanitarian Records never change.
 
@@ -79,25 +80,33 @@ Individual Humanitarian Records never change.
 
 The purpose of the Humanitarian Record Lifecycle Model is to define how Humanitarian Records behave throughout their existence.
 
-The lifecycle belongs to the Humanitarian Record.
+The lifecycle belongs exclusively to the Humanitarian Record.
 
-It never belongs to the observed Subject.
+It never belongs to:
 
-This model defines:
+- the observed Subject;
+- the Humanitarian Case;
+- humanitarian understanding.
+
+This specification defines:
 
 - how Humanitarian Records are created;
 - why they remain immutable;
-- how humanitarian situations evolve;
+- how humanitarian evidence accumulates;
 - how historical evidence is preserved;
-- how correlated observations reconstruct humanitarian history.
+- how humanitarian understanding evolves.
 
 The protocol intentionally separates humanitarian evidence from humanitarian interpretation.
+
+The Humanitarian Record Lifecycle Model answers one fundamental question:
+
+> **How does a Humanitarian Record behave throughout its existence?**
 
 ---
 
 # 3. Design Principles
 
-Every Humanitarian Record Lifecycle follows the fundamental architectural principles of HCP.
+Every Humanitarian Record Lifecycle follows the architectural principles of HCP.
 
 ---
 
@@ -113,41 +122,47 @@ It permanently preserves the humanitarian observation originally reported.
 
 ## Snapshot-Based
 
-Every Humanitarian Record represents a humanitarian snapshot captured at a specific point in time.
+Every Humanitarian Record represents one humanitarian snapshot captured at one specific point in time.
 
-It does not represent an evolving humanitarian situation.
+It never represents an evolving humanitarian situation.
 
 ---
 
 ## Event-Oriented
 
-The lifecycle describes humanitarian observations.
+Every Humanitarian Record represents one humanitarian observation identified by one Event Type.
 
-It never describes identities.
+Future observations generate new Humanitarian Records.
+
+Previous observations remain unchanged.
 
 ---
 
-## Historical
+## Historical Independence
 
-Every Humanitarian Record contributes to the permanent humanitarian history.
+Every Humanitarian Record permanently preserves one humanitarian observation independently of every later observation.
 
-Historical observations should remain available whenever permitted by local policy.
+New observations never alter the humanitarian meaning of previous records.
 
 ---
 
 ## Append-Oriented
 
-New humanitarian information always generates new Humanitarian Records.
+New humanitarian observations always generate new Humanitarian Records.
 
-Existing records remain unchanged.
+Existing Humanitarian Records remain immutable.
+
+Historical humanitarian evidence continually grows.
+
+It is never rewritten.
 
 ---
 
 ## Implementation Independent
 
-Every HCP Node manages Humanitarian Records according to these semantic principles.
+Every compatible HCP Node follows these lifecycle principles.
 
-Internal storage technologies remain implementation-specific.
+Internal storage technologies remain completely implementation-specific.
 
 ---
 
@@ -155,53 +170,86 @@ Internal storage technologies remain implementation-specific.
 
 Humanitarian Records preserve humanitarian evidence.
 
-They do not preserve humanitarian state.
+They do not preserve humanitarian understanding.
 
-Humanitarian situations evolve through new observations.
+Humanitarian understanding evolves as additional Humanitarian Records become available.
 
-History is reconstructed from immutable Humanitarian Records rather than maintained through updates.
+History is never rewritten.
+
+Only humanitarian interpretation evolves.
 
 The fundamental philosophy of the Humanitarian Record Lifecycle is:
 
 **Humanitarian Records are immutable evidence.**
 
-**Humanitarian situations evolve through new observations.**
+**Humanitarian understanding evolves.**
 
-**History is reconstructed through correlation.**
+**Correlation remains local.**
 
-**Reality is verified by humans.**
+**People verify reality.**
+
 ---
 
-# 5. Humanitarian Snapshot
+# 5. Record Immutability
 
-Every Humanitarian Record represents a humanitarian snapshot.
+Once a Humanitarian Record has been published, it becomes permanent humanitarian evidence.
 
-A humanitarian snapshot captures a single humanitarian observation exactly as it was reported at a specific moment in time.
+Its humanitarian meaning never changes.
+
+Its Event Type never changes.
+
+Its humanitarian observation never changes.
+
+Only the interpretation produced by an HCP Node may evolve as additional Humanitarian Records become available.
+
+Immutability preserves:
+
+- transparency;
+- traceability;
+- explainability;
+- interoperability;
+- historical integrity.
+
+Every compliant HCP implementation shall preserve this principle.
+
+---
+
+# 6. Humanitarian Snapshot
+
+Every Humanitarian Record represents one humanitarian snapshot.
+
+A humanitarian snapshot captures one humanitarian observation exactly as it was reported at one specific moment.
 
 Snapshots are immutable.
 
-Once created, they permanently preserve the humanitarian evidence available when the observation was made.
+Once created, they permanently preserve the humanitarian evidence available when the observation occurred.
 
-A snapshot is a conceptual representation.
+A Humanitarian Snapshot is a conceptual explanation.
 
 It is not an independent protocol object.
 
-Its purpose is to help explain why Humanitarian Records never change after publication.
+Its purpose is to explain why Humanitarian Records never evolve after publication.
 
 ---
 
-# 6. Humanitarian Record Lifecycle
+# 7. Humanitarian Record Lifecycle
 
-Every Humanitarian Record follows a simple lifecycle.
+Every Humanitarian Record follows the same conceptual lifecycle.
 
 ```text
+Reality
+
+        │
+
+        ▼
+
 Observation
 
         │
 
         ▼
 
-Humanitarian Snapshot
+Humanitarian Record
 
         │
 
@@ -219,46 +267,46 @@ Stored by HCP Node
 
         ▼
 
-Synchronized
+Synchronization
 
         │
 
         ▼
 
-Correlated
+Correlation
 
         │
 
         ▼
 
-Presented through Humanitarian Cases
+Humanitarian Understanding
 
         │
 
         ▼
 
-Remains Historical Humanitarian Evidence
+Presentation
 ```
 
-Throughout its lifecycle, the Humanitarian Record itself never changes.
+Throughout its entire lifecycle, the Humanitarian Record itself never changes.
 
-Only its interpretation may evolve as additional Humanitarian Records become available.
-
+Only humanitarian understanding evolves as additional humanitarian evidence becomes available.
 ---
-
-# 7. Humanitarian Situation Evolution
+# 8. Humanitarian Situation Evolution
 
 Humanitarian situations evolve continuously.
 
 Humanitarian Records do not.
 
-For example:
+Every new humanitarian observation generates a new immutable Humanitarian Record.
+
+Illustrative example:
 
 ```text
 Observation 1
 
-Status:
-Missing
+Event Type:
+Missing Report
 
         │
 
@@ -266,8 +314,8 @@ Missing
 
 Observation 2
 
-Status:
-Located
+Event Type:
+Rescue
 
         │
 
@@ -275,7 +323,7 @@ Located
 
 Observation 3
 
-Status:
+Event Type:
 Hospital Admission
 
         │
@@ -284,162 +332,166 @@ Hospital Admission
 
 Observation 4
 
-Status:
+Event Type:
 Family Reunification
 ```
 
-Each observation generates a new immutable Humanitarian Record.
+Each observation represents an independent humanitarian snapshot.
 
-Together they describe the humanitarian evolution of the situation.
+No previously published Humanitarian Record is modified.
 
-No previous Humanitarian Record is modified.
-
----
-
-# 8. Status Representation
-
-A Status represents the humanitarian condition observed when the Humanitarian Record was created.
-
-Examples include:
-
-- Missing;
-- Located;
-- Rescue;
-- Hospital Admission;
-- Stable;
-- Critical;
-- Shelter Registration;
-- Safe;
-- Family Reunification.
-
-Status belongs to the observation.
-
-It never represents a permanent characteristic of the Subject.
-
-Future observations may describe different humanitarian conditions without modifying previous Humanitarian Records.
+Humanitarian understanding evolves because additional observations become available.
 
 ---
 
-# 9. No Record Updates
+# 9. Interpretation Evolution
 
-The Humanitarian Connection Protocol intentionally prohibits updating Humanitarian Records.
+Humanitarian understanding evolves continuously.
 
-The following model is never used:
+Humanitarian Records do not.
+
+As additional Humanitarian Records become available:
+
+- humanitarian correlation may improve;
+- humanitarian reasoning may become stronger;
+- Humanitarian Cases may evolve;
+- presentation may change.
+
+The underlying Humanitarian Records remain exactly the same.
+
+Interpretation evolves.
+
+Evidence remains immutable.
+
+---
+
+# 10. No Record Updates
+
+The Humanitarian Connection Protocol intentionally prohibits modifying previously published Humanitarian Records.
+
+The following lifecycle never occurs:
 
 ```text
 Record A
 
-Status:
-Missing
+Event Type:
+Missing Report
 
         │
 
         ▼
 
-Update
+Update Existing Record
 
         │
 
         ▼
 
-Status:
+Event Type:
 Hospital Admission
 ```
 
-Instead, HCP preserves both observations.
+Instead, HCP preserves both humanitarian observations independently.
 
 ```text
 Record A
 
-Status:
-Missing
+Event Type:
+Missing Report
 
         +
 
 Record B
 
-Status:
+Event Type:
 Hospital Admission
 ```
 
 Historical integrity is preserved.
 
-Every Humanitarian Record remains an immutable humanitarian snapshot.
+Every Humanitarian Record remains permanent humanitarian evidence.
 
 ---
 
-# 10. Correlation and Timeline Reconstruction
+# 11. Correlation and Interpretation
 
-The Correlation Model compares immutable Humanitarian Records.
+Correlation evaluates immutable Humanitarian Records.
 
 It never modifies them.
 
-Compatible Humanitarian Records may be dynamically organized into Humanitarian Timelines representing one possible humanitarian evolution.
+As additional Humanitarian Records become available, correlation may discover new humanitarian relationships.
 
-Those timelines are reconstructed whenever necessary.
+Those relationships contribute to humanitarian understanding.
 
-They are never stored as permanent protocol objects.
+Presentation may later organize that understanding into Humanitarian Cases and Humanitarian Timelines.
 
-Different HCP Nodes may reconstruct different timelines from exactly the same Humanitarian Records while preserving semantic interoperability.
+Neither Humanitarian Cases nor Humanitarian Timelines are protocol objects.
+
+Both are local implementation constructs.
+
 ---
 
-# 11. Conflicting Observations
+# 12. Conflicting Observations
 
-Humanitarian emergencies naturally produce independent observations that may appear contradictory.
+Humanitarian emergencies naturally generate independent observations that may appear contradictory.
 
-Examples include:
+Illustrative examples include:
 
 - different Reported Labels;
+- different Event Types;
 - different Reported Locations;
-- different Status values;
 - different Recognition Features;
-- different reporting sources.
+- different Reporting Sources.
 
-These observations should never replace one another.
+These observations never replace one another.
 
-Each Humanitarian Record remains valid historical humanitarian evidence describing what was observed at a specific moment in time.
+Each Humanitarian Record permanently preserves exactly what was observed at one specific moment.
 
-Conflicting observations contribute additional humanitarian context and may improve future correlation.
+Conflicting observations contribute additional humanitarian context.
+
+Future humanitarian understanding may improve as additional Humanitarian Records become available.
 
 ---
 
-# 12. Historical Preservation
+# 13. Historical Preservation
 
 Humanitarian history is preserved through immutable Humanitarian Records.
 
-Every Humanitarian Record remains available as historical humanitarian evidence unless removed according to local retention policies.
+Every Humanitarian Record remains historical humanitarian evidence unless removed according to local operational policies.
 
 Historical preservation improves:
 
 - transparency;
 - traceability;
+- explainability;
 - humanitarian auditing;
-- future humanitarian analysis;
-- explainable correlation.
+- long-term humanitarian analysis.
 
-The protocol intentionally preserves humanitarian history rather than maintaining continuously updated records.
+The protocol intentionally preserves humanitarian observations rather than continuously updating humanitarian records.
 
 ---
 
-# 13. Record Retirement
+# 14. Record Retirement
 
 Implementations may archive or retire Humanitarian Records according to local operational policies.
 
-Retirement affects storage and availability.
+Retirement affects only local availability.
 
-It never modifies the Humanitarian Record itself.
+It never modifies:
 
-Archived Humanitarian Records remain valid humanitarian evidence.
+- humanitarian evidence;
+- semantic meaning;
+- historical integrity.
 
-Whenever restored, they preserve exactly the same humanitarian meaning they originally contained.
+Whenever restored, a Humanitarian Record preserves exactly the same humanitarian meaning it originally contained.
 
 ---
 
-# 14. Humanitarian Situation Closure
+# 15. Humanitarian Situation Closure
 
-The conclusion of a humanitarian situation is itself represented by a new Humanitarian Record.
+The conclusion of a humanitarian situation is itself represented by one additional Humanitarian Record.
 
-For example:
+Illustrative example:
 
 ```text
 Observation 1
@@ -463,101 +515,151 @@ Observation 3
 Family Reunification
 ```
 
-No previous Humanitarian Record is updated.
+No previous Humanitarian Record changes.
 
-The humanitarian situation appears complete only because additional observations became available.
+Humanitarian understanding evolves because new observations become available.
 
-Closure represents another humanitarian snapshot.
+Closure represents one additional humanitarian observation.
 
-It never modifies history.
+It never rewrites history.
 
 ---
 
-# 15. Synchronization
+# 16. Synchronization
 
 Every Humanitarian Record is synchronized independently.
 
 Synchronization exchanges immutable humanitarian evidence.
 
-It never exchanges humanitarian history, Humanitarian Timelines or Humanitarian Cases.
+It never exchanges:
 
-Each HCP Node reconstructs humanitarian history locally after synchronization.
+- Humanitarian Cases;
+- Humanitarian Timelines;
+- humanitarian understanding;
+- presentation objects.
+
+Each HCP Node independently reconstructs humanitarian understanding after synchronization.
 
 Interpretation always remains local.
 
 ---
 
-# 16. Search Behavior
+# 17. Search Behavior
 
 Queries never retrieve continuously updated humanitarian states.
 
-Instead, every Query reconstructs humanitarian understanding dynamically from the available Humanitarian Records.
+Instead, every Query evaluates the currently available Humanitarian Records.
 
-Different HCP Nodes may reconstruct different Humanitarian Timelines while preserving semantic interoperability.
+Correlation constructs humanitarian understanding from those immutable observations.
 
-Every search represents the Node's current interpretation of the humanitarian evidence available at that moment.
+Humanitarian Cases communicate that understanding.
+
+Every search therefore represents the Node's current humanitarian interpretation rather than permanent humanitarian truth.
 
 ---
 
-# 17. Privacy
+# 18. Privacy
 
-The Humanitarian Record Lifecycle depends exclusively on Humanitarian Records intentionally published through HCP.
+The Humanitarian Record Lifecycle depends exclusively upon Humanitarian Records intentionally published through HCP.
 
 Organizations remain responsible for determining which humanitarian observations become available for synchronization.
 
-Internal operational records remain outside the scope of the protocol.
+Internal operational systems remain outside the scope of the protocol.
 
-Additional privacy guidance is defined in:
+Additional privacy guidance is defined by:
 
 - **HCP-0021 — Privacy and Data Minimization**
 
 ---
 
-# 18. Relationship with Other Specifications
+# 19. Relationship with Other Specifications
 
 The Humanitarian Record Lifecycle Model defines how Humanitarian Records behave throughout their existence.
 
-Complementary specifications define how those records are represented, synchronized, correlated and presented.
+Complementary specifications define how those records are represented, exchanged, interpreted and presented.
+
+```text
+Observation
+
+        │
+
+        ▼
+
+Humanitarian Record
+
+        │
+
+        ▼
+
+Synchronization
+
+        │
+
+        ▼
+
+Correlation
+
+        │
+
+        ▼
+
+Humanitarian Understanding
+
+        │
+
+        ▼
+
+Humanitarian Case
+
+        │
+
+        ▼
+
+Presentation
+```
+
+Each specification has a distinct responsibility.
 
 - **HCP-0001** defines the Humanitarian Record.
 - **HCP-0006** defines the Observation Model.
+- **HCP-0008** defines Event Types.
 - **HCP-0010** defines the Canonical JSON Specification.
 - **HCP-0012** defines the Correlation Model.
 - **HCP-0013** defines the Synchronization Model.
-- **HCP-0015** defines the Result Presentation Model.
+- **HCP-0015** defines Humanitarian Case presentation.
 
-Together, these specifications define how immutable humanitarian evidence becomes humanitarian understanding while preserving decentralization and semantic interoperability.
+Together, these specifications define how immutable humanitarian evidence becomes humanitarian understanding while preserving semantic interoperability and implementation independence.
 
 ---
 
-# 19. Summary
+# 20. Summary
 
 The Humanitarian Record Lifecycle Model defines the semantic principles governing the lifecycle of Humanitarian Records within HCP.
 
-Every Humanitarian Record represents a humanitarian snapshot captured at a specific moment in time.
+Every Humanitarian Record represents one immutable humanitarian observation captured at one specific moment in time.
 
-Humanitarian Records are immutable.
+Humanitarian Records never evolve.
 
-Humanitarian situations evolve through new observations.
-
-History is reconstructed dynamically through correlation rather than maintained through updates.
+Humanitarian understanding evolves continuously as additional Humanitarian Records become available.
 
 Synchronization exchanges immutable humanitarian evidence.
 
-Interpretation remains local.
+Correlation remains local.
 
-Humanitarian Timelines emerge dynamically.
+Presentation remains local.
 
-Humanitarian Cases communicate humanitarian understanding.
+People verify reality.
 
-By preserving immutable humanitarian snapshots instead of continuously updating records, HCP maintains transparency, traceability and long-term semantic interoperability.
+By preserving immutable humanitarian observations instead of continuously updating records, HCP maintains transparency, traceability, explainability and long-term semantic interoperability.
 
 The Humanitarian Record Lifecycle Model reinforces one of the central architectural principles of HCP:
 
 **Humanitarian Records are immutable evidence.**
 
-**Humanitarian situations evolve through new observations.**
+**Humanitarian understanding evolves.**
 
-**History is reconstructed through correlation.**
+**Correlation remains local.**
+
+**Presentation remains local.**
 
 **People verify reality.**

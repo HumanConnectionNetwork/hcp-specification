@@ -1,0 +1,115 @@
+{
+"$schema": "https://json-schema.org/draft/2020-12/schema",
+"$id": "https://humanconnectionnetwork.org/schemas/query.schema.json",
+"title": "HCP Humanitarian Query",
+"description": "Machine-readable structural definition of a humanitarian Query conforming to HCP-0011 Query Model version 0.4.",
+"type": "object",
+"required": [
+"subject"
+],
+"properties": {
+"subject": {
+"$ref": "#/$defs/subjectQuery"
+},
+"observation": {
+"$ref": "#/$defs/observationQuery"
+}
+},
+"additionalProperties": true,
+"$defs": {
+"subjectQuery": {
+"type": "object",
+"required": [
+"type"
+],
+"properties": {
+"type": {
+"type": "string",
+"enum": [
+"human",
+"animal"
+],
+"description": "Type of living being described by the humanitarian Query."
+},
+"reported_label": {
+"type": "string",
+"minLength": 1,
+"description": "Human-readable label known or reported by the person initiating the search. It does not imply verified identity.",
+"examples": [
+"María González",
+"Unknown child",
+"Max",
+"White dog"
+]
+},
+"estimated_age": {
+"type": "integer",
+"minimum": 0,
+"description": "Approximate age associated with a human Subject. This field is not applicable to animal Subjects."
+},
+"recognition_features": {
+"type": "string",
+"minLength": 1,
+"description": "Free-text description of observable characteristics remembered or known by the person initiating the search.",
+"examples": [
+"Blue jacket, small black backpack, gray hair",
+"Light brown coat, red collar, white patch on chest"
+]
+}
+},
+"allOf": [
+{
+"if": {
+"properties": {
+"type": {
+"const": "animal"
+}
+},
+"required": [
+"type"
+]
+},
+"then": {
+"properties": {
+"estimated_age": false
+}
+}
+}
+],
+"additionalProperties": true
+},
+"observationQuery": {
+"type": "object",
+"minProperties": 1,
+"properties": {
+"event_type": {
+"type": "string",
+"minLength": 1,
+"pattern": "^[a-z][a-z0-9]*(?:_[a-z0-9]+)*$",
+"description": "Canonical language-independent Event Type associated with the humanitarian situation being searched. Unknown future Event Types remain structurally valid.",
+"examples": [
+"missing_report",
+"hospital_admission",
+"shelter_registration",
+"rescue",
+"family_reunification",
+"public_emergency_report",
+"found_animal",
+"veterinary_assistance"
+]
+},
+"reported_location": {
+"type": "string",
+"minLength": 1,
+"description": "Free-text description of the location associated with the humanitarian evidence currently known.",
+"examples": [
+"Central Community Shelter",
+"Regional General Hospital",
+"Near Plaza Bolívar"
+]
+}
+},
+"additionalProperties": true
+}
+}
+}

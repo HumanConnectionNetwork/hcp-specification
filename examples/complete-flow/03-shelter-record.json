@@ -1,1 +1,37 @@
+{
+  "hcp_version": "0.3",
+  "record_uuid": "7c4d8b12-9e51-4f87-a2f4-5e8c9d7a3b64",
+  "event_type": "refugee_person",
+  "observation_timestamp": "2026-07-14T01:35:00Z",
 
+  "subject": {
+    "type": "person",
+    "reported_label": "María",
+    "estimated_age": 74
+  },
+
+  "observation": {
+    "reported_location": "Central Community Shelter",
+    "recognition_features": [
+      "Blue jacket",
+      "Small black backpack",
+      "Gray hair",
+      "Approximately 160 cm tall"
+    ]
+  },
+
+  "reported_by": {
+    "relationship": "shelter"
+  },
+
+  "public_contact": {
+    "name": "Central Community Shelter",
+    "contact": "+58 212 555 1300"
+  },
+
+  "metadata": {
+    "created_by": "hcp-shelter-system",
+    "language": "es",
+    "country": "VE"
+  }
+}

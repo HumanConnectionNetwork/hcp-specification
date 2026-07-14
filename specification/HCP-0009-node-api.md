@@ -1,8 +1,8 @@
 # HCP-0009
 
-# Node API
+# Reference HTTP API
 
-Version: 0.3 (Draft)
+Version: 0.4 (Draft)
 
 Status: Draft
 
@@ -20,7 +20,7 @@ Depends On:
 - HCP-0001 — Humanitarian Record
 - HCP-0002 — HCP Node
 - HCP-0005 — Node Communication Protocol
-- HCP-0010 — Canonical JSON Specification
+- HCP-0010 — Canonical JSON
 - HCP-0011 — Query Model
 
 Replaces:
@@ -33,71 +33,73 @@ None
 
 # Abstract
 
-This document defines the reference HTTP API exposed by an HCP Node.
+This document defines the recommended HTTP reference binding for the Humanitarian Connection Protocol (HCP).
 
-The Node API provides a standardized HTTP interface through which applications, bots, mobile clients, hospital systems and other HCP Nodes interact with implementations of the Humanitarian Connection Protocol.
+It describes one possible HTTP interface through which HCP Clients and HCP Nodes may interact with an implementation of the protocol.
 
-This specification defines a recommended HTTP binding.
+This document is **not part of the HCP Core semantics**.
 
-It is not the protocol itself.
+Compatible implementations remain fully interoperable when exposing equivalent semantic behavior through different communication technologies.
 
-Compatible implementations may expose equivalent interfaces using different communication technologies while preserving the semantic behavior defined by HCP.
+The protocol standardizes humanitarian meaning.
 
-The API exists to make HCP semantics accessible through HTTP without constraining implementation architecture.
+This specification demonstrates one recommended way to expose that meaning through HTTP.
 
 ---
 
 # 1. Introduction
 
-The Humanitarian Connection Protocol defines semantic interoperability between independent humanitarian systems.
+The Humanitarian Connection Protocol defines semantic interoperability between independent humanitarian implementations.
 
-The Node Communication Protocol defines how HCP Nodes conceptually exchange humanitarian observations.
+HCP-0005 defines the conceptual communication model between HCP Nodes.
 
-This document defines a reference HTTP API implementing that communication model.
+This specification defines one recommended HTTP binding implementing that communication model.
 
-The API provides a practical interface allowing HCP Clients and HCP Nodes to:
+The HTTP API allows Clients and other Nodes to interact with an HCP implementation using widely adopted web technologies.
 
-- create humanitarian observations;
-- search compatible observations;
-- synchronize Humanitarian Records;
-- monitor node availability.
+Although every example in this specification uses HTTP, the protocol itself remains completely transport-independent.
 
-Although HTTP is used throughout this specification, HCP remains transport-independent.
+Equivalent implementations may expose identical semantic behavior through:
 
-Equivalent APIs may be implemented using different communication technologies while preserving identical semantic behavior.
+- gRPC;
+- MQTT;
+- Message Queues;
+- Mesh Networks;
+- SMS Gateways;
+- Satellite Networks;
+- Local APIs;
+- future communication technologies.
+
+Changing the transport never changes humanitarian meaning.
 
 ---
 
 # 2. Purpose
 
-The purpose of the Node API is to expose the semantic capabilities of an HCP Node through a consistent HTTP interface.
+The purpose of this specification is to define a recommended HTTP interface exposing the semantic capabilities of an HCP Node.
 
-The API enables compatible implementations to:
+The API demonstrates how an implementation may expose operations such as:
 
-- create humanitarian observations;
-- search compatible observations;
+- submit Humanitarian Records;
+- query Humanitarian Records;
 - synchronize Humanitarian Records;
-- retrieve node status information.
+- retrieve operational information.
 
 The API intentionally remains minimal.
 
-Advanced capabilities may be introduced by future specifications without affecting interoperability.
-
-The protocol standardizes humanitarian semantics.
-
-The API exposes those semantics through HTTP.
+Implementations remain free to extend it according to their operational needs while preserving HCP semantic compatibility.
 
 ---
 
 # 3. Design Principles
 
-Every HCP Node API should preserve the following principles.
+Every compatible HTTP implementation should preserve the following principles.
 
 ## Semantic
 
 The API exposes HCP semantic concepts.
 
-It does not expose implementation details.
+It never exposes implementation-specific behavior.
 
 ---
 
@@ -105,15 +107,13 @@ It does not expose implementation details.
 
 Every request should be processed independently.
 
-Servers should not depend on conversational state between requests.
-
-Stateless communication improves interoperability between heterogeneous implementations.
+Servers should not require conversational state between requests.
 
 ---
 
 ## Canonical
 
-Every exchanged Humanitarian Record shall follow the Canonical HCP JSON Representation defined by **HCP-0010**.
+Every exchanged Humanitarian Record shall follow the Canonical JSON representation defined in **HCP-0010**.
 
 ---
 
@@ -121,55 +121,83 @@ Every exchanged Humanitarian Record shall follow the Canonical HCP JSON Represen
 
 Clients may be implemented using any programming language.
 
-The API behavior remains semantically identical.
+HTTP remains only one possible transport.
 
 ---
 
 ## Extensible
 
-Future API operations may be introduced without breaking existing compatible implementations.
+Future HTTP operations may be introduced without affecting semantic interoperability.
 
 ---
 
-# 4. Reference Endpoints
+## Transport Independent
 
-A reference HTTP implementation should expose the following operations.
+HTTP is a reference transport.
+
+The protocol itself remains transport-independent.
+
+---
+
+# 4. Reference HTTP Binding
+
+The HTTP interface defined by this specification is a reference implementation.
+
+Equivalent semantic behavior may be exposed through completely different communication technologies.
+
+Examples include:
+
+- REST APIs;
+- gRPC services;
+- Message Queues;
+- MQTT brokers;
+- Mesh synchronization;
+- Local IPC;
+- Future communication mechanisms.
+
+Implementations remain compliant as long as they preserve the semantic behavior defined by HCP.
+
+The protocol standardizes semantics.
+
+The HTTP API standardizes one recommended HTTP binding.
+
+---
+
+# 5. Reference Endpoints
+
+A reference HTTP implementation should expose operations conceptually equivalent to the following.
 
 | Method | Endpoint | Purpose |
-|---------|----------------|---------------------------------------------|
-| POST | `/observations` | Create a humanitarian observation |
-| POST | `/search` | Search compatible observations |
+|---------|-----------|-----------------------------------------|
+| POST | `/records` | Submit a Humanitarian Record |
+| POST | `/query` | Query Humanitarian Records |
 | POST | `/sync` | Synchronize Humanitarian Records |
-| GET | `/health` | Retrieve node health information |
+| GET | `/health` | Retrieve operational information |
 
-These endpoints represent the recommended HTTP binding for HCP.
+These endpoints are recommendations.
 
-Equivalent operations may be implemented using different transport technologies while preserving the same semantic behavior.
+Equivalent interfaces may expose the same semantic behavior using different endpoint names or communication mechanisms.
+
 ---
 
-# 5. Create Observation
+# 6. Submit Humanitarian Record
 
-Creates a new humanitarian observation.
+A Client submits humanitarian information to an HCP Node.
 
-The submitted Observation shall be transformed by the HCP Node into a Humanitarian Record represented using the Canonical HCP JSON Specification.
+The submitted payload shall follow the Canonical JSON Representation defined by **HCP-0010**.
 
-Request
+Illustrative request:
 
 ```http
-POST /observations
+POST /records
 ```
 
-Request Body
-
-The request body shall follow the Canonical HCP JSON Representation defined in **HCP-0010**.
-
-Illustrative example:
+Illustrative request body:
 
 ```json
 {
   "subject": "human",
   "event_type": "missing_report",
-  "status": "missing",
   "reported_label": "Juan Pérez",
   "estimated_age": 42,
   "recognition_features": "Blue jacket, black backpack",
@@ -178,7 +206,7 @@ Illustrative example:
 }
 ```
 
-Successful Response
+Illustrative successful response:
 
 ```http
 201 Created
@@ -192,29 +220,23 @@ Successful Response
 }
 ```
 
-The HTTP API creates an Observation.
+The HTTP API receives a canonical Humanitarian Record.
 
-The HCP Node creates the corresponding Humanitarian Record.
-
+The HCP Node validates it and stores it according to its local implementation.
 ---
+# 7. Query Humanitarian Records
 
-# 6. Search Observations
+An HCP Client may query Humanitarian Records exposed by an HCP Node.
 
-Searches for compatible humanitarian observations.
+The submitted query shall follow the Query Model defined in **HCP-0011**.
 
-The HCP Node evaluates available Humanitarian Records using its locally implemented Correlation Model.
-
-Request
+Illustrative request:
 
 ```http
-POST /search
+POST /query
 ```
 
-Request Body
-
-The request body shall follow the Query Model defined in **HCP-0011**.
-
-Illustrative example:
+Illustrative request body:
 
 ```json
 {
@@ -227,11 +249,11 @@ Illustrative example:
 }
 ```
 
-Successful Response
+The Node evaluates its locally available Humanitarian Records.
 
-```http
-200 OK
-```
+Correlation remains entirely implementation-specific.
+
+Illustrative response:
 
 ```json
 {
@@ -240,20 +262,8 @@ Successful Response
       "record_id": "d71b5f...",
       "score": 0.93,
       "event_type": "hospital_admission",
-      "status": "stable",
       "explanation": [
-        "Reported labels are compatible",
-        "Estimated ages are compatible",
-        "Recognition Features are compatible",
-        "Locations are geographically compatible"
-      ]
-    },
-    {
-      "record_id": "ab91de...",
-      "score": 0.81,
-      "event_type": "missing_report",
-      "status": "missing",
-      "explanation": [
+        "Reported Labels are compatible",
         "Recognition Features are compatible",
         "Reported locations are compatible"
       ]
@@ -262,35 +272,35 @@ Successful Response
 }
 ```
 
-The correlation algorithm remains implementation-specific.
+The API standardizes request and response semantics.
 
-The API standardizes only the request and response semantics.
+It does not standardize correlation algorithms.
 
 ---
 
-# 7. Synchronization
+# 8. Synchronize Humanitarian Records
 
-Synchronizes Humanitarian Records between compatible HCP Nodes.
+Independent HCP Nodes may synchronize Humanitarian Records through an HTTP interface.
 
-Request
+Illustrative request:
 
 ```http
 POST /sync
 ```
 
-Request Body
+Illustrative request body:
 
 ```json
 {
   "records": [
     {
-      "...": "Canonical HCP JSON..."
+      "...": "Canonical HCP JSON Representation"
     }
   ]
 }
 ```
 
-Successful Response
+Illustrative response:
 
 ```http
 202 Accepted
@@ -303,43 +313,45 @@ Successful Response
 }
 ```
 
-Synchronization behavior is defined in **HCP-0013 — Synchronization Model**.
+Synchronization behavior is defined by **HCP-0013 — Synchronization Model**.
 
-The API defines only the HTTP binding.
+This specification defines only one possible HTTP binding.
 
 ---
 
-# 8. Health Check
+# 9. Operational Endpoints
 
-Returns operational information about the HCP Node.
+Reference implementations may expose operational endpoints supporting administration and monitoring.
 
-Request
+Illustrative example:
 
 ```http
 GET /health
 ```
 
-Example Response
+Illustrative response:
 
 ```json
 {
   "status": "ok",
-  "hcp_version": "0.3",
-  "node_version": "1.2.0"
+  "hcp_version": "0.4",
+  "implementation_version": "1.2.0"
 }
 ```
 
-Health Check is intended for operational monitoring.
+Operational endpoints are not part of humanitarian interoperability.
 
-It is not part of humanitarian interoperability.
+They exist exclusively to support implementation management.
+
+Equivalent operational information may be exposed through different mechanisms.
 
 ---
 
-# 9. Error Responses
+# 10. Error Handling
 
-Whenever possible, HCP Nodes should return structured, machine-readable error information.
+Whenever possible, HTTP implementations should return structured machine-readable error responses.
 
-Example
+Illustrative example:
 
 ```http
 400 Bad Request
@@ -352,141 +364,96 @@ Example
 }
 ```
 
-Error responses should describe protocol-level problems.
+The exact error schema remains implementation-specific.
 
-They should avoid exposing implementation-specific details whenever reasonably possible.
+Implementations should avoid exposing unnecessary internal implementation details.
 
-The protocol does not prescribe a mandatory error schema.
-
-However, consistent machine-readable responses are strongly encouraged.
 ---
 
-# 10. Authentication
+# 11. Authentication
 
-Authentication and authorization remain outside the scope of the Humanitarian Connection Protocol.
+Authentication and authorization remain outside the scope of HCP.
 
-Different HCP implementations may adopt authentication mechanisms appropriate to their operational environment.
+Different implementations may adopt authentication mechanisms appropriate to their operational environments.
 
 Examples include:
 
-- API Keys
-- OAuth 2.0
-- Mutual TLS
-- JWT
-- Internal Network Authentication
-- Future authentication technologies
+- API Keys;
+- OAuth 2.0;
+- Mutual TLS;
+- JWT;
+- Internal Network Authentication;
+- future authentication technologies.
 
-Authentication mechanisms do not affect protocol interoperability.
-
-The protocol standardizes humanitarian semantics.
-
-Implementations define authentication.
+Authentication mechanisms never affect protocol semantics.
 
 ---
 
-# 11. Versioning
+# 12. Relationship with Other Specifications
 
-Every HCP Node should expose the versions it supports.
+This document defines one recommended HTTP binding for HCP.
 
-Example:
+It complements the semantic specifications defined throughout the HCP Core.
 
-```json
-{
-  "hcp_version": "0.3",
-  "node_version": "1.2.0"
-}
+```text
+HCP-0005
+Node Communication Protocol
+        │
+        ▼
+HCP-0009
+Reference HTTP API
+        │
+        ▼
+HTTP Interface
+        │
+        ▼
+HCP Implementation
 ```
 
-Where:
+Each specification has a distinct responsibility.
 
-- **hcp_version** identifies the supported Humanitarian Connection Protocol version.
-- **node_version** identifies the software implementation version.
+- **HCP-0005** defines the semantic communication model.
+- **HCP-0009** defines one recommended HTTP implementation of that model.
+- **HCP-0010** defines the Canonical JSON representation.
+- **HCP-0011** defines the Query Model.
+- **HCP-0013** defines synchronization behavior.
 
-Separating protocol version from implementation version improves interoperability and simplifies protocol evolution.
+Together, these specifications demonstrate how HCP semantics may be exposed through HTTP while preserving complete implementation independence.
 
 ---
 
-# 12. Transport Independence
+# 13. Summary
 
-This specification defines a reference HTTP binding.
+The Reference HTTP API defines one recommended HTTP binding for the Humanitarian Connection Protocol.
 
-The Humanitarian Connection Protocol itself remains transport-independent.
+It is not the protocol itself.
 
-Equivalent semantic behavior may be implemented using technologies such as:
-
-- HTTPS
-- HTTP/2
-- gRPC
-- Message Queues
-- MQTT
-- Mesh Networks
-- SMS Gateways
-- Satellite Communication
-- Local Networks
-- Future communication technologies
-
-Changing the transport mechanism never changes the semantic meaning of the exchanged humanitarian information.
+It is not the only valid implementation.
 
 The protocol standardizes humanitarian semantics.
 
-Transport technologies deliver those semantics.
+The Node Communication Protocol standardizes semantic communication.
 
----
+This specification demonstrates one recommended HTTP interface exposing those semantics.
 
-# 13. Relationship with Other Specifications
+Equivalent behavior may be implemented using any transport technology while preserving interoperability.
 
-This document defines the recommended HTTP interface exposed by HCP Nodes.
+Clients submit Humanitarian Records.
 
-Complementary specifications define the remaining layers of the protocol.
+Nodes exchange Humanitarian Records.
 
-- **HCP-0001** defines the Humanitarian Record.
-- **HCP-0002** defines the HCP Node.
-- **HCP-0005** defines the Node Communication Protocol.
-- **HCP-0010** defines the Canonical HCP JSON Representation.
-- **HCP-0011** defines the Query Model.
-- **HCP-0012** defines the Correlation Model.
-- **HCP-0013** defines the Synchronization Model.
+Correlation remains local.
 
-Together, these specifications define how independent HCP implementations expose, exchange and synchronize humanitarian observations while preserving semantic interoperability.
-
----
-
-# 14. Summary
-
-The Node API defines the recommended HTTP interface for exposing the capabilities of an HCP Node.
-
-It is a reference HTTP binding.
-
-It is not the Humanitarian Connection Protocol itself.
-
-The protocol defines humanitarian semantics.
-
-The Node Communication Protocol defines conceptual communication.
-
-The Node API exposes that communication through HTTP.
-
-Reference implementations transform humanitarian observations into Humanitarian Records.
-
-Clients submit observations.
-
-Nodes generate Humanitarian Records.
-
-Nodes correlate observations.
-
-Nodes synchronize Humanitarian Records.
-
-People interpret results.
+Humanitarian Cases remain local.
 
 People verify reality.
 
-By separating protocol semantics, communication behavior, transport technologies and software implementation, HCP enables independent organizations to build interoperable humanitarian systems without requiring shared software, centralized databases or global identity systems.
+By separating protocol semantics from transport technologies, HCP enables independent organizations to build interoperable humanitarian systems without requiring common software architectures, centralized databases or mandatory communication technologies.
 
-The Node API demonstrates one of the fundamental architectural principles of HCP:
+The protocol standardizes semantics.
 
-**The protocol standardizes semantics.**
+The communication model standardizes interaction.
 
-**The communication model standardizes interaction.**
+The Reference HTTP API standardizes one recommended HTTP binding.
 
-**The API standardizes HTTP exposure.**
-
-**Implementations remain free.**
+Implementations remain free.

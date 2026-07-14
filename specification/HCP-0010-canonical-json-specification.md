@@ -2,7 +2,7 @@
 
 # Canonical JSON Specification
 
-Version: 0.4 (Draft)
+Version: 0.5 (Draft)
 
 Status: Draft
 
@@ -20,7 +20,6 @@ Depends On:
 - HCP-0001 — Humanitarian Record
 - HCP-0003 — Subject Model
 - HCP-0006 — Observation Model
-- HCP-0007 — Status Model
 - HCP-0008 — Event Type Model
 
 Replaces:
@@ -35,15 +34,17 @@ None
 
 This document defines the Canonical JSON Specification of the Humanitarian Connection Protocol (HCP).
 
-The Canonical JSON is the standardized semantic representation exchanged between compatible HCP implementations.
+The Canonical JSON is the normative semantic representation of every Humanitarian Record exchanged between compatible HCP implementations.
 
 It is the shared humanitarian language of HCP.
 
-Every Humanitarian Record exchanged between compatible HCP Nodes shall be represented using this canonical structure.
+Every Humanitarian Record exchanged between HCP Nodes shall be represented using this canonical structure.
 
-The Canonical JSON standardizes semantic meaning rather than software architecture, database models or communication technologies.
+The Canonical JSON standardizes humanitarian semantics.
 
-Its purpose is to enable independent implementations to exchange humanitarian observations while preserving interoperability, implementation independence and long-term protocol evolution.
+It does not standardize databases, software architectures, communication technologies or internal implementation models.
+
+Its purpose is to enable independent implementations to exchange Humanitarian Records while preserving semantic interoperability, implementation independence and long-term protocol evolution.
 
 ---
 
@@ -51,79 +52,128 @@ Its purpose is to enable independent implementations to exchange humanitarian ob
 
 The Humanitarian Connection Protocol defines a common semantic model for representing humanitarian observations.
 
-The Canonical JSON is the official representation of that model.
+The Canonical JSON is the official representation of that semantic model.
 
-Every Humanitarian Record exchanged by HCP Nodes shall follow this specification.
+Every Humanitarian Record exchanged between compatible HCP Nodes shall follow this specification.
 
-The Canonical JSON is independent of:
+Internal implementations remain completely free to organize information according to their own technical requirements.
 
-- programming language;
-- operating system;
-- database technology;
-- communication protocol;
-- storage mechanism;
-- software architecture.
+However, whenever Humanitarian Records are exchanged, every implementation should produce the same canonical semantic representation.
 
-Different implementations may internally organize information in completely different ways.
+This separation between internal implementation and exchanged representation allows HCP to preserve semantic interoperability without constraining technological freedom.
 
-However, when exchanging humanitarian information they shall produce the same semantic representation.
-
-The Canonical JSON is therefore the shared humanitarian language spoken by all compatible HCP implementations.
+The Canonical JSON is therefore the common humanitarian language spoken by every compatible HCP implementation.
 
 ---
 
-# 2. Design Principles
+# 2. Purpose
 
-The Canonical JSON follows the fundamental architectural principles of HCP.
+The purpose of the Canonical JSON Specification is to define the normative representation of Humanitarian Records exchanged by HCP.
+
+Rather than defining internal software architectures or storage models, this specification defines the semantic structure that every compatible implementation shall exchange.
+
+The Canonical JSON enables:
+
+- semantic interoperability;
+- implementation independence;
+- explainable correlation;
+- protocol evolution;
+- long-term compatibility.
+
+This specification answers one fundamental question:
+
+> **How is a Humanitarian Record represented when exchanged?**
 
 ---
+
+# 3. Canonical Representation
+
+Every compliant HCP implementation shall be capable of exporting every Humanitarian Record using the Canonical JSON defined by this specification.
+
+Likewise, every compliant implementation shall be capable of importing Canonical JSON representations produced by other compatible HCP Nodes.
+
+Internal storage models remain entirely implementation-specific.
+
+Examples include:
+
+- relational databases;
+- document databases;
+- embedded storage;
+- object models;
+- flat files;
+- distributed storage;
+- future implementation technologies.
+
+Only the exchanged semantic representation is standardized.
+
+This distinction preserves both interoperability and implementation freedom.
+
+---
+
+# 4. Design Principles
+
+The Canonical JSON follows the architectural principles of HCP.
 
 ## Semantic
 
 The Canonical JSON standardizes humanitarian meaning.
 
-It does not standardize software implementation.
+It never standardizes implementation behavior.
 
 ---
 
 ## Observation-Based
 
-Every Canonical JSON represents exactly one Observation.
+Every Canonical JSON represents exactly one Humanitarian Observation through one Humanitarian Record.
 
-It never represents an identity record, a humanitarian history or a centralized person profile.
+It never represents:
 
----
-
-## Minimal
-
-Only humanitarian information necessary to describe an Observation should be included.
-
-The protocol intentionally avoids unnecessary complexity and implementation-specific metadata.
+- permanent identity;
+- humanitarian history;
+- centralized person profiles;
+- Humanitarian Cases.
 
 ---
 
 ## Deterministic
 
-Equivalent humanitarian observations should always produce the same canonical semantic structure regardless of implementation.
+Equivalent Humanitarian Records should always produce equivalent Canonical JSON representations regardless of implementation.
 
-This guarantees interoperability between independent HCP Nodes.
+Deterministic representation guarantees semantic interoperability between independent HCP Nodes.
+
+---
+
+## Minimal
+
+Only humanitarian information necessary to represent one Humanitarian Observation should be included.
+
+Implementation-specific metadata should remain outside the Canonical JSON whenever possible.
+
+---
+
+## Stable
+
+The Canonical JSON should evolve conservatively.
+
+Equivalent Humanitarian Records should remain semantically compatible across protocol versions whenever reasonably possible.
 
 ---
 
 ## Portable
 
-Canonical Humanitarian Records should be transferable through any compatible communication technology including:
+Canonical Humanitarian Records should be transferable through any compatible communication technology without semantic modification.
 
-- HTTP APIs
-- JSON files
-- Message Queues
-- SMS Gateways
-- Mesh Networks
-- Satellite Communication
-- Offline Synchronization
-- Future communication technologies
+Examples include:
 
-without requiring semantic modifications.
+- HTTP;
+- gRPC;
+- Message Queues;
+- MQTT;
+- Mesh Networks;
+- Satellite Communication;
+- Offline Synchronization;
+- removable media;
+- future communication technologies.
 
 ---
 
@@ -131,15 +181,7 @@ without requiring semantic modifications.
 
 Future protocol versions may introduce optional semantic elements while preserving compatibility whenever reasonably possible.
 
-Older implementations should safely ignore unknown fields without losing recognized humanitarian information.
-
----
-
-## Offline-First
-
-The Canonical JSON is intentionally lightweight.
-
-It is designed to be created, exchanged and preserved even under severely constrained communication environments.
+Older implementations should safely ignore unknown fields while preserving recognized humanitarian information.
 
 ---
 
@@ -147,26 +189,27 @@ It is designed to be created, exchanged and preserved even under severely constr
 
 The Canonical JSON represents humanitarian evidence.
 
-It does not identify people.
+It does not establish identity.
 
-Its purpose is to facilitate explainable correlation between independent humanitarian observations while allowing correlation algorithms to evolve independently.
+Its purpose is to support explainable humanitarian correlation while allowing correlation algorithms to evolve independently.
 
 The protocol standardizes semantics.
 
 Implementations define correlation.
+
 ---
 
-# 3. Canonical Structure
+# 5. Canonical Structure
 
 Every Humanitarian Record shall follow the semantic structure defined below.
 
-The Canonical JSON represents one humanitarian observation.
+The Canonical JSON represents exactly one Humanitarian Observation.
 
-It is composed of three conceptual sections:
+Conceptually, every Humanitarian Record consists of three semantic sections:
 
-- Record Metadata
-- Subject
-- Observation
+- Record Metadata;
+- Subject;
+- Observation.
 
 Illustrative structure:
 
@@ -174,7 +217,7 @@ Illustrative structure:
 {
   "id": "2d36d31d-c987-4c35-b0a8-74cb8eb9b62e",
 
-  "schema_version": "0.4",
+  "schema_version": "0.5",
 
   "source_client": "hcp-client-telegram",
 
@@ -194,8 +237,6 @@ Illustrative structure:
 
     "event_type": "hospital_admission",
 
-    "status": "stable",
-
     "reported_location": "Hospital Central",
 
     "reported_by": "hospital",
@@ -207,19 +248,19 @@ Illustrative structure:
 }
 ```
 
-The internal organization of software systems may differ.
+Internal software architectures may organize information differently.
 
-Only the exchanged semantic representation is standardized.
-
+Only the exchanged semantic representation defined by this specification is normative.
 ---
-
-# 4. Record Metadata
+# 6. Record Metadata
 
 The Record Metadata identifies the Humanitarian Record itself.
 
-Metadata belongs to the Record.
+Metadata belongs exclusively to the Humanitarian Record.
 
-It does not belong to the observed Subject.
+It never belongs to the observed Subject.
+
+It never identifies a person or animal.
 
 ---
 
@@ -233,9 +274,11 @@ Type:
 UUID
 ```
 
-The identifier uniquely identifies the Observation.
+The identifier uniquely identifies one Humanitarian Record.
 
-It never identifies a person or animal.
+It never identifies a Subject.
+
+Every new Humanitarian Observation generates a new UUID.
 
 ---
 
@@ -246,10 +289,10 @@ Version of the Canonical JSON Specification used to generate the Humanitarian Re
 Example:
 
 ```
-0.4
+0.5
 ```
 
-This field enables protocol evolution while preserving interoperability.
+This field enables long-term protocol evolution while preserving interoperability between different HCP versions.
 
 ---
 
@@ -257,7 +300,7 @@ This field enables protocol evolution while preserving interoperability.
 
 Technical identifier of the implementation that generated the Humanitarian Record.
 
-Examples include:
+Examples:
 
 ```
 hcp-client-telegram
@@ -271,21 +314,25 @@ veterinary-plugin
 
 This field exists exclusively for interoperability diagnostics.
 
-It shall never participate in humanitarian correlation.
+It shall never participate in:
+
+- humanitarian correlation;
+- ranking;
+- identity determination.
 
 ---
 
-# 5. Subject Object
+# 7. Subject Object
 
-The Subject object describes the observed living being.
+The Subject object describes the observed Subject.
 
-It contains descriptive humanitarian evidence concerning the Subject itself.
+It contains humanitarian evidence describing the living being referenced by the Humanitarian Observation.
 
 The Subject object intentionally avoids permanent identity concepts.
 
 Its purpose is to describe the observed Subject rather than identify an individual.
 
-Example:
+Illustrative example:
 
 ```json
 {
@@ -298,9 +345,12 @@ Example:
     "estimated_age": 42,
 
     "recognition_features": "Blue jacket, black backpack"
+
   }
 }
 ```
+
+The complete semantic definition of the Subject is provided by **HCP-0003 — Subject Model**.
 
 ---
 
@@ -316,37 +366,39 @@ human
 animal
 ```
 
-Future specifications may define additional Subject Types while preserving semantic compatibility.
+Future HCP specifications may define additional Subject Types while preserving semantic compatibility.
 
 ---
 
 ## reported_label
 
-Human-readable label provided by the reporter.
+Human-readable label reported by the observer.
 
 Examples:
 
 ```
 Juan Pérez
 
-NN
+Unknown child
 
 Adult male
 
 White dog
 
 Green parrot
-
-Unknown child
 ```
 
-The reported label is humanitarian evidence.
+The Reported Label is humanitarian evidence.
 
-It is not a protocol identifier.
+It is not:
 
-Different Observations concerning the same Subject may legitimately contain different reported labels.
+- a protocol identifier;
+- verified identity;
+- permanent identifier.
 
-Correlation evaluates this field probabilistically together with all other available humanitarian evidence.
+Different Humanitarian Records concerning the same Subject may legitimately contain different Reported Labels.
+
+Correlation evaluates this field together with all other humanitarian evidence.
 
 ---
 
@@ -368,6 +420,10 @@ type = human
 
 If unknown, this field may be omitted.
 
+Estimated Age contributes humanitarian evidence.
+
+It never establishes identity.
+
 ---
 
 ## recognition_features
@@ -381,46 +437,44 @@ Examples for humans include:
 - tattoos;
 - scars;
 - hairstyle;
-- backpack;
-- mobility aids.
+- mobility aids;
+- backpacks.
 
 Examples for animals include:
 
 - collar;
 - coat color;
 - distinctive markings;
-- ear shape;
 - tail characteristics;
+- ear shape;
 - visible injuries.
 
-Recognition Features represent one of the strongest sources of humanitarian evidence available for correlation.
+Recognition Features represent one of the strongest sources of humanitarian evidence available for explainable correlation.
 
-Implementations should encourage concise descriptions based on directly observable characteristics.
+Implementations should encourage concise descriptions based exclusively on directly observable characteristics.
 
 ---
 
-# 6. Observation Object
+# 8. Observation Object
 
-The Observation object describes the humanitarian evidence recorded at a specific moment in time.
+The Observation object preserves the humanitarian evidence observed at one specific moment in time.
 
 Every Humanitarian Record contains exactly one Observation.
 
-An Observation answers four fundamental questions:
+The Observation answers four fundamental questions:
 
 - What happened?
-- What was observed?
-- Where was it observed?
+- Where did it happen?
 - Who reported it?
+- When was it observed?
 
-Example:
+Illustrative example:
 
 ```json
 {
   "observation": {
 
     "event_type": "hospital_admission",
-
-    "status": "stable",
 
     "reported_location": "Hospital Central",
 
@@ -429,26 +483,28 @@ Example:
     "observed_at": "2026-07-13T18:30:00Z",
 
     "public_contact": "@hospital"
+
   }
 }
 ```
 
-The Observation object contains humanitarian evidence.
+The Observation preserves humanitarian evidence.
 
 It does not establish identity.
 
 It preserves one humanitarian observation exactly as it was reported.
+
 ---
 
-# 7. Observation Fields
+# 9. Observation Fields
 
-The Observation object contains the humanitarian evidence associated with the reported event.
+The Observation object contains the humanitarian evidence associated with the observed event.
 
 ---
 
 ## event_type
 
-Classifies the humanitarian event that generated the Observation.
+Defines the humanitarian meaning of the Observation.
 
 Examples:
 
@@ -466,39 +522,13 @@ family_reunification
 veterinary_assistance
 ```
 
-Event Types answer one question:
+Every Observation contains exactly one Event Type.
+
+Event Types answer one fundamental question:
 
 > **What happened?**
 
-The complete semantic model is defined in **HCP-0008 — Event Type Model**.
-
----
-
-## status
-
-Describes the humanitarian condition observed at the time of the Observation.
-
-Examples:
-
-```
-missing
-
-stable
-
-critical
-
-safe
-
-receiving_care
-
-reunified
-```
-
-Status answers one question:
-
-> **What was the observed condition?**
-
-The complete semantic model is defined in **HCP-0007 — Status Model**.
+The complete semantic definition is provided by **HCP-0008 — Event Type Model**.
 
 ---
 
@@ -518,7 +548,7 @@ Near Plaza Bolívar
 Highway KM 18
 ```
 
-Future protocol extensions may introduce structured geographic information while preserving compatibility.
+Future protocol versions may introduce optional structured geographic information while preserving backward compatibility.
 
 ---
 
@@ -544,9 +574,9 @@ friend
 unknown
 ```
 
-This field contributes humanitarian context.
+The reporting source contributes humanitarian context.
 
-It does not establish identity or certainty.
+It never establishes identity or certainty.
 
 ---
 
@@ -568,7 +598,11 @@ Example:
 
 The Observation Timestamp represents when humanitarian evidence was observed.
 
-It is independent of when the Humanitarian Record was created or synchronized.
+It is independent of:
+
+- record creation;
+- synchronization;
+- correlation.
 
 ---
 
@@ -588,95 +622,108 @@ person@example.org
 
 This field exists exclusively to facilitate humanitarian communication.
 
-It is not:
+It is never:
 
 - a protocol identifier;
-- an identity attribute;
+- humanitarian evidence;
 - a correlation variable;
 - a searchable identity directory.
 
-Nodes may hide, omit or restrict this field according to local operational policies.
+Matching Public Contact information shall never increase or decrease correlation probability.
 
-Matching public contact information shall never increase or decrease correlation probability.
-
+Implementations may hide, restrict or omit this field according to their local operational policies.
 ---
-
-# 8. Humanitarian Evidence
+# 10. Humanitarian Evidence
 
 Unlike traditional identity-based information systems, HCP represents humanitarian evidence rather than verified identities.
 
-Correlation evaluates multiple independent pieces of humanitarian evidence, including:
+Every field contained within the Canonical JSON contributes humanitarian evidence.
 
-- reported_label;
-- estimated_age;
+Examples include:
+
+- Reported Label;
+- Estimated Age;
 - Recognition Features;
-- reported_location;
-- event_type;
-- status;
-- reported_by;
-- temporal proximity.
+- Event Type;
+- Reported Location;
+- Reporting Source;
+- Observation Timestamp.
 
 No individual field is sufficient to establish identity.
 
-Correlation emerges from the combined interpretation of multiple compatible observations.
+Correlation evaluates the complete humanitarian context represented by one or more independent Humanitarian Records.
 
-Different HCP implementations may assign different weights to different evidence while preserving semantic interoperability.
+Different HCP implementations may assign different relevance to different evidence while preserving semantic interoperability.
+
+The protocol standardizes humanitarian evidence.
+
+Implementations define correlation.
 
 ---
 
-# 9. Unknown Information
+# 11. Unknown Information
 
 Humanitarian emergencies frequently involve incomplete information.
 
 Unknown values should simply be omitted whenever reasonably possible.
 
-The absence of information shall never invalidate an Observation.
+Missing information shall never invalidate a Humanitarian Record.
 
 Partial humanitarian evidence remains valuable.
 
-Future Observations may complement previously recorded information without modifying earlier Humanitarian Records.
+Future Humanitarian Observations may complement previously recorded information without modifying earlier Humanitarian Records.
+
+The absence of information is itself part of the humanitarian context.
 
 ---
 
-# 10. Future Compatibility
+# 12. Future Compatibility
 
 Future protocol versions may introduce additional optional fields.
 
-Existing implementations should ignore unknown fields while preserving all recognized humanitarian information.
+Compatible implementations should safely ignore unknown fields while preserving all recognized humanitarian information.
 
-Semantic compatibility should be preserved whenever reasonably possible.
+Semantic compatibility should always be preserved whenever reasonably possible.
 
 Breaking structural changes should occur only through a new major protocol version.
 
----
-
-# 11. Security and Privacy
-
-HCP protects privacy primarily through protocol design rather than by prohibiting voluntary disclosure.
-
-The protocol never requires permanent identifiers for interoperability.
-
-Correlation never depends on identity documents, national identifiers or centralized identity registries.
+Stable semantic evolution is one of the architectural principles of HCP.
 
 ---
 
-## Voluntary Identity Disclosure
+# 13. Security and Privacy
 
-Users may voluntarily include personally identifiable information within humanitarian observations if they believe it helps humanitarian reunification.
+The Canonical JSON protects privacy primarily through protocol architecture rather than by prohibiting voluntary disclosure.
+
+The protocol never requires:
+
+- national identifiers;
+- passports;
+- medical record numbers;
+- centralized identity registries;
+- permanent protocol identities.
+
+Interoperability depends on humanitarian observations rather than administrative identities.
+
+---
+
+## Voluntary Information
+
+Reporters may voluntarily include personally identifiable information whenever they believe it contributes to humanitarian reunification.
 
 Examples include:
 
-- full names;
-- national identity numbers;
+- names;
 - telephone numbers;
 - email addresses;
+- organization names;
 - additional descriptive information.
 
-Such information is treated as humanitarian evidence.
+Such information remains humanitarian evidence.
 
 It never becomes protocol identity.
 
-Interoperability never depends upon personally identifiable information.
+Correlation should never depend exclusively upon personally identifiable information.
 
 ---
 
@@ -684,17 +731,19 @@ Interoperability never depends upon personally identifiable information.
 
 Implementations should encourage reporters to provide only the information genuinely useful for humanitarian purposes.
 
-Whenever possible, humanitarian observations should remain valuable even without personally identifiable information.
+Whenever equivalent humanitarian value can be achieved through humanitarian observations, implementations should prefer humanitarian evidence over personally identifiable information.
+
+Additional privacy guidance is defined in **HCP-0021 — Privacy and Data Minimization**.
 
 ---
 
-# 12. Interoperability
+# 14. Interoperability
 
 Every compatible HCP implementation shall exchange Humanitarian Records using the Canonical JSON defined by this specification.
 
 Internal implementation details remain completely independent.
 
-Different implementations may use:
+Implementations may freely choose:
 
 - relational databases;
 - document databases;
@@ -703,68 +752,72 @@ Different implementations may use:
 - embedded devices;
 - offline storage;
 - distributed synchronization;
-- future technologies.
+- future storage technologies.
 
 Only the exchanged semantic representation is standardized.
 
+Shared semantics enable universal interoperability.
+
 ---
 
-# 13. Philosophy
+# 15. Relationship with Other Specifications
 
-The Canonical JSON is the shared humanitarian language of the Humanitarian Connection Protocol.
-
-It is not:
-
-- a database schema;
-- an identity registry;
-- a centralized platform;
-- an application data model.
-
-It is the semantic representation exchanged between independent humanitarian implementations.
-
-Every Humanitarian Record preserves one humanitarian observation.
-
-Observations preserve humanitarian evidence.
-
-Correlation relates compatible observations.
-
-Humanitarian Timelines emerge through correlated observations.
-
-People interpret results.
-
-People verify reality.
-
-By separating semantic meaning from implementation architecture, HCP enables independent organizations to exchange meaningful humanitarian information without requiring shared software, centralized databases or global identity systems.
-
-The Canonical JSON embodies one of the fundamental principles of HCP:
-
-**The protocol standardizes humanitarian semantics.**
-
-**The Canonical JSON standardizes semantic representation.**
-
-**Implementations remain independent.**
----
-
-# 14. Relationship with Other Specifications
-
-The Canonical JSON Specification defines the standardized semantic representation exchanged between compatible HCP implementations.
+The Canonical JSON Specification defines the normative semantic representation exchanged between compatible HCP implementations.
 
 Complementary specifications define the concepts represented by this structure.
 
-- **HCP-0001** defines the Humanitarian Record.
-- **HCP-0003** defines the Subject Model.
-- **HCP-0006** defines the Observation Model.
-- **HCP-0007** defines the Status Model.
-- **HCP-0008** defines the Event Type Model.
-- **HCP-0009** defines the Reference HTTP API.
-- **HCP-0011** defines the Query Model.
-- **HCP-0012** defines the Correlation Model.
+```text
+HCP-0001
+Humanitarian Record
+        │
+        ▼
+HCP-0003
+Subject Model
+        │
+        ▼
+HCP-0006
+Observation Model
+        │
+        ▼
+HCP-0008
+Event Type Model
+        │
+        ▼
+HCP-0010
+Canonical JSON
+        │
+        ├───────────────┐
+        ▼               ▼
+HCP-0009          HCP-0011
+Reference API     Query Model
+        │               │
+        └───────┬───────┘
+                ▼
+          HCP-0012
+      Correlation Model
+                │
+                ▼
+          HCP-0013
+     Synchronization
+```
 
-Together, these specifications define both the semantic meaning and the canonical representation of humanitarian observations exchanged throughout the HCP ecosystem.
+Each specification has a distinct responsibility.
+
+- **HCP-0001** defines the Humanitarian Record.
+- **HCP-0003** defines the Subject.
+- **HCP-0006** defines the Humanitarian Observation.
+- **HCP-0008** defines the humanitarian meaning through Event Types.
+- **HCP-0009** defines one recommended HTTP binding.
+- **HCP-0010** defines the Canonical JSON representation.
+- **HCP-0011** defines humanitarian queries.
+- **HCP-0012** defines local correlation.
+- **HCP-0013** defines synchronization.
+
+Together, these specifications define how humanitarian observations are represented, exchanged and interpreted while preserving semantic interoperability.
 
 ---
 
-# 15. Summary
+# 16. Summary
 
 The Canonical JSON Specification defines the official semantic representation of Humanitarian Records within the Humanitarian Connection Protocol.
 
@@ -772,33 +825,37 @@ Every exchanged Humanitarian Record contains one Subject and one Observation.
 
 The Subject describes the observed living being.
 
-The Observation preserves the humanitarian evidence reported about that Subject at a specific moment in time.
+The Observation preserves humanitarian evidence observed at one specific moment in time.
 
 Within every Observation:
 
-- Event Type answers:
+- **Event Type answers:**
 
 > **What happened?**
 
-- Status answers:
+The remaining Observation fields provide humanitarian context supporting explainable correlation.
 
-> **What was the observed condition?**
+The Canonical JSON does not standardize:
 
-This semantic separation allows HCP to represent humanitarian information with clarity while preserving interoperability across independent implementations.
+- databases;
+- software architectures;
+- programming languages;
+- communication technologies;
+- internal object models.
 
-The Canonical JSON does not standardize databases, software architectures or communication technologies.
+It standardizes humanitarian semantics.
 
-It standardizes humanitarian meaning.
+Every compatible implementation speaks the same humanitarian language regardless of how information is internally stored, transported or processed.
 
-Every compatible implementation speaks the same humanitarian language regardless of how it stores, transports or internally processes information.
+Humanitarian Observations preserve evidence.
 
-Humanitarian observations remain independent.
+Humanitarian Records preserve observations.
 
-Correlation relates compatible observations.
+Event Types define meaning.
 
-Humanitarian Timelines emerge from correlated observations.
+Correlation creates local understanding.
 
-People interpret results.
+Humanitarian Cases communicate interpretation.
 
 People verify reality.
 
@@ -808,20 +865,23 @@ The Canonical JSON embodies one of the central architectural principles of HCP:
 
 **The Canonical JSON standardizes semantic representation.**
 
-**Nodes exchange observations.**
+**Nodes exchange Humanitarian Records.**
 
 **Implementations remain independent.**
 
 ---
 
-# 16. Canonical Architecture
+# 17. Canonical Architecture
 
 The Canonical JSON reflects the conceptual architecture of the Humanitarian Connection Protocol.
 
 ```text
 Humanitarian Record
 
-├── Metadata
+├── Record Metadata
+│     ├── id
+│     ├── schema_version
+│     └── source_client
 │
 ├── Subject
 │     ├── type
@@ -831,7 +891,6 @@ Humanitarian Record
 │
 └── Observation
       ├── event_type
-      ├── status
       ├── reported_location
       ├── reported_by
       ├── observed_at
@@ -840,10 +899,15 @@ Humanitarian Record
 
 This structure is intentionally semantic.
 
-It does not prescribe software architecture, database schemas or internal object models.
+It does not prescribe:
 
-Different implementations may organize information internally in completely different ways.
+- software architectures;
+- database schemas;
+- programming languages;
+- internal object models.
 
-Interoperability is achieved because every implementation exchanges the same semantic representation.
+Different implementations may internally organize information in completely different ways.
 
-The Canonical JSON is therefore the shared humanitarian language that allows independent HCP implementations to understand one another while preserving organizational autonomy, implementation independence and long-term protocol evolution.
+Interoperability is achieved because every compatible implementation exchanges the same Canonical JSON representation.
+
+The Canonical JSON is the common humanitarian language that enables autonomous HCP implementations to understand one another while preserving organizational autonomy, implementation independence and long-term protocol evolution.

@@ -1,1 +1,37 @@
+{
+  "hcp_version": "0.3",
+  "record_uuid": "f2b7f4e1-7b54-4d0f-9d7f-6d0e7b3d4c85",
+  "event_type": "found_person",
+  "observation_timestamp": "2026-07-14T09:20:00Z",
 
+  "subject": {
+    "type": "person",
+    "reported_label": "María",
+    "estimated_age": 74
+  },
+
+  "observation": {
+    "reported_location": "Northern Evacuation Route, Riverside District",
+    "recognition_features": [
+      "Blue jacket",
+      "Small black backpack",
+      "Gray hair",
+      "Approximately 160 cm tall"
+    ]
+  },
+
+  "reported_by": {
+    "relationship": "volunteer"
+  },
+
+  "public_contact": {
+    "name": "Community Volunteer Team",
+    "contact": "+58 412 555 0145"
+  },
+
+  "metadata": {
+    "created_by": "hcp-client-mobile",
+    "language": "es",
+    "country": "VE"
+  }
+}

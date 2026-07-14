@@ -20,7 +20,7 @@ Depends On:
 - HCP-0001 — Humanitarian Record
 - HCP-0002 — HCP Node
 - HCP-0003 — Subject Model
-- HCP-0004 — Correlation Model
+- HCP-0013 — Synchronization Model
 
 Replaces:
 None
@@ -32,77 +32,113 @@ None
 
 # Abstract
 
-This document defines how independent HCP Nodes exchange humanitarian observations while preserving semantic interoperability.
+This document defines the semantic communication model between independent HCP Nodes.
 
-The Node Communication Protocol standardizes the meaning of exchanged information rather than the technologies used to transport it.
+The Node Communication Protocol specifies how autonomous implementations exchange Humanitarian Records while preserving semantic interoperability.
 
-Compatible HCP Nodes may communicate through different infrastructures while remaining interoperable by exchanging Canonical HCP JSON representations defined by the protocol.
+The protocol standardizes humanitarian meaning.
 
-Communication enables Humanitarian Records to be created, queried, synchronized and correlated across independent implementations without requiring shared databases or centralized identity systems.
+It does not standardize transport technologies, software architectures or communication infrastructures.
+
+Communication enables independent Nodes to exchange humanitarian evidence while preserving organizational autonomy, implementation independence and local interpretation.
 
 ---
 
 # 1. Introduction
 
-Humanitarian organizations often operate using independent software systems.
+Humanitarian organizations frequently operate using independent software systems.
 
-Hospitals, emergency responders, humanitarian organizations, governments and community initiatives frequently collect compatible humanitarian observations without sharing the same infrastructure.
+Hospitals, emergency responders, humanitarian organizations, governments, community initiatives and digital platforms often collect compatible humanitarian observations without sharing the same infrastructure.
 
-The Node Communication Protocol enables those independent implementations to exchange humanitarian observations using the common semantic model defined by HCP.
+The Node Communication Protocol enables those independent implementations to exchange Humanitarian Records using the common semantic language defined by HCP.
 
 Communication occurs between HCP Nodes.
 
-Each Node remains fully responsible for its own infrastructure, operational policies and internal implementation.
+Each Node remains fully responsible for its own:
+
+- infrastructure;
+- operational policies;
+- synchronization strategy;
+- internal implementation;
+- correlation methods.
 
 The protocol standardizes communication semantics.
 
-It does not standardize software architecture, databases or communication technologies.
+It does not prescribe software architectures, databases, transport technologies or deployment models.
 
-Communication standardizes meaning, not infrastructure.
+Communication standardizes humanitarian meaning.
+
+It does not standardize implementation.
 
 ---
 
 # 2. Purpose
 
-The purpose of the Node Communication Protocol is to enable humanitarian interoperability between independent HCP Nodes.
+The purpose of the Node Communication Protocol is to enable semantic interoperability between autonomous HCP Nodes.
 
-The protocol allows compatible implementations to:
+Rather than requiring organizations to replace their existing software or adopt centralized platforms, HCP enables independent implementations to communicate through a shared humanitarian language.
 
-- create humanitarian observations;
-- query humanitarian observations;
-- synchronize humanitarian observations;
-- exchange Canonical HCP JSON representations;
-- generate explainable Correlation Candidates.
+The protocol allows Nodes to:
 
-Organizations remain free to implement their own:
+- create Humanitarian Records;
+- query Humanitarian Records;
+- synchronize Humanitarian Records;
+- exchange Canonical HCP JSON representations.
+
+Interpretation always remains local.
+
+Evidence is exchanged.
+
+Humanitarian understanding is never synchronized.
+
+Organizations remain free to define their own:
 
 - programming languages;
-- database technologies;
-- deployment architectures;
+- databases;
 - communication technologies;
+- deployment architectures;
 - operational procedures.
 
-Only the exchanged humanitarian meaning is standardized.
+Only humanitarian meaning is standardized.
 
 ---
 
-# 3. Communication Principles
+# 3. Communication Philosophy
 
-Every HCP Node communication should preserve the following principles.
+The Node Communication Protocol follows one fundamental architectural principle.
+
+Nodes exchange humanitarian evidence.
+
+They do not exchange humanitarian interpretation.
+
+Consequently:
+
+- Humanitarian Records are exchanged.
+- Humanitarian Cases are never exchanged.
+- Correlation Candidates are never exchanged.
+- Correlation remains local.
+- Presentation remains local.
+- Human verification remains outside the protocol.
+
+This separation preserves semantic interoperability while allowing independent implementations to continuously improve their internal processing without affecting communication with other Nodes.
+
+---
+
+# 4. Communication Principles
+
+Every Node communication should preserve the following principles.
 
 ## Semantic Interoperability
 
-Every exchanged Humanitarian Record should preserve the semantic definitions established by HCP.
+Every exchanged Humanitarian Record should preserve the humanitarian meaning defined by HCP.
 
 ---
 
 ## Stateless Communication
 
-Each request should be processed independently.
+Each communication should be interpreted independently.
 
-Nodes should not depend on previous communication history to interpret a request.
-
-Stateless communication improves interoperability across heterogeneous implementations.
+Nodes should not require previous communication history to understand exchanged Humanitarian Records.
 
 ---
 
@@ -112,17 +148,17 @@ Every HCP Node remains independently operated.
 
 Organizations retain complete control over:
 
-- stored observations;
+- stored Humanitarian Records;
 - synchronization policies;
-- operational procedures;
-- correlation implementation;
-- security mechanisms.
+- correlation strategies;
+- security mechanisms;
+- operational procedures.
 
 The protocol never requires centralized operational control.
 
 ---
 
-## Infrastructure Independence
+## Implementation Independence
 
 The Node Communication Protocol does not prescribe:
 
@@ -130,123 +166,119 @@ The Node Communication Protocol does not prescribe:
 - databases;
 - programming languages;
 - deployment models;
-- network topologies.
+- communication infrastructures.
 
-Independent implementations remain interoperable through the common semantic model defined by HCP.
-
----
-
-## Offline-first
-
-Humanitarian observations may be exchanged immediately or synchronized later depending on network availability.
-
-This allows HCP implementations to operate under intermittent, delayed or disrupted connectivity.
+Independent implementations remain interoperable because they exchange the same humanitarian meaning.
 
 ---
 
-## Extensible
+## Synchronization Independence
 
-Future protocol versions may introduce additional communication operations while preserving backward compatibility whenever reasonably possible.
+Communication does not imply synchronization.
+
+Synchronization does not imply federation.
+
+Federation does not imply permanent communication.
+
+Each Node independently decides when and how Humanitarian Records are exchanged.
+---
+# 5. Communication Operations
+
+The Node Communication Protocol defines the conceptual communication operations performed between autonomous HCP Nodes.
+
+These operations describe humanitarian meaning rather than specific APIs, transport mechanisms or implementation technologies.
+
+The protocol currently defines four fundamental communication operations.
 
 ---
 
-# 4. Core Communication Operations
+## Create Humanitarian Record
 
-Every compatible HCP implementation should support the following conceptual communication operations.
+A Node may receive a new Humanitarian Record created from a Humanitarian Observation.
 
-## Create Observation
+The receiving Node validates the Canonical HCP JSON representation according to the protocol specification.
 
-Registers a new humanitarian observation.
+Successful creation does not imply synchronization with other Nodes.
 
-Input:
+---
+
+## Query Humanitarian Records
+
+A Node may receive a query describing humanitarian evidence.
+
+The Node evaluates its locally available Humanitarian Records.
+
+Query processing always remains local.
+
+Only Humanitarian Records are evaluated.
+
+Correlation and presentation occur afterwards according to local implementation rules.
+
+---
+
+## Synchronize Humanitarian Records
+
+Independent Nodes may exchange Humanitarian Records through synchronization.
+
+Synchronization distributes humanitarian observations.
+
+It never distributes:
+
+- Humanitarian Cases;
+- Correlation Candidates;
+- local interpretation.
+
+Synchronization behavior is fully defined in **HCP-0013 — Synchronization Model**.
+
+---
+
+## Discover Available Information
+
+A Node may expose information allowing other Nodes to determine what humanitarian information may be available for synchronization or query.
+
+The discovery mechanism is implementation-specific.
+
+Discovery does not imply:
+
+- federation;
+- synchronization;
+- trust;
+- authorization.
+
+Those concepts are defined independently by other HCP specifications.
+
+---
+
+# 6. Communication Flow
+
+The conceptual communication flow defined by HCP is illustrated below.
 
 ```text
-Canonical Humanitarian Record
-```
-
-Output:
-
-```text
-Record Identifier
-
-Creation Status
-
-Timestamp
-```
-
----
-
-## Query Observations
-
-Requests Humanitarian Records that may describe the same observed Subject.
-
-Input:
-
-```text
-Query Model
-```
-
-Output:
-
-```text
-Explainable Correlation Candidates
-```
----
-
-## Synchronize Observations
-
-Exchanges Humanitarian Records between compatible HCP Nodes.
-
-Synchronization allows independent observations to propagate across autonomous implementations while preserving observation independence.
-
-Synchronization behavior is further defined in **HCP-0013 — Synchronization Model**.
-
----
-
-## Health Check
-
-An HCP Node may expose a lightweight operation indicating that it is available to receive communication.
-
-Health Check is optional but recommended.
-
-It is intended for operational monitoring rather than humanitarian interoperability.
-
----
-
-# 5. Communication Flow
-
-The following conceptual flow illustrates a typical interaction between independent HCP implementations.
-
-```text
-User
+Humanitarian Observation
 
         │
 
         ▼
 
-HCP Client
+Humanitarian Record
 
         │
 
         ▼
 
-HCP Node A
-
-(Create Observation)
+Node Communication
 
         │
 
         ▼
 
-Canonical Humanitarian Record
+Synchronization
 
         │
 
         ▼
 
-HCP Node B
-
-(Query / Synchronize)
+Query
 
         │
 
@@ -258,222 +290,137 @@ Local Correlation
 
         ▼
 
-Explainable Correlation Candidates
+Humanitarian Case
 
         │
 
         ▼
 
-HCP Client
+Presentation
 
         │
 
         ▼
 
-User
+Human Verification
 ```
 
-Throughout this process:
+Each stage has a distinct responsibility.
 
-- Humanitarian Records are exchanged.
-- Correlation Candidates are generated locally.
-- Identity verification remains a human responsibility.
+Communication exchanges humanitarian evidence.
+
+Interpretation always remains local.
 
 ---
 
-# 6. Data Exchange
+# 7. Data Exchange
 
-Every exchanged Humanitarian Record shall use the **Canonical HCP JSON Representation** defined in **HCP-0010**.
+Every exchanged Humanitarian Record shall use the Canonical HCP JSON representation defined in **HCP-0010**.
 
-Implementations may internally use:
+Implementations remain free to use any internal representation including:
 
 - relational databases;
 - document databases;
 - object models;
-- file systems;
 - distributed storage;
+- file systems;
 - future storage technologies.
 
-Those implementation details remain outside the scope of HCP.
+Internal implementation details remain outside the scope of HCP.
 
-Only the exchanged semantic representation is standardized.
+Only the exchanged humanitarian meaning is standardized.
 
-This separation preserves interoperability while allowing unlimited implementation flexibility.
-
----
-
-# 7. Communication Categories
-
-Typical communication between HCP Nodes includes:
-
-- Create Observation
-- Query Observations
-- Synchronize Observations
-- Status Information
-- Health Check
-
-Future specifications may define additional communication categories without affecting existing interoperable implementations.
-
-The protocol is intentionally extensible.
+This separation enables unlimited implementation flexibility while preserving interoperability.
 
 ---
 
-# 8. Responses
+# 8. Interoperability
 
-Every communication response should provide sufficient semantic information for the requesting implementation to understand the result.
+Two HCP Nodes are interoperable when they exchange Humanitarian Records while preserving the semantic definitions established by the protocol.
 
-Typical successful responses include:
+Interoperability does not require:
+
+- identical software;
+- identical databases;
+- identical infrastructures;
+- identical APIs;
+- identical correlation algorithms.
+
+Instead, interoperability depends upon shared semantic understanding.
+
+Different implementations may internally process humanitarian information differently while exchanging semantically compatible Humanitarian Records.
+
+Shared meaning replaces shared infrastructure.
+
+---
+
+# 9. Relationship with Other Specifications
+
+This document defines the semantic communication model between HCP Nodes.
+
+Additional specifications define complementary aspects of humanitarian interoperability.
 
 ```text
-200 OK
+HCP-0001
+Humanitarian Record
+        │
+        ▼
+HCP-0005
+Node Communication
+        │
+        ├───────────────┐
+        ▼               ▼
+HCP-0009          HCP-0013
+Node API      Synchronization
+        │               │
+        └───────┬───────┘
+                ▼
+          HCP-0011
+        Query Model
+                │
+                ▼
+          HCP-0012
+       Correlation Model
+                │
+                ▼
+          HCP-0015
+     Result Presentation
 ```
 
-Operation completed successfully.
+Each specification has a distinct responsibility.
+
+- **HCP-0005** defines what communication means.
+- **HCP-0009** defines one possible API for that communication.
+- **HCP-0010** defines the Canonical JSON representation.
+- **HCP-0011** defines humanitarian queries.
+- **HCP-0012** defines local correlation.
+- **HCP-0013** defines synchronization.
+- **HCP-0015** defines local presentation.
+
+Together, these specifications define how autonomous HCP Nodes exchange humanitarian evidence while preserving semantic interoperability and implementation independence.
 
 ---
 
-```text
-201 Created
-```
+# 10. Summary
 
-A new Humanitarian Record was successfully created.
+The Node Communication Protocol defines the semantic communication model between autonomous HCP Nodes.
 
----
+Nodes exchange Humanitarian Records.
 
-```text
-202 Accepted
-```
+Nodes never exchange Humanitarian Cases.
 
-The request was accepted for asynchronous processing.
+Nodes never exchange Correlation Candidates.
 
-Typical unsuccessful responses include:
+Communication distributes humanitarian evidence.
 
-```text
-400 Bad Request
-```
+Interpretation remains local.
 
-Invalid protocol request.
+Human verification determines reality.
 
----
+By separating communication semantics from transport technologies, software architectures and infrastructure, HCP enables independent humanitarian organizations to collaborate using a common semantic language without requiring centralized databases, shared software platforms or common implementation technologies.
 
-```text
-404 Not Found
-```
+Nodes exchange humanitarian evidence.
 
-Requested resource or observation not found.
+Implementations create humanitarian understanding.
 
----
-
-```text
-500 Internal Server Error
-```
-
-Unexpected implementation error.
-
-Transport-specific status codes depend on the communication technology being used.
-
-The protocol standardizes semantic behavior rather than transport-specific details.
----
-
-# 9. Error Handling
-
-Whenever possible, HCP Nodes should return structured error information that allows compatible implementations to understand and recover from communication failures.
-
-Error responses should describe protocol-level problems rather than implementation-specific details.
-
-Typical protocol errors include:
-
-- invalid Humanitarian Record
-- invalid Query Model
-- unsupported protocol version
-- malformed Canonical HCP JSON
-- unsupported communication operation
-
-Example:
-
-```json
-{
-  "error": "invalid_query",
-  "message": "reported_name must be a string"
-}
-```
-
-The protocol does not prescribe a mandatory error format.
-
-However, implementations are encouraged to provide consistent, machine-readable error information whenever practical.
-
----
-
-# 10. Security
-
-The Node Communication Protocol should use secure transport mechanisms whenever available.
-
-Authentication, authorization, encryption and network security remain implementation-specific responsibilities.
-
-Different HCP implementations may adopt different security models while remaining fully interoperable.
-
-The protocol standardizes communication semantics.
-
-It does not standardize transport security.
-
-Additional security requirements are defined in:
-
-- **HCP-0020 — Security Model**
-
----
-
-# 11. Interoperability
-
-An HCP Node is considered interoperable when it correctly implements the semantic communication model defined by HCP.
-
-A compatible implementation should be capable of:
-
-- creating Humanitarian Records from humanitarian observations;
-- exchanging Canonical HCP JSON representations;
-- executing protocol-compatible queries;
-- returning Explainable Correlation Candidates;
-- synchronizing Humanitarian Records;
-- interpreting compatible protocol versions.
-
-Interoperability is achieved through shared semantic definitions.
-
-It is not achieved through shared software, common databases or identical implementations.
-
-Independent HCP Nodes remain interoperable because they exchange humanitarian meaning rather than implementation details.
-
----
-
-# 12. Relationship with Other Specifications
-
-This document defines the conceptual communication model between HCP Nodes.
-
-Additional specifications define complementary aspects of node communication.
-
-- **HCP-0001** defines the Humanitarian Record.
-- **HCP-0002** defines the HCP Node.
-- **HCP-0004** defines the Correlation Model.
-- **HCP-0009** defines the Node API.
-- **HCP-0010** defines the Canonical HCP JSON Representation.
-- **HCP-0011** defines the Query Model.
-- **HCP-0013** defines the Synchronization Model.
-- **HCP-0015** defines the Result Presentation Model.
-
-Together, these specifications define how independent HCP Nodes exchange humanitarian observations while preserving semantic interoperability, organizational autonomy and implementation independence.
-
----
-
-# 13. Summary
-
-The Node Communication Protocol defines how independent HCP Nodes exchange humanitarian observations using a common semantic model.
-
-The protocol standardizes communication semantics rather than communication technologies.
-
-Humanitarian Records are exchanged.
-
-Correlation Candidates are generated locally.
-
-Identity verification remains a human responsibility.
-
-By separating protocol semantics from transport technologies and software implementation, HCP enables hospitals, humanitarian organizations, governments, emergency responders and independent initiatives to interoperate without requiring shared infrastructure or centralized identity systems.
-
-The Node Communication Protocol transforms independent humanitarian implementations into an interoperable humanitarian network through a shared language rather than a shared platform.
+People determine reality.

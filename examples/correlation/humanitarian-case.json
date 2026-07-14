@@ -1,1 +1,103 @@
+{
+  "case_id": "case-6f24a95e-127d-49e1-94fc-33de70e7d846",
+  "generated_at": "2026-07-14T13:30:12Z",
+  "source_query_id": "3e5f8b71-2d46-4b93-a0c8-8d5f1b7c9e24",
 
+  "humanitarian_summary": "Multiple compatible observations suggest that the missing person may have been located and received humanitarian assistance.",
+
+  "current_situation": {
+    "likely_event_type": "located",
+    "reported_location": "Northern Evacuation Route, Riverside District",
+    "observed_at": "2026-07-14T09:20:00Z"
+  },
+
+  "correlation": {
+    "score": 0.94,
+    "evidence_level": "very_strong",
+
+    "supporting_evidence": [
+      {
+        "type": "reported_label",
+        "description": "The reported labels \"María González\" and \"María\" are compatible."
+      },
+      {
+        "type": "estimated_age",
+        "description": "All observations report an estimated age of approximately 74 years."
+      },
+      {
+        "type": "recognition_features",
+        "description": "The blue jacket, small black backpack, gray hair and approximate height are consistent across the observations."
+      },
+      {
+        "type": "reported_location",
+        "description": "The reported locations are compatible with the same evacuation area."
+      },
+      {
+        "type": "temporal_proximity",
+        "description": "The observation timestamps form a plausible humanitarian sequence."
+      },
+      {
+        "type": "event_type",
+        "description": "The Event Types describe a plausible progression from missing report to later location."
+      }
+    ],
+
+    "conflicting_evidence": [
+      {
+        "type": "reported_label",
+        "description": "Some observations contain only the reported label \"María\" rather than the complete reported label \"María González\"."
+      }
+    ]
+  },
+
+  "related_records": [
+    {
+      "record_id": "9b3d7d88-4f2d-4e75-a2a5-5aaf8b5c1d91",
+      "event_type": "missing_report",
+      "observed_at": "2026-07-13T18:45:00Z"
+    },
+    {
+      "record_id": "0a8f0b65-c0d2-4c8e-8d8a-f4f0c8d6d321",
+      "event_type": "hospital_admission",
+      "observed_at": "2026-07-13T22:10:00Z"
+    },
+    {
+      "record_id": "7c4d8b12-9e51-4f87-a2f4-5e8c9d7a3b64",
+      "event_type": "shelter_registration",
+      "observed_at": "2026-07-14T01:35:00Z"
+    },
+    {
+      "record_id": "f2b7f4e1-7b54-4d0f-9d7f-6d0e7b3d4c85",
+      "event_type": "located",
+      "observed_at": "2026-07-14T09:20:00Z"
+    }
+  ],
+
+  "humanitarian_timeline": [
+    {
+      "observed_at": "2026-07-13T18:45:00Z",
+      "event_type": "missing_report",
+      "record_id": "9b3d7d88-4f2d-4e75-a2a5-5aaf8b5c1d91"
+    },
+    {
+      "observed_at": "2026-07-13T22:10:00Z",
+      "event_type": "hospital_admission",
+      "record_id": "0a8f0b65-c0d2-4c8e-8d8a-f4f0c8d6d321"
+    },
+    {
+      "observed_at": "2026-07-14T01:35:00Z",
+      "event_type": "shelter_registration",
+      "record_id": "7c4d8b12-9e51-4f87-a2f4-5e8c9d7a3b64"
+    },
+    {
+      "observed_at": "2026-07-14T09:20:00Z",
+      "event_type": "located",
+      "record_id": "f2b7f4e1-7b54-4d0f-9d7f-6d0e7b3d4c85"
+    }
+  ],
+
+  "verification": {
+    "status": "unverified",
+    "message": "This Humanitarian Case represents a local interpretation. Identity and humanitarian outcome require direct human verification."
+  }
+}

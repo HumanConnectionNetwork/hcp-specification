@@ -2,7 +2,7 @@
 
 # Result Presentation Model
 
-Version: 0.2 (Draft)
+Version: 0.3 (Draft)
 
 Status: Draft
 
@@ -17,6 +17,8 @@ Last Updated: 2026-07-13
 Depends On:
 
 - HCP-0004 — Correlation Candidate Model
+- HCP-0008 — Event Type Model
+- HCP-0010 — Canonical JSON Specification
 - HCP-0012 — Correlation Model
 - HCP-0014 — Explainable Correlation Model
 
@@ -32,13 +34,17 @@ None
 
 This document defines the Result Presentation Model of the Humanitarian Connection Protocol (HCP).
 
-The Result Presentation Model describes how HCP Clients transform Correlation Candidates into Humanitarian Cases that people can understand and evaluate.
+The Result Presentation Model describes how HCP Clients transform humanitarian reasoning into Humanitarian Cases that people can understand, evaluate and act upon.
 
 The protocol intentionally separates humanitarian interpretation from humanitarian presentation.
 
-Correlation Candidates remain implementation objects.
+Correlation produces humanitarian understanding.
 
-Humanitarian Cases are the information presented to users.
+Presentation communicates that understanding.
+
+Humanitarian Cases are local presentation objects.
+
+They are never synchronized between HCP Nodes.
 
 The protocol standardizes the semantic principles governing humanitarian presentation.
 
@@ -48,32 +54,34 @@ It does not standardize user interface design.
 
 # 1. Introduction
 
-After an HCP Node completes correlation and explainability, the resulting humanitarian information must be communicated to people.
+After humanitarian correlation and explainability have been completed, the resulting humanitarian understanding must be communicated to people.
 
-Families, hospitals, emergency responders and humanitarian organizations require information that is understandable, transparent and actionable.
+Families, hospitals, emergency responders, volunteers and humanitarian organizations require information that is understandable, transparent and actionable.
 
 The Result Presentation Model defines the semantic principles that guide this communication.
 
-Rather than presenting protocol objects, implementations present Humanitarian Cases.
+Rather than exposing protocol objects, implementations present Humanitarian Cases.
 
-Each Humanitarian Case represents one implementation's interpretation of the available humanitarian evidence.
+Each Humanitarian Case represents one implementation's humanitarian understanding derived from correlated humanitarian evidence.
 
-Presentation assists humanitarian understanding.
+Presentation supports human understanding.
 
 It never claims certainty.
+
+Identity verification always remains a human responsibility.
 
 ---
 
 # 2. Purpose
 
-The purpose of the Result Presentation Model is to define how correlated humanitarian information should be presented to people.
+The purpose of the Result Presentation Model is to define how humanitarian understanding should be communicated to people.
 
-Presentation transforms technical correlation results into humanitarian information suitable for human interpretation.
+Presentation transforms humanitarian reasoning into information suitable for human interpretation.
 
 The Result Presentation Model enables implementations to:
 
+- summarize humanitarian understanding;
 - organize humanitarian evidence;
-- summarize correlated observations;
 - communicate uncertainty;
 - explain supporting and conflicting evidence;
 - facilitate humanitarian decision-making.
@@ -82,11 +90,15 @@ The protocol standardizes humanitarian meaning.
 
 Clients remain free to define their own user experiences.
 
+The Result Presentation Model answers one fundamental question:
+
+> **How should humanitarian understanding be communicated to people?**
+
 ---
 
 # 3. Design Principles
 
-Every Result Presentation Model follows the fundamental architectural principles of HCP.
+Every Result Presentation Model follows the architectural principles of HCP.
 
 ---
 
@@ -100,15 +112,15 @@ Information should remain understandable under stressful conditions.
 
 ## Transparent
 
-Implementations should clearly communicate both certainty and uncertainty.
+Presentation should communicate both confidence and uncertainty.
 
-Humanitarian evidence should remain visible.
+Humanitarian evidence should remain visible whenever reasonably possible.
 
 ---
 
 ## Explainable
 
-Presentation should include humanitarian explanations whenever available.
+Presentation should communicate humanitarian reasoning rather than merely displaying scores.
 
 People should understand why a Humanitarian Case was generated.
 
@@ -116,15 +128,23 @@ People should understand why a Humanitarian Case was generated.
 
 ## Non-Authoritative
 
-A Humanitarian Case represents humanitarian interpretation.
+A Humanitarian Case represents humanitarian understanding.
 
-It never represents identity verification.
+It never represents verified identity.
+
+It never represents humanitarian truth.
+
+---
+
+## Accessible
+
+Presentation should remain understandable across different devices, languages and accessibility technologies whenever reasonably possible.
 
 ---
 
 ## Implementation Independent
 
-Different HCP Clients may present identical Humanitarian Cases using completely different user interfaces.
+Different HCP Clients may communicate identical humanitarian understanding using completely different user experiences.
 
 The protocol standardizes humanitarian meaning.
 
@@ -132,54 +152,73 @@ It does not standardize presentation techniques.
 
 ---
 
-## Accessible
-
-Presentation should remain understandable across different platforms, devices, languages and accessibility technologies whenever reasonably possible.
-
----
-
 # 4. Presentation Philosophy
 
-The Result Presentation Model exists to communicate humanitarian understanding.
+Presentation exists to support people.
 
 It does not expose protocol internals.
 
-Users should never need to understand Correlation Models, Canonical JSON structures or implementation details.
+Users should never need to understand:
+
+- Canonical JSON;
+- Correlation Models;
+- Correlation Candidates;
+- implementation algorithms.
 
 Instead, they should receive humanitarian information that supports informed human judgment.
 
 The fundamental philosophy of presentation is:
 
-**The protocol exchanges observations.**
+**Humanitarian Records preserve observations.**
 
-**Nodes generate interpretations.**
+**Correlation creates humanitarian understanding.**
 
-**Clients present Humanitarian Cases.**
+**Clients communicate Humanitarian Cases.**
 
 **People verify reality.**
----
-
-# 5. Humanitarian Case
-
-A Humanitarian Case is the human-readable representation of one Correlation Candidate.
-
-It organizes humanitarian evidence in a form intended to assist human interpretation and decision-making.
-
-A Humanitarian Case is not exchanged between HCP Nodes.
-
-It is generated locally by an implementation after correlation and explainability have been completed.
-
-Different implementations may generate different Humanitarian Cases from the same Correlation Candidate while preserving semantic interoperability.
 
 ---
 
-# 6. Humanitarian Case Structure
+# 5. Presentation Boundaries
 
-The internal representation of a Humanitarian Case remains implementation-specific.
+Presentation intentionally defines strict architectural boundaries.
 
-However, a Humanitarian Case should communicate, whenever reasonably available:
+Presentation never:
 
-- Current humanitarian situation;
+- modifies Humanitarian Records;
+- modifies humanitarian evidence;
+- changes Correlation Scores;
+- creates new humanitarian observations;
+- replaces human verification.
+
+Presentation only communicates humanitarian understanding.
+
+Everything presented to people remains a local interpretation generated by the implementation.
+
+---
+
+# 6. Humanitarian Case
+
+A Humanitarian Case is the human-readable representation of humanitarian understanding derived from correlated humanitarian evidence.
+
+It may summarize one or more Correlation Candidates together with humanitarian reasoning.
+
+Humanitarian Cases are never exchanged between HCP Nodes.
+
+They are generated locally after correlation and explainability have been completed.
+
+Different implementations may generate different Humanitarian Cases from exactly the same Humanitarian Records while remaining fully compatible with HCP.
+
+---
+
+# 7. Humanitarian Case Structure
+
+The internal representation of a Humanitarian Case remains entirely implementation-specific.
+
+However, whenever reasonably available, a Humanitarian Case should communicate:
+
+- Humanitarian Summary;
+- Current Humanitarian Situation;
 - Correlation Score;
 - Supporting Evidence;
 - Conflicting Evidence;
@@ -187,11 +226,12 @@ However, a Humanitarian Case should communicate, whenever reasonably available:
 - Public Contact (when permitted);
 - Related Humanitarian Observations.
 
-Illustrative representation:
+Illustrative structure:
 
 ```text
 Humanitarian Case
 
+├── Humanitarian Summary
 ├── Current Situation
 ├── Correlation Score
 ├── Supporting Evidence
@@ -207,7 +247,23 @@ Implementations remain free to organize and visualize them according to their us
 
 ---
 
-# 7. Ranking
+# 8. Humanitarian Summary
+
+Every Humanitarian Case should begin with a concise humanitarian summary describing the current humanitarian understanding before presenting supporting details.
+
+Illustrative examples include:
+
+- "This person was probably transferred to Hospital Central."
+- "This animal was likely reunited with its owner."
+- "Multiple compatible observations suggest the person may currently be in Shelter A."
+
+The Humanitarian Summary helps people quickly understand the current humanitarian situation before reviewing detailed evidence.
+
+It represents humanitarian understanding.
+
+It never represents verified fact.
+---
+# 9. Ranking
 
 When multiple Humanitarian Cases are available, implementations should present the most relevant cases first.
 
@@ -227,9 +283,9 @@ Different implementations may prioritize different humanitarian criteria while p
 
 ---
 
-# 8. Humanitarian Evidence Levels
+# 10. Humanitarian Evidence Levels
 
-Implementations are encouraged to communicate the strength of humanitarian evidence using human-readable descriptions.
+Implementations are encouraged to communicate the overall strength of humanitarian evidence using human-readable descriptions.
 
 Illustrative categories include:
 
@@ -241,29 +297,29 @@ Illustrative categories include:
 
 These categories assist interpretation.
 
-They do not represent certainty or identity verification.
+They never represent certainty or verified identity.
 
-Different implementations may define their own presentation terminology while preserving the underlying humanitarian meaning.
+Different implementations may define their own terminology while preserving identical humanitarian meaning.
 
 ---
 
-# 9. Multiple Humanitarian Cases
+# 11. Multiple Humanitarian Cases
 
 A single Query may legitimately produce multiple Humanitarian Cases.
 
-Each Humanitarian Case represents one possible interpretation of the available humanitarian evidence.
+Each Humanitarian Case represents one possible humanitarian interpretation derived from the available humanitarian evidence.
 
-Implementations should avoid hiding uncertainty by presenting only one candidate when multiple plausible interpretations exist.
+Implementations should avoid hiding uncertainty by presenting only one Humanitarian Case when multiple plausible interpretations exist.
 
-Humanitarian emergencies frequently involve incomplete or contradictory information.
+Humanitarian emergencies frequently involve incomplete or contradictory observations.
 
-Presenting multiple Humanitarian Cases allows people to evaluate alternative humanitarian hypotheses.
+Presenting multiple Humanitarian Cases enables people to evaluate alternative humanitarian possibilities.
 
 ---
 
-# 10. Humanitarian Timeline
+# 12. Humanitarian Timeline
 
-Whenever reasonably possible, a Humanitarian Case should present correlated observations in chronological order.
+Whenever reasonably possible, a Humanitarian Case should organize correlated humanitarian observations chronologically.
 
 Illustrative example:
 
@@ -297,18 +353,23 @@ Hospital Admission
 Family Reunification
 ```
 
-The Humanitarian Timeline represents correlated humanitarian observations.
+The Humanitarian Timeline is generated during presentation.
 
-It does not represent verified historical fact.
+It is never synchronized between HCP Nodes.
 
-Its purpose is to assist humanitarian understanding by organizing available evidence into a coherent chronological sequence.
+It represents one implementation's chronological organization of humanitarian evidence.
+
+It never represents verified historical fact.
+
+Its purpose is to improve humanitarian understanding.
+
 ---
 
-# 11. Source Transparency
+# 13. Source Transparency
 
 Whenever reasonably possible, Humanitarian Cases should identify the origin of the humanitarian observations they summarize.
 
-Examples include:
+Illustrative examples include:
 
 - Hospital;
 - Fire Department;
@@ -318,49 +379,52 @@ Examples include:
 - Family;
 - Government Agency.
 
-Source transparency improves credibility and supports human verification.
+Source transparency strengthens credibility and supports human verification.
 
 The protocol encourages transparency without prescribing presentation formats.
 
 ---
 
-# 12. Contradictory Information
+# 14. Contradictory Information
 
-Humanitarian emergencies frequently generate contradictory observations.
+Humanitarian emergencies naturally generate contradictory observations.
 
-Contradictory information should remain visible whenever reasonably possible.
+Contradictory humanitarian evidence should remain visible whenever reasonably possible.
 
-Examples include:
+Illustrative examples include:
 
 - different Reported Labels;
-- conflicting Status values;
+- conflicting Event Types;
 - incompatible Reported Locations;
-- inconsistent Recognition Features.
+- inconsistent Recognition Features;
+- different Reporting Sources.
 
-Presenting contradictory information enables people to better evaluate humanitarian uncertainty.
+Contradictions provide valuable humanitarian context.
 
-Contradictions should not be hidden simply to produce cleaner user interfaces.
+Presentation should communicate uncertainty rather than hiding it.
+
+Humanitarian understanding improves when both compatible and conflicting evidence remain visible.
 
 ---
 
-# 13. Human Readability
+# 15. Human Readability
 
 Humanitarian Cases should prioritize clarity over technical completeness.
 
-People operating during emergencies should quickly understand:
+People operating during humanitarian emergencies should quickly understand:
 
 - what is currently known;
 - what remains uncertain;
-- why the case was presented;
-- which observations contributed to the result.
+- why the Humanitarian Case was generated;
+- which humanitarian evidence contributed to the current understanding.
 
 Human-centered communication remains one of the primary objectives of HCP presentation.
 
 ---
 
-# 14. Machine Readability
+# 16. Machine Readability
 
-Although Humanitarian Cases are intended for people, implementations are encouraged to preserve machine-readable representations whenever appropriate.
+Although Humanitarian Cases primarily exist for people, implementations are encouraged to preserve machine-readable representations whenever appropriate.
 
 Machine-readable Humanitarian Cases facilitate:
 
@@ -368,15 +432,15 @@ Machine-readable Humanitarian Cases facilitate:
 - SDKs;
 - humanitarian dashboards;
 - reporting systems;
-- future interoperable clients.
+- future interoperable applications.
 
 Presentation formats may differ while preserving identical humanitarian meaning.
 
 ---
 
-# 15. Accessibility
+# 17. Accessibility
 
-Humanitarian Cases should remain accessible across different operational environments.
+Humanitarian Cases should remain understandable across different operational environments.
 
 Implementations are encouraged to support:
 
@@ -393,9 +457,9 @@ It should never compromise semantic interoperability.
 
 ---
 
-# 16. Privacy
+# 18. Privacy
 
-Nodes remain responsible for determining which humanitarian information may be presented.
+Every implementation remains responsible for determining which humanitarian information may be presented.
 
 Implementations may omit, redact or restrict information according to:
 
@@ -410,55 +474,109 @@ Public Contact should only be presented when:
 - permitted by local policy;
 - considered appropriate for humanitarian purposes.
 
-Additional privacy guidance is defined in:
+Additional privacy guidance is defined by:
 
 - **HCP-0021 — Privacy and Data Minimization**
 
 ---
 
-# 17. Relationship with Other Specifications
+# 19. Relationship with Other Specifications
 
-The Result Presentation Model defines how humanitarian interpretations are communicated to people.
+The Result Presentation Model defines how humanitarian understanding is communicated to people.
 
 Complementary specifications define the preceding stages of humanitarian interoperability.
 
-- **HCP-0004** defines the Correlation Candidate Model.
-- **HCP-0011** defines the Query Model.
-- **HCP-0012** defines the Correlation Model.
-- **HCP-0014** defines the Explainable Correlation Model.
+```text
+Query
 
-Together, these specifications define how humanitarian evidence is queried, correlated, explained and ultimately presented as Humanitarian Cases while preserving semantic interoperability and implementation independence.
+        │
+
+        ▼
+
+Humanitarian Records
+
+        │
+
+        ▼
+
+Correlation
+
+        │
+
+        ▼
+
+Correlation Candidates
+
+        │
+
+        ▼
+
+Humanitarian Reasoning
+
+        │
+
+        ▼
+
+Humanitarian Cases
+
+        │
+
+        ▼
+
+Presentation
+
+        │
+
+        ▼
+
+Human Verification
+```
+
+Each specification has a distinct responsibility.
+
+- **HCP-0004** defines the Correlation Candidate Model.
+- **HCP-0008** defines humanitarian Event Types.
+- **HCP-0010** defines the Canonical JSON representation.
+- **HCP-0012** defines humanitarian correlation.
+- **HCP-0014** defines humanitarian reasoning and explainability.
+- **HCP-0015** defines Humanitarian Case presentation.
+
+Together, these specifications define how humanitarian evidence is represented, evaluated, explained and ultimately communicated while preserving semantic interoperability and implementation independence.
 
 ---
 
-# 18. Summary
+# 20. Summary
 
-The Result Presentation Model defines the semantic principles governing how humanitarian interpretations are presented to people.
+The Result Presentation Model defines the semantic principles governing how humanitarian understanding is communicated to people.
 
 Humanitarian Cases organize humanitarian evidence into information that supports human understanding.
 
 Presentation communicates humanitarian meaning.
 
-It does not expose protocol internals.
+It never modifies humanitarian evidence.
 
-Different HCP Clients may present Humanitarian Cases using completely different user experiences while preserving the same humanitarian semantics.
+It never exposes protocol internals.
 
-The protocol exchanges Humanitarian Records.
+Different HCP Clients may present Humanitarian Cases using completely different user experiences while preserving identical humanitarian semantics.
 
-Nodes generate humanitarian interpretations.
+Humanitarian Records preserve observations.
 
-Clients present Humanitarian Cases.
+Correlation creates humanitarian understanding.
 
-People interpret the information.
+Humanitarian reasoning explains that understanding.
+
+Clients communicate Humanitarian Cases.
 
 People verify reality.
 
 The Result Presentation Model reinforces one of the central architectural principles of HCP:
 
-**The protocol exchanges observations.**
+**Humanitarian Records preserve observations.**
 
-**Nodes generate interpretations.**
+**Correlation creates humanitarian understanding.**
 
-**Clients present Humanitarian Cases.**
+**Humanitarian reasoning explains that understanding.**
+
+**Clients communicate Humanitarian Cases.**
 
 **People verify reality.**

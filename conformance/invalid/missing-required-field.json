@@ -1,1 +1,13 @@
+{
+"id": "9b3d7d88-4f2d-4e75-a2a5-5aaf8b5c1d91",
+"schema_version": "0.5",
+"source_client": "hcp-client-telegram",
+
+"subject": {
+"type": "human",
+"reported_label": "María González",
+"estimated_age": 74,
+"recognition_features": "Blue jacket, small black backpack, gray hair, approximately 160 cm tall"
+}
+}
 
